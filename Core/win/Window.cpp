@@ -8,17 +8,24 @@ namespace Hydro::win
 		width( width ),
 		height( height )
 	{
-		WNDCLASS wndClass = {};
-		wndClass.lpszClassName = className;
-		wndClass.hInstance = hInstance;
-		wndClass.hCursor = LoadCursor( nullptr, IDC_ARROW );
+		WNDCLASSEX wndClass = { 0 };
+		wndClass.cbSize = sizeof( wndClass );
+		wndClass.style = CS_OWNDC;
 		wndClass.lpfnWndProc = HandleMsgSetup;
+		wndClass.cbClsExtra = 0;
+		wndClass.cbWndExtra = 0;
+		wndClass.hInstance = hInstance;
+		wndClass.hIcon = static_cast<HICON>(LoadImage( hInstance, MAKEINTRESOURCE( 101 ), IMAGE_ICON, 32, 32, 0 ));
+		wndClass.hCursor = nullptr;
+		wndClass.hbrBackground = nullptr;
+		wndClass.lpszMenuName = nullptr;
+		wndClass.lpszClassName = className;
+		wndClass.hIconSm = static_cast<HICON>(LoadImage( hInstance, MAKEINTRESOURCE( 101 ), IMAGE_ICON, 16, 16, 0 ));
 
-		if( FAILED( RegisterClass( &wndClass ) ) )
+		if( RegisterClassEx( &wndClass ) == 0 )
 		{
 			throw WIN_EXCEPT( GetLastError() );
 		}
-
 
 		DWORD style = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
 		RECT rect = { 0, 0, width, height };

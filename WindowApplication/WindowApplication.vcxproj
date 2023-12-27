@@ -81,6 +81,15 @@
       <Project>{31aa7e0c-7dbf-4575-a007-bfddbb192dce}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="icons\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="icons\WindowApplication.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icons\HydroDirectX.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
