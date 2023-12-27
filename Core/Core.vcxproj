@@ -11,15 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="utility\HydroException.h" />
     <ClInclude Include="win\HydroWin.h" />
     <ClInclude Include="win\Keyboard.h" />
     <ClInclude Include="win\Mouse.h" />
     <ClInclude Include="win\Window.h" />
+    <ClInclude Include="win\WindowException.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="utility\HydroException.cpp" />
     <ClCompile Include="win\Keyboard.cpp" />
     <ClCompile Include="win\Mouse.cpp" />
     <ClCompile Include="win\Window.cpp" />
+    <ClCompile Include="win\WindowException.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

@@ -27,6 +27,12 @@
     <ClInclude Include="win\HydroWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utility\HydroException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win\WindowException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="win\Window.cpp">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="win\Mouse.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utility\HydroException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="win\WindowException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

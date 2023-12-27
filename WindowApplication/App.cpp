@@ -5,34 +5,52 @@
 #include <codecvt>
 #include <string>
 
-int StringToWString( std::wstring& ws, const std::string& s )
+std::wstring CharToWString( const char* str )
 {
-	std::wstring wsTmp( s.begin(), s.end() );
-
-	ws = wsTmp;
-
-	return 0;
+	std::wstring wstr;
+	while( *str != '\0' )
+		wstr.push_back( *str++ );
+	return wstr.c_str();
 }
+
+
 
 int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow ) 
 {
-	Hydro::win::Window window;
-
-	std::optional<int> quiting = {};
-	while( !quiting )
+	try
 	{
-		quiting = window.ProcessMessages();
 
-		if( window.kbd.KeyIsPressed( 'A' ) )
+		Hydro::win::Window window;
+
+		std::optional<int> quiting = {};
+		while( !quiting )
 		{
-			std::wstring title;
-			StringToWString( title, std::format( "x: {} y: {}", window.mouse.GetPosX(), window.mouse.GetPosY() ) );
-			
+			quiting = window.ProcessMessages();
 
-			window.SetTitle( title );
+			if( window.kbd.KeyIsPressed( 'A' ) )
+			{
+				std::wstring title;
+
+
+				window.SetTitle( title );
+			}
+			//Do some cool game stuff here
 		}
-		//Do some cool game stuff here
+
+		return *quiting;
+	}
+	catch( const Hydro::win::WindowException& e )
+	{
+		MessageBox( nullptr, CharToWString( e.what() ).c_str(), CharToWString(e.GetType()).c_str(), MB_OK | MB_ICONEXCLAMATION);
+	}
+	catch( const std::exception& e )
+	{
+		MessageBox( nullptr, CharToWString( e.what() ).c_str(), L"Standard Exception", MB_OK | MB_ICONEXCLAMATION );
+	}
+	catch( ... )
+	{
+		MessageBox( nullptr, L"No details available", L"Unknown Exception", MB_OK | MB_ICONEXCLAMATION );
 	}
 
-	return *quiting;
+	return -1;
 }

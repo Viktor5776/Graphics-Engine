@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <optional>
-#include "HydroWin.h"
+#include "WindowException.h"
 #include "Keyboard.h"
 #include "Mouse.h"
 

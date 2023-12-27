@@ -14,26 +14,37 @@ namespace Hydro::win
 		wndClass.hCursor = LoadCursor( nullptr, IDC_ARROW );
 		wndClass.lpfnWndProc = HandleMsgSetup;
 
-		RegisterClass( &wndClass );
+		if( FAILED( RegisterClass( &wndClass ) ) )
+		{
+			throw WIN_EXCEPT( GetLastError() );
+		}
 
-		DWORD e = GetLastError();
 
 		DWORD style = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
 		RECT rect = { 0, 0, width, height };
-		AdjustWindowRect( &rect, style, FALSE );
 
-		hWnd = CreateWindow( 
-			className, 
-			L"Hydro", 
+		if( AdjustWindowRect( &rect, style, FALSE ) == 0 )
+		{
+			throw WIN_EXCEPT( GetLastError() );
+		}
+
+		hWnd = CreateWindow(
+			className,
+			L"Hydro",
 			style,
 			CW_USEDEFAULT, CW_USEDEFAULT,
-			rect.right - rect.left, 
+			rect.right - rect.left,
 			rect.bottom - rect.top,
-			nullptr, 
-			nullptr, 
-			hInstance, 
+			nullptr,
+			nullptr,
+			hInstance,
 			this
 		);
+
+		if( hWnd == nullptr )
+		{
+			throw WIN_EXCEPT( GetLastError() );
+		}
 
 		ShowWindow( hWnd, SW_SHOW );
 	}
