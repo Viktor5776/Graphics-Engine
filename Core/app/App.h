@@ -1,6 +1,6 @@
 #pragma once
 #include "../win/Window.h"
-#include "../utility/HydroTimer.h"
+#include "../utility/Timer.h"
 
 namespace Hydro::app
 {
@@ -8,11 +8,13 @@ namespace Hydro::app
 	{
 	public:
 		App();
+		virtual ~App() = default;
 		int Go();
 	private:
-		void DoFrame();
-	private:
+		virtual void DoFrame() = 0;
+	protected:
 		win::Window window;
-		utility::Timer timer;
 	};
+
+	App* CreateApplication();
 }

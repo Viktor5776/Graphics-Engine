@@ -74,21 +74,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="WinMain.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Core\Core.vcxproj">
       <Project>{31aa7e0c-7dbf-4575-a007-bfddbb192dce}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="icons\resource.h" />
+    <ClInclude Include="WindowApplication.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icons\WindowApplication.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="icons\HydroDirectX.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WindowApplication.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

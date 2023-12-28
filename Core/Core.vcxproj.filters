@@ -39,7 +39,10 @@
     <ClInclude Include="app\App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utility\HydroTimer.h">
+    <ClInclude Include="utility\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="app\EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
