@@ -14,6 +14,7 @@
     <ClInclude Include="app\App.h" />
     <ClInclude Include="app\EntryPoint.h" />
     <ClInclude Include="gfx\Graphics.h" />
+    <ClInclude Include="gfx\GraphicsException.h" />
     <ClInclude Include="utility\HydroException.h" />
     <ClInclude Include="utility\Timer.h" />
     <ClInclude Include="win\HydroWin.h" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ClCompile Include="app\App.cpp" />
     <ClCompile Include="gfx\Graphics.cpp" />
+    <ClCompile Include="gfx\GraphicsException.cpp" />
     <ClCompile Include="utility\HydroException.cpp" />
     <ClCompile Include="win\Keyboard.cpp" />
     <ClCompile Include="win\Mouse.cpp" />

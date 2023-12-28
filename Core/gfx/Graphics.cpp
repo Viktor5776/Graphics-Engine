@@ -17,17 +17,25 @@ namespace Hydro::gfx
 		sd.SampleDesc.Count = 1;
 		sd.SampleDesc.Quality = 0;
 		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		sd.BufferCount = 1;
+		sd.BufferCount = 2;
 		sd.OutputWindow = hWnd;
 		sd.Windowed = TRUE;
-		sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+		sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 		sd.Flags = 0;
 
-		D3D11CreateDeviceAndSwapChain(
+		HRESULT hr;
+
+		UINT swapCreateFlags = 0u;
+
+#ifdef _DEBUG
+		swapCreateFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
+		GFX_THROW_FAILED( D3D11CreateDeviceAndSwapChain(
 			nullptr,
 			D3D_DRIVER_TYPE_HARDWARE,
 			nullptr,
-			0,
+			swapCreateFlags,
 			nullptr,
 			0,
 			D3D11_SDK_VERSION,
@@ -36,11 +44,11 @@ namespace Hydro::gfx
 			&pDevice,
 			nullptr,
 			&pContext
-		);
+		) );
 
 		ID3D11Resource* pBackBuffer = nullptr;
-		pSwap->GetBuffer( 0, __uuidof( ID3D11Resource ), reinterpret_cast<void**>( &pBackBuffer ) );
-		pDevice->CreateRenderTargetView( pBackBuffer, nullptr, &pTarget );
+		GFX_THROW_FAILED( pSwap->GetBuffer( 0, __uuidof( ID3D11Resource ), reinterpret_cast<void**>( &pBackBuffer ) ) );
+		GFX_THROW_FAILED( pDevice->CreateRenderTargetView( pBackBuffer, nullptr, &pTarget ) );
 	}
 
 	Graphics::~Graphics()
@@ -61,7 +69,18 @@ namespace Hydro::gfx
 
 	void Graphics::EndFrame()
 	{
-		pSwap->Present( 1u, 0u );
+		HRESULT hr;
+		if( FAILED( hr = pSwap->Present( 1u, 0u ) ) )
+		{
+			if( hr == DXGI_ERROR_DEVICE_REMOVED )
+			{
+				throw GFX_DEVICE_REMOVED_EXCEPT( pDevice->GetDeviceRemovedReason() );
+			}
+			else
+			{
+				GFX_THROW_FAILED( hr );
+			}
+		}
 	}
 
 	void Graphics::ClearBuffer( float red, float green, float blue ) noexcept
