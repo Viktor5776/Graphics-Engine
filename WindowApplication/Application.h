@@ -15,9 +15,7 @@ private:
 	Hydro::utility::Timer timer;
 };
 
-
 Hydro::app::App* Hydro::app::CreateApplication()
 {
 	return new WindowApplication();
 }
-
