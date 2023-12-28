@@ -1,4 +1,4 @@
-#include <Core/win/Window.h>
+#include <Core/app/App.h>
 #include <format>
 
 #include <locale>
@@ -19,25 +19,8 @@ int CALLBACK WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 {
 	try
 	{
-
-		Hydro::win::Window window;
-
-		std::optional<int> quiting = {};
-		while( !quiting )
-		{
-			quiting = window.ProcessMessages();
-
-			if( window.kbd.KeyIsPressed( 'A' ) )
-			{
-				std::wstring title;
-
-
-				window.SetTitle( title );
-			}
-			//Do some cool game stuff here
-		}
-
-		return *quiting;
+		Hydro::app::App app;
+		return app.Go();
 	}
 	catch( const Hydro::win::WindowException& e )
 	{

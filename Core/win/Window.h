@@ -1,9 +1,11 @@
 #pragma once
 #include <string>
 #include <optional>
+#include <memory>
 #include "WindowException.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+#include "../gfx/Graphics.h"
 
 namespace Hydro::win
 {
@@ -16,6 +18,7 @@ namespace Hydro::win
 		~Window();
 		void SetTitle( const std::wstring& title );
 		std::optional<int> ProcessMessages();
+		gfx::Graphics& Gfx();
 	private:
 		static LRESULT CALLBACK HandleMsgSetup( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 		static LRESULT CALLBACK HandleMsgThunk( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
@@ -23,6 +26,7 @@ namespace Hydro::win
 	public:
 		Keyboard kbd;
 		Mouse mouse;
+		std::unique_ptr<gfx::Graphics> pGfx;
 	private:
 		HINSTANCE hInstance;
 		HWND hWnd;

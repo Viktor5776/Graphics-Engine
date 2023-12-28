@@ -54,6 +54,8 @@ namespace Hydro::win
 		}
 
 		ShowWindow( hWnd, SW_SHOW );
+
+		pGfx = std::make_unique<gfx::Graphics>( hWnd );
 	}
 
 	Window::~Window()
@@ -83,6 +85,11 @@ namespace Hydro::win
 		}
 
 		return {};
+	}
+
+	gfx::Graphics& Window::Gfx()
+	{
+		return *pGfx;
 	}
 
 	LRESULT CALLBACK Window::HandleMsgSetup( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam ) 
