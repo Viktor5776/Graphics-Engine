@@ -46,25 +46,9 @@ namespace Hydro::gfx
 			&pContext
 		) );
 
-		ID3D11Resource* pBackBuffer = nullptr;
-		GFX_THROW_FAILED( pSwap->GetBuffer( 0, __uuidof( ID3D11Resource ), reinterpret_cast<void**>( &pBackBuffer ) ) );
-		GFX_THROW_FAILED( pDevice->CreateRenderTargetView( pBackBuffer, nullptr, &pTarget ) );
-	}
-
-	Graphics::~Graphics()
-	{
-		if( pContext != nullptr )
-		{
-			pContext->Release();
-		}
-		if( pSwap != nullptr )
-		{
-			pSwap->Release();
-		}
-		if( pDevice != nullptr )
-		{
-			pDevice->Release();
-		}
+		Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
+		GFX_THROW_FAILED( pSwap->GetBuffer( 0, __uuidof( ID3D11Resource ), &pBackBuffer ) );
+		GFX_THROW_FAILED( pDevice->CreateRenderTargetView( pBackBuffer.Get(), nullptr, &pTarget));
 	}
 
 	void Graphics::EndFrame()
@@ -86,7 +70,7 @@ namespace Hydro::gfx
 	void Graphics::ClearBuffer( float red, float green, float blue ) noexcept
 	{
 		const float color[] = { red, green, blue, 1.0f };
-		pContext->ClearRenderTargetView( pTarget, color );
+		pContext->ClearRenderTargetView( pTarget.Get(), color);
 	}
 
 }

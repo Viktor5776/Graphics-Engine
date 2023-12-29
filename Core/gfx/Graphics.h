@@ -1,7 +1,7 @@
 #pragma once
 #include "GraphicsException.h"
 #include <d3d11.h>
-
+#include <wrl.h>
 
 namespace Hydro::gfx
 {
@@ -11,13 +11,13 @@ namespace Hydro::gfx
 		Graphics( HWND hWnd );
 		Graphics( const Graphics& ) = delete;
 		Graphics& operator=( const Graphics& ) = delete;
-		~Graphics();
+		~Graphics() = default;
 		void EndFrame();
 		void ClearBuffer( float red, float green, float blue ) noexcept;
 	private:
-		ID3D11Device* pDevice = nullptr;
-		IDXGISwapChain* pSwap = nullptr;
-		ID3D11DeviceContext* pContext = nullptr;
-		ID3D11RenderTargetView* pTarget = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
+		Microsoft::WRL::ComPtr<IDXGISwapChain> pSwap;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> pContext;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> pTarget;
 	};
 }
