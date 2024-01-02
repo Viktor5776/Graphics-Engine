@@ -1,5 +1,8 @@
 #include "Graphics.h"
+#include <d3dcompiler.h>
 #pragma comment(lib, "d3d11.lib")
+#pragma comment(lib, "D3DCompiler.lib")
+
 
 namespace Hydro::gfx
 {
@@ -71,6 +74,86 @@ namespace Hydro::gfx
 	{
 		const float color[] = { red, green, blue, 1.0f };
 		pContext->ClearRenderTargetView( pTarget.Get(), color);
+	}
+
+	void Graphics::DrawTestTriangle()
+	{
+		struct Vertex
+		{
+			float x;
+			float y;
+		};
+
+		const Vertex vertices[] =
+		{
+			{ 0.0f, 0.5f },
+			{ 0.5f, -0.5f },
+			{ -0.5f, -0.5f }
+		};
+
+		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
+
+		D3D11_BUFFER_DESC bd = {};
+		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bd.Usage = D3D11_USAGE_DEFAULT;
+		bd.CPUAccessFlags = 0u;
+		bd.MiscFlags = 0u;
+		bd.ByteWidth = sizeof( vertices );
+		bd.StructureByteStride = sizeof( Vertex );
+
+		D3D11_SUBRESOURCE_DATA sd = {};
+		sd.pSysMem = vertices;
+
+		HRESULT hr;
+
+		//Bind Vertex Buffer
+		GFX_THROW_FAILED( pDevice->CreateBuffer( &bd, &sd, &pVertexBuffer ) );
+		const UINT stride = sizeof( Vertex );
+		const UINT offset = 0u;
+		pContext->IASetVertexBuffers( 0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset);
+
+		//Set Vertex Shader
+		Microsoft::WRL::ComPtr<ID3D11VertexShader> pVertexShader;
+		Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
+		GFX_THROW_FAILED( D3DReadFileToBlob( L"VertexShader.cso", &pBlob ) );
+		GFX_THROW_FAILED( pDevice->CreateVertexShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader ) );
+		pContext->VSSetShader( pVertexShader.Get(), nullptr, 0u );
+
+		//Bind Vertex Input Layout
+		Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
+		const D3D11_INPUT_ELEMENT_DESC ied[] =
+		{
+			{ "Position", 0u, DXGI_FORMAT_R32G32_FLOAT, 0u, 0u, D3D11_INPUT_PER_VERTEX_DATA, 0u },
+		};
+		GFX_THROW_FAILED( pDevice->CreateInputLayout( ied, (UINT)std::size( ied ), pBlob->GetBufferPointer(), pBlob->GetBufferSize(), &pInputLayout ) );
+		pContext->IASetInputLayout( pInputLayout.Get() );
+		
+
+		//Set Pixel Shader
+		Microsoft::WRL::ComPtr<ID3D11PixelShader> pPixelShader;
+		GFX_THROW_FAILED( D3DReadFileToBlob( L"PixelShader.cso", &pBlob ) );
+		GFX_THROW_FAILED( pDevice->CreatePixelShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader ) );
+		pContext->PSSetShader( pPixelShader.Get(), nullptr, 0u );
+
+		//Bind Render Target
+		pContext->OMSetRenderTargets( 1u, pTarget.GetAddressOf(), nullptr);
+
+		//Set Primitive Topology
+		pContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+
+		//Configure Viewport
+		D3D11_VIEWPORT vp;
+		vp.Width = 1280;
+		vp.Height = 720;
+		vp.MinDepth = 0;
+		vp.MaxDepth = 1;
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		pContext->RSSetViewports( 1u, &vp );
+
+		
+
+		pContext->Draw( (UINT)std::size(vertices), 0u);
 	}
 
 }

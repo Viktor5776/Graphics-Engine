@@ -2,9 +2,9 @@
 
 namespace Hydro::app
 {
-	App::App()
+	App::App( int width, int height)
 		:
-		window( 1280, 720 )
+		window( width, height )
 	{
 	}
 

@@ -6,9 +6,6 @@
 
 class WindowApplication : public Hydro::app::App
 {
-public:
-	WindowApplication();
-	~WindowApplication();
 private:
 	void DoFrame() override;
 private:

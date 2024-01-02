@@ -7,7 +7,7 @@ namespace Hydro::app
 	class App
 	{
 	public:
-		App();
+		App( int width = 1280, int height = 720 );
 		virtual ~App() = default;
 		int Go();
 	private:
