@@ -1,7 +1,7 @@
 #pragma once
-#include <Core/app/App.h>
-#include <Core/app/EntryPoint.h>
-#include <Core/utility/Timer.h>
+#include <Core/src/app/App.h>
+#include <Core/src/app/EntryPoint.h>
+#include <Core/src/utility/Timer.h>
 
 
 class WindowApplication : public Hydro::app::App
