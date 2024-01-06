@@ -15,63 +15,132 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="win\Window.h">
+    <ClInclude Include="src\win\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win\Keyboard.h">
+    <ClInclude Include="src\win\Keyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win\Mouse.h">
+    <ClInclude Include="src\win\Mouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win\HydroWin.h">
+    <ClInclude Include="src\win\HydroWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utility\HydroException.h">
+    <ClInclude Include="src\utility\HydroException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win\WindowException.h">
+    <ClInclude Include="src\win\WindowException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gfx\Graphics.h">
+    <ClInclude Include="src\gfx\Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\App.h">
+    <ClInclude Include="src\app\App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utility\Timer.h">
+    <ClInclude Include="src\utility\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="app\EntryPoint.h">
+    <ClInclude Include="src\app\EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gfx\GraphicsException.h">
+    <ClInclude Include="src\gfx\GraphicsException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\Bindable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\BindableBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\ConstantBuffers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\IndexBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\InputLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\PixelShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\Topology.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\TransformCbuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Drawable\Drawable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\VertexBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\VertexShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Drawable\Box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Drawable\DrawableBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="win\Window.cpp">
+    <ClCompile Include="src\win\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win\Keyboard.cpp">
+    <ClCompile Include="src\win\Keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win\Mouse.cpp">
+    <ClCompile Include="src\win\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utility\HydroException.cpp">
+    <ClCompile Include="src\utility\HydroException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win\WindowException.cpp">
+    <ClCompile Include="src\win\WindowException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gfx\Graphics.cpp">
+    <ClCompile Include="src\gfx\Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="app\App.cpp">
+    <ClCompile Include="src\app\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gfx\GraphicsException.cpp">
+    <ClCompile Include="src\gfx\GraphicsException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\Bindable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\IndexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\InputLayout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\PixelShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\Topology.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Drawable\Drawable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\TransformCbuf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\VertexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\VertexShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Drawable\Box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
