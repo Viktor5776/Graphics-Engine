@@ -47,11 +47,11 @@ namespace Hydro::gfx
 			};
 			AddStaticBind( std::make_unique<VertexBuffer>( gfx, vertices ) );
 
-			auto pvs = std::make_unique<VertexShader>( gfx, L"VertexShader.cso" );
+			auto pvs = std::make_unique<VertexShader>( gfx, L"ColorIndexVS.cso" );
 			auto pvsbc = pvs->GetBytecode();
 			AddStaticBind( std::move( pvs ) );
 
-			AddStaticBind( std::make_unique<PixelShader>( gfx, L"PixelShader.cso" ) );
+			AddStaticBind( std::make_unique<PixelShader>( gfx, L"ColorIndexPS.cso" ) );
 
 			const std::vector<unsigned short> indices =
 			{

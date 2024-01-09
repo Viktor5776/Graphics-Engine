@@ -1,6 +1,11 @@
 #include "Application.h"
+#include <Core/src/utility/Surface.h>
+#include <Core/src/utility/GDIPlusManager.h>
+#include <Core/src/gfx/Drawable/Box.h>
+#include <Core/src/gfx/Drawable/Sheet.h>
 
 using namespace Hydro;
+utility::GDIPlusManager gdipm;
 
 WindowApplication::WindowApplication()
 	:
@@ -19,6 +24,8 @@ WindowApplication::WindowApplication()
 		) );
 	}
 
+	boxes.push_back( std::make_unique<gfx::Sheet>( window.Gfx(), rng, adist, ddist, odist, rdist ) );
+
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 80.0f ) );
 }
 
@@ -32,7 +39,7 @@ void WindowApplication::DoFrame()
 
 	for( auto& b : boxes )
 	{
-		b->Update( dt );
+		b->Update( window.kbd.KeyIsPressed( VK_SPACE ) ? 0.0f : dt );
 		b->Draw( window.Gfx() );
 	}
 

@@ -31,6 +31,9 @@
     <Image Include="icons\HydroDirectX.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Images\kappa50.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -38,7 +41,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shaders\VertexShader.hlsl" />
-    <FxCompile Include="shaders\PixelShader.hlsl" />
+    <FxCompile Include="shaders\ColorIndexVS.hlsl" />
+    <FxCompile Include="shaders\ColorIndexPS.hlsl" />
+    <FxCompile Include="shaders\TextureVS.hlsl" />
+    <FxCompile Include="shaders\TexturePS.hlsl" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 #include <Core/src/app/App.h>
 #include <Core/src/app/EntryPoint.h>
 #include <Core/src/utility/Timer.h>
-#include <Core/src/gfx/Drawable/Box.h>
+#include <Core/src/gfx/Drawable/Drawable.h>
 
 class WindowApplication : public Hydro::app::App
 {
@@ -13,7 +13,7 @@ private:
 	void DoFrame() override;
 private:
 	Hydro::utility::Timer timer;
-	std::vector<std::unique_ptr<Hydro::gfx::Box>> boxes;
+	std::vector<std::unique_ptr<Hydro::gfx::Drawable>> boxes;
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()
