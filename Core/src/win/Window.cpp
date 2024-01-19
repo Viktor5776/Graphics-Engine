@@ -1,7 +1,11 @@
 #include "Window.h"
+#include "../../third/ImGui/imgui_impl_win32.h"
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
 namespace Hydro::win
 {
+
 	Window::Window( int width, int height )
 		:
 		hInstance( GetModuleHandle( nullptr ) ),
@@ -56,10 +60,13 @@ namespace Hydro::win
 		ShowWindow( hWnd, SW_SHOW );
 
 		pGfx = std::make_unique<gfx::Graphics>( hWnd );
+
+		ImGui_ImplWin32_Init( hWnd );
 	}
 
 	Window::~Window()
 	{
+		ImGui_ImplWin32_Shutdown();
 		UnregisterClass( className, hInstance );
 		DestroyWindow( hWnd );
 	}
@@ -121,6 +128,13 @@ namespace Hydro::win
 
 	LRESULT Window::HandleMsg( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam ) 
 	{
+		if( ImGui_ImplWin32_WndProcHandler( hWnd, msg, wParam, lParam ) )
+		{
+			return true;
+		}
+		const auto& imio = ImGui::GetIO();
+
+
 		switch( msg )
 		{
 		case WM_CLOSE:
@@ -134,6 +148,11 @@ namespace Hydro::win
 		case WM_KEYDOWN:
 			//SYSKEY Commands Need to be Handeld For ALT ( VM_MENU ) and F10
 		case WM_SYSKEYDOWN:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			//Filter Auto Repeat
 			if( !(lParam & 0x40000000) || kbd.AutorepeatIsEnabled() )
 			{
@@ -142,15 +161,30 @@ namespace Hydro::win
 			break;
 		case WM_KEYUP:
 		case WM_SYSKEYUP:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			kbd.OnKeyReleased( static_cast<unsigned char>(wParam) );
 			break;
 		case WM_CHAR:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			kbd.OnChar( static_cast<unsigned char>(wParam) );
 			break;
 			/******** END KEYBOARD MESSAGES ********/
 
 			/********** Mouse MESSAGES **********/
 		case WM_MOUSEMOVE:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			if( GetFocus() == hWnd )
 			{
 				const POINTS pt = MAKEPOINTS( lParam );
@@ -182,21 +216,51 @@ namespace Hydro::win
 			}
 			break;
 		case WM_LBUTTONDOWN:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			mouse.OnLeftPressed();
 			break;
 		case WM_LBUTTONUP:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			mouse.OnLeftRelease();
 			break;
 		case WM_RBUTTONDOWN:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			mouse.OnRightPressed();
 			break;
 		case WM_RBUTTONUP:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			mouse.OnRightRelease();
 			break;
 		case WM_MOUSEWHEEL:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			mouse.OnWheelDelta( GET_WHEEL_DELTA_WPARAM( wParam ) );
 			break;
 		case WM_MBUTTONDOWN:
+			//Remove Message if Imgui Wants to Capture
+			if( imio.WantCaptureKeyboard )
+			{
+				break;
+			}
 			mouse.OnWheelPressed();
 			break;
 		}

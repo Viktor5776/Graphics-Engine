@@ -1,6 +1,7 @@
 #pragma once
 #include "../win/Window.h"
 #include "../utility/Timer.h"
+#include "../utility/ImGuiManager.h"
 
 namespace Hydro::app
 {
@@ -13,6 +14,7 @@ namespace Hydro::app
 	private:
 		virtual void DoFrame() = 0;
 	protected:
+		utility::ImGuiManager imgui;
 		win::Window window;
 	};
 

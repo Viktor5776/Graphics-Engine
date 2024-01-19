@@ -3,6 +3,7 @@
 #include <Core/src/utility/GDIPlusManager.h>
 #include <Core/src/gfx/Drawable/Box.h>
 #include <Core/src/gfx/Drawable/Sheet.h>
+#include <Core/src/gfx/Drawable/SkinnedBox.h>
 
 using namespace Hydro;
 utility::GDIPlusManager gdipm;
@@ -16,15 +17,21 @@ WindowApplication::WindowApplication()
 	std::uniform_real_distribution<float> ddist( 0.0f, 3.1415f * 2.0f );
 	std::uniform_real_distribution<float> odist( 0.0f, 3.1415f * 0.3f );
 	std::uniform_real_distribution<float> rdist( 6.0f, 20.0f );
-	for( auto i = 0; i < 80; i++ )
+	for( auto i = 0; i < 30; i++ )
 	{
-		boxes.push_back( std::make_unique<gfx::Box>(
+		drawables.push_back( std::make_unique<gfx::Box>(
 			window.Gfx(), rng, adist,
 			ddist, odist, rdist
 		) );
 	}
-
-	boxes.push_back( std::make_unique<gfx::Sheet>( window.Gfx(), rng, adist, ddist, odist, rdist ) );
+	for( auto i = 0; i < 30; i++ )
+	{
+		drawables.push_back( std::make_unique<gfx::Sheet>( window.Gfx(), rng, adist, ddist, odist, rdist ) );
+	}
+	for( auto i = 0; i < 30; i++ )
+	{
+		drawables.push_back( std::make_unique<gfx::SkinnedBox>( window.Gfx(), rng, adist, ddist, odist, rdist ) );
+	}
 
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 80.0f ) );
 }
@@ -37,12 +44,16 @@ void WindowApplication::DoFrame()
 	window.Gfx().ClearBuffer( 0.2f, 0.1f, 0.4f );
 	float dt = timer.Mark();
 
-	for( auto& b : boxes )
+	window.Gfx().BeginFrame();
+
+	ImGui::ShowDemoWindow();
+	
+	for( auto& b : drawables )
 	{
 		b->Update( window.kbd.KeyIsPressed( VK_SPACE ) ? 0.0f : dt );
 		b->Draw( window.Gfx() );
 	}
 
-
+	
 	window.Gfx().EndFrame();
 }

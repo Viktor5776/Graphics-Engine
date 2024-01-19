@@ -13,7 +13,7 @@ private:
 	void DoFrame() override;
 private:
 	Hydro::utility::Timer timer;
-	std::vector<std::unique_ptr<Hydro::gfx::Drawable>> boxes;
+	std::vector<std::unique_ptr<Hydro::gfx::Drawable>> drawables;
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()

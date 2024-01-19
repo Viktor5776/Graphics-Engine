@@ -26,15 +26,18 @@
     <ClInclude Include="src\gfx\Bindable\VertexBuffer.h" />
     <ClInclude Include="src\gfx\Bindable\VertexShader.h" />
     <ClInclude Include="src\gfx\Drawable\Box.h" />
+    <ClInclude Include="src\gfx\Drawable\Cube.h" />
     <ClInclude Include="src\gfx\Drawable\Drawable.h" />
     <ClInclude Include="src\gfx\Drawable\DrawableBase.h" />
     <ClInclude Include="src\gfx\Drawable\IndexedTriangleList.h" />
     <ClInclude Include="src\gfx\Drawable\Plane.h" />
     <ClInclude Include="src\gfx\Drawable\Sheet.h" />
+    <ClInclude Include="src\gfx\Drawable\SkinnedBox.h" />
     <ClInclude Include="src\gfx\Graphics.h" />
     <ClInclude Include="src\gfx\GraphicsException.h" />
     <ClInclude Include="src\utility\GDIPlusManager.h" />
     <ClInclude Include="src\utility\HydroException.h" />
+    <ClInclude Include="src\utility\ImGuiManager.h" />
     <ClInclude Include="src\utility\Surface.h" />
     <ClInclude Include="src\utility\Timer.h" />
     <ClInclude Include="src\win\HydroWin.h" />
@@ -42,6 +45,14 @@
     <ClInclude Include="src\win\Mouse.h" />
     <ClInclude Include="src\win\Window.h" />
     <ClInclude Include="src\win\WindowException.h" />
+    <ClInclude Include="third\ImGui\imconfig.h" />
+    <ClInclude Include="third\ImGui\imgui.h" />
+    <ClInclude Include="third\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="third\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="third\ImGui\imgui_internal.h" />
+    <ClInclude Include="third\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="third\ImGui\imstb_textedit.h" />
+    <ClInclude Include="third\ImGui\imstb_truetype.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\app\App.cpp" />
@@ -58,6 +69,7 @@
     <ClCompile Include="src\gfx\Drawable\Box.cpp" />
     <ClCompile Include="src\gfx\Drawable\Drawable.cpp" />
     <ClCompile Include="src\gfx\Drawable\Sheet.cpp" />
+    <ClCompile Include="src\gfx\Drawable\SkinnedBox.cpp" />
     <ClCompile Include="src\gfx\Graphics.cpp" />
     <ClCompile Include="src\gfx\GraphicsException.cpp" />
     <ClCompile Include="src\utility\GDIPlusManager.cpp" />
@@ -67,6 +79,13 @@
     <ClCompile Include="src\win\Mouse.cpp" />
     <ClCompile Include="src\win\Window.cpp" />
     <ClCompile Include="src\win\WindowException.cpp" />
+    <ClCompile Include="third\ImGui\imgui.cpp" />
+    <ClCompile Include="third\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="third\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="third\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="third\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="third\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="third\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

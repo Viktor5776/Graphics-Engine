@@ -14,7 +14,7 @@ namespace Gdiplus
 
 Hydro::utility::Surface::Surface( unsigned int width, unsigned int height, unsigned int pitch ) noexcept
 	:
-	pBuffer( std::make_unique<Color[]>( pitch* height ) ),
+	pBuffer( std::make_unique<Color[]>( ((size_t)pitch) * height ) ),
 	width( width ),
 	height( height )
 {}
@@ -45,7 +45,7 @@ Hydro::utility::Surface::~Surface()
 
 void Hydro::utility::Surface::Clear( Color fillValue ) noexcept
 {
-	memset( pBuffer.get(), fillValue.dword, width * height * sizeof( Color ) );
+	memset( pBuffer.get(), fillValue.dword, ((size_t)width) * height * sizeof( Color ) );
 }
 
 void Hydro::utility::Surface::PutPixel( unsigned int x, unsigned int y, Color c ) noexcept(!_DEBUG)
@@ -54,7 +54,7 @@ void Hydro::utility::Surface::PutPixel( unsigned int x, unsigned int y, Color c 
 	assert( y >= 0 );
 	assert( x < width );
 	assert( y < height );
-	pBuffer[y * width + x] = c;
+	pBuffer[((size_t)y) * width + x] = c;
 }
 
 Hydro::utility::Surface::Color Hydro::utility::Surface::GetPixel( unsigned int x, unsigned int y ) const noexcept(!_DEBUG)
@@ -63,7 +63,7 @@ Hydro::utility::Surface::Color Hydro::utility::Surface::GetPixel( unsigned int x
 	assert( y >= 0 );
 	assert( x < width );
 	assert( y < height );
-	return pBuffer[y * width + x];
+	return pBuffer[((size_t)y) * width + x];
 }
 
 unsigned int Hydro::utility::Surface::GetWidth() const noexcept
@@ -114,7 +114,7 @@ Hydro::utility::Surface Hydro::utility::Surface::FromFile( const std::string& na
 		height = bitmap.GetHeight();
 		width = bitmap.GetWidth();
 		pitch = width;
-		pBuffer = std::make_unique<Color[]>( width * height );
+		pBuffer = std::make_unique<Color[]>( ((size_t)width) * height );
 
 		for( unsigned int y = 0; y < height; y++ )
 		{
@@ -122,7 +122,7 @@ Hydro::utility::Surface Hydro::utility::Surface::FromFile( const std::string& na
 			{
 				Gdiplus::Color c;
 				bitmap.GetPixel( x, y, &c );
-				pBuffer[y * pitch + x] = c.GetValue();
+				pBuffer[((size_t)y) * pitch + x] = c.GetValue();
 			}
 		}
 	}
@@ -199,7 +199,7 @@ void Hydro::utility::Surface::Copy( const Surface& src ) noexcept(!_DEBUG)
 {
 	assert( width == src.width );
 	assert( height == src.height );
-	memcpy( pBuffer.get(), src.pBuffer.get(), width * height * sizeof( Color ) );
+	memcpy( pBuffer.get(), src.pBuffer.get(), ((size_t)width) * height * sizeof( Color ) );
 }
 
 Hydro::utility::Surface::Surface( unsigned int width, unsigned int height, std::unique_ptr<Color[]> pBufferParam ) noexcept
