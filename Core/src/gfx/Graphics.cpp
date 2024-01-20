@@ -112,24 +112,35 @@ namespace Hydro::gfx
 		ImGui_ImplDX11_Shutdown();
 	}
 
-	void Graphics::BeginFrame()
+	void Graphics::BeginFrame( float red, float green, float blue ) noexcept
 	{
-		ImGui_ImplDX11_NewFrame();
-		ImGui_ImplWin32_NewFrame();
-		ImGui::NewFrame();
+		pContext->OMSetRenderTargets( 1u, pTarget.GetAddressOf(), pDSV.Get() );
+		const float color[] = { red, green, blue, 1.0f };
+		pContext->ClearRenderTargetView( pTarget.Get(), color );
+		pContext->ClearDepthStencilView( pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u );
+		if( imguiEnabled )
+		{
+			ImGui_ImplDX11_NewFrame();
+			ImGui_ImplWin32_NewFrame();
+			ImGui::NewFrame();
+		}
 	}
 
 	void Graphics::EndFrame()
 	{
 		HRESULT hr;
-		ImGui::EndFrame();
-		ImGui::Render();
-		ImGui_ImplDX11_RenderDrawData( ImGui::GetDrawData() );
-		if( ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable )
+		if( imguiEnabled )
 		{
-			ImGui::UpdatePlatformWindows();
-			ImGui::RenderPlatformWindowsDefault();
+			ImGui::Render();
+			ImGui_ImplDX11_RenderDrawData( ImGui::GetDrawData() );
+
+			if( ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable )
+			{
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+			}
 		}
+		
 
 		if( FAILED( hr = pSwap->Present( 1u, 0u ) ) )
 		{
@@ -142,14 +153,6 @@ namespace Hydro::gfx
 				GFX_THROW_FAILED( hr );
 			}
 		}
-	}
-
-	void Graphics::ClearBuffer( float red, float green, float blue ) noexcept
-	{
-		pContext->OMSetRenderTargets( 1u, pTarget.GetAddressOf(), pDSV.Get() );
-		const float color[] = { red, green, blue, 1.0f };
-		pContext->ClearRenderTargetView( pTarget.Get(), color);
-		pContext->ClearDepthStencilView( pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u );
 	}
 
 	void Graphics::DrawIndexed( UINT count ) noexcept(!_DEBUG)
@@ -165,6 +168,31 @@ namespace Hydro::gfx
 	DirectX::XMMATRIX Graphics::GetProjection() const noexcept
 	{
 		return projection;
+	}
+
+	void Graphics::SetCamera( DirectX::FXMMATRIX cam ) noexcept
+	{
+		camera = cam;
+	}
+
+	DirectX::XMMATRIX Graphics::GetCamera() const noexcept
+	{
+		return camera;
+	}
+
+	void Graphics::EnableImgui() noexcept
+	{
+		imguiEnabled = true;
+	}
+
+	void Graphics::DisableImgui() noexcept
+	{
+		imguiEnabled = false;
+	}
+
+	bool Graphics::IsImguiEnabled() const noexcept
+	{
+		return imguiEnabled;
 	}
 
 }

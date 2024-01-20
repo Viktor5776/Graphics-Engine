@@ -4,6 +4,10 @@
 #include <Core/src/gfx/Drawable/Box.h>
 #include <Core/src/gfx/Drawable/Sheet.h>
 #include <Core/src/gfx/Drawable/SkinnedBox.h>
+#include <Core/third/ImGui/imgui.h>
+#include <Core/third/ImGui/imgui_impl_dx11.h>
+#include <Core/third/ImGui/imgui_impl_win32.h>
+
 
 using namespace Hydro;
 utility::GDIPlusManager gdipm;
@@ -34,6 +38,7 @@ WindowApplication::WindowApplication()
 	}
 
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 80.0f ) );
+	window.Gfx().SetCamera( cam.GetMatrix() );
 }
 
 WindowApplication::~WindowApplication()
@@ -41,19 +46,26 @@ WindowApplication::~WindowApplication()
 
 void WindowApplication::DoFrame()
 {
-	window.Gfx().ClearBuffer( 0.2f, 0.1f, 0.4f );
-	float dt = timer.Mark();
+	float dt = timer.Mark() * speed_factor;
+	window.Gfx().BeginFrame( 0.2f, 0.1f, 0.4f );
 
-	window.Gfx().BeginFrame();
-
-	ImGui::ShowDemoWindow();
-	
 	for( auto& b : drawables )
 	{
 		b->Update( window.kbd.KeyIsPressed( VK_SPACE ) ? 0.0f : dt );
 		b->Draw( window.Gfx() );
 	}
 
+	if( ImGui::Begin( "Simulation speed " ) )
+	{
+		ImGui::SliderFloat( "Speed", &speed_factor, 0.0f, 10.0f, "%.2f" );
+		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate );
+		ImGui::Text( "Status: %s ( hold space to pause )", window.kbd.KeyIsPressed( VK_SPACE ) ?  "Paused" : "Running" );
+	}
+	ImGui::End();
+
+	cam.SpawnControlWindow();
+
+	window.Gfx().SetCamera( cam.GetMatrix() );
 	
 	window.Gfx().EndFrame();
 }

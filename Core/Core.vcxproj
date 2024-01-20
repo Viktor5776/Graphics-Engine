@@ -25,6 +25,7 @@
     <ClInclude Include="src\gfx\Bindable\TransformCbuf.h" />
     <ClInclude Include="src\gfx\Bindable\VertexBuffer.h" />
     <ClInclude Include="src\gfx\Bindable\VertexShader.h" />
+    <ClInclude Include="src\gfx\Camera.h" />
     <ClInclude Include="src\gfx\Drawable\Box.h" />
     <ClInclude Include="src\gfx\Drawable\Cube.h" />
     <ClInclude Include="src\gfx\Drawable\Drawable.h" />
@@ -66,6 +67,7 @@
     <ClCompile Include="src\gfx\Bindable\TransformCbuf.cpp" />
     <ClCompile Include="src\gfx\Bindable\VertexBuffer.cpp" />
     <ClCompile Include="src\gfx\Bindable\VertexShader.cpp" />
+    <ClCompile Include="src\gfx\Camera.cpp" />
     <ClCompile Include="src\gfx\Drawable\Box.cpp" />
     <ClCompile Include="src\gfx\Drawable\Drawable.cpp" />
     <ClCompile Include="src\gfx\Drawable\Sheet.cpp" />
