@@ -24,7 +24,7 @@ WindowApplication::WindowApplication()
 	std::uniform_real_distribution<float> rdist{ 6.0f,20.0f };
 	std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
 	
-	for( auto i = 0; i < 60; i++ )
+	for( auto i = 0; i < 160; i++ )
 	{
 		drawables.push_back( std::make_unique<gfx::Box>(
 			window.Gfx(), rng, adist,
@@ -41,7 +41,7 @@ WindowApplication::~WindowApplication()
 void WindowApplication::DoFrame()
 {
 	float dt = timer.Mark() * speed_factor;
-	window.Gfx().BeginFrame( 0.2f, 0.1f, 0.4f );
+	window.Gfx().BeginFrame( 0.07f, 0.0f, 0.12f );
 	window.Gfx().SetCamera( cam.GetMatrix() );
 	light.Bind( window.Gfx() );
 

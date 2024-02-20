@@ -41,6 +41,7 @@ namespace Hydro::gfx
 	void PointLight::Bind( Graphics& gfx ) const noexcept
 	{
 		cbuf.Update( gfx, { pos } );
+		cbuf.Bind( gfx );
 	}
 
 }
