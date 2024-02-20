@@ -13,7 +13,8 @@ namespace Hydro::gfx
 
 	Graphics::Graphics( HWND hWnd )
 		:
-		projection( DirectX::XMMatrixIdentity() )
+		projection( DirectX::XMMatrixIdentity() ),
+		camera( DirectX::XMMatrixIdentity() )
 	{
 		DXGI_SWAP_CHAIN_DESC sd = {};
 		sd.BufferDesc.Width = 0;

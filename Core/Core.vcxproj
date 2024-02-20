@@ -34,8 +34,11 @@
     <ClInclude Include="src\gfx\Drawable\Plane.h" />
     <ClInclude Include="src\gfx\Drawable\Sheet.h" />
     <ClInclude Include="src\gfx\Drawable\SkinnedBox.h" />
+    <ClInclude Include="src\gfx\Drawable\SolidSphere.h" />
+    <ClInclude Include="src\gfx\Drawable\Sphere.h" />
     <ClInclude Include="src\gfx\Graphics.h" />
     <ClInclude Include="src\gfx\GraphicsException.h" />
+    <ClInclude Include="src\gfx\PointLight.h" />
     <ClInclude Include="src\utility\GDIPlusManager.h" />
     <ClInclude Include="src\utility\HydroException.h" />
     <ClInclude Include="src\utility\ImGuiManager.h" />
@@ -72,8 +75,10 @@
     <ClCompile Include="src\gfx\Drawable\Drawable.cpp" />
     <ClCompile Include="src\gfx\Drawable\Sheet.cpp" />
     <ClCompile Include="src\gfx\Drawable\SkinnedBox.cpp" />
+    <ClCompile Include="src\gfx\Drawable\SolidSphere.cpp" />
     <ClCompile Include="src\gfx\Graphics.cpp" />
     <ClCompile Include="src\gfx\GraphicsException.cpp" />
+    <ClCompile Include="src\gfx\PointLight.cpp" />
     <ClCompile Include="src\utility\GDIPlusManager.cpp" />
     <ClCompile Include="src\utility\HydroException.cpp" />
     <ClCompile Include="src\utility\Surface.cpp" />

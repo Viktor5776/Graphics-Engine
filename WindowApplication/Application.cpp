@@ -14,31 +14,25 @@ utility::GDIPlusManager gdipm;
 
 WindowApplication::WindowApplication()
 	:
-	App( 1280, 720 )
+	App( 1280, 720 ),
+	light( window.Gfx(), 0.5f )
 {
-	std::mt19937 rng( std::random_device{}() );
-	std::uniform_real_distribution<float> adist( 0.0f, 3.1415f * 2.0f );
-	std::uniform_real_distribution<float> ddist( 0.0f, 3.1415f * 2.0f );
-	std::uniform_real_distribution<float> odist( 0.0f, 3.1415f * 0.3f );
-	std::uniform_real_distribution<float> rdist( 6.0f, 20.0f );
-	for( auto i = 0; i < 30; i++ )
+	std::mt19937 rng{ std::random_device{}() };
+	std::uniform_real_distribution<float> adist{ 0.0f,3.1415 * 2.0f };
+	std::uniform_real_distribution<float> ddist{ 0.0f,3.1415 * 0.5f };
+	std::uniform_real_distribution<float> odist{ 0.0f,3.1415 * 0.08f };
+	std::uniform_real_distribution<float> rdist{ 6.0f,20.0f };
+	std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
+	
+	for( auto i = 0; i < 60; i++ )
 	{
 		drawables.push_back( std::make_unique<gfx::Box>(
 			window.Gfx(), rng, adist,
-			ddist, odist, rdist
+			ddist, odist, rdist, bdist
 		) );
-	}
-	for( auto i = 0; i < 30; i++ )
-	{
-		drawables.push_back( std::make_unique<gfx::Sheet>( window.Gfx(), rng, adist, ddist, odist, rdist ) );
-	}
-	for( auto i = 0; i < 30; i++ )
-	{
-		drawables.push_back( std::make_unique<gfx::SkinnedBox>( window.Gfx(), rng, adist, ddist, odist, rdist ) );
 	}
 
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 80.0f ) );
-	window.Gfx().SetCamera( cam.GetMatrix() );
 }
 
 WindowApplication::~WindowApplication()
@@ -48,13 +42,17 @@ void WindowApplication::DoFrame()
 {
 	float dt = timer.Mark() * speed_factor;
 	window.Gfx().BeginFrame( 0.2f, 0.1f, 0.4f );
+	window.Gfx().SetCamera( cam.GetMatrix() );
+	light.Bind( window.Gfx() );
 
 	for( auto& b : drawables )
 	{
 		b->Update( window.kbd.KeyIsPressed( VK_SPACE ) ? 0.0f : dt );
 		b->Draw( window.Gfx() );
 	}
+	light.Draw( window.Gfx() );
 
+	//Imgui window to control simulation speed
 	if( ImGui::Begin( "Simulation speed " ) )
 	{
 		ImGui::SliderFloat( "Speed", &speed_factor, 0.0f, 10.0f, "%.2f" );
@@ -62,10 +60,10 @@ void WindowApplication::DoFrame()
 		ImGui::Text( "Status: %s ( hold space to pause )", window.kbd.KeyIsPressed( VK_SPACE ) ?  "Paused" : "Running" );
 	}
 	ImGui::End();
-
+	
+	//Imgui window to control camera and light
 	cam.SpawnControlWindow();
-
-	window.Gfx().SetCamera( cam.GetMatrix() );
+	light.SpawnControlWindow();
 	
 	window.Gfx().EndFrame();
 }
