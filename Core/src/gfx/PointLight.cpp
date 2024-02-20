@@ -22,7 +22,6 @@ namespace Hydro::gfx
 			ImGui::SliderFloat( "Z", &pcb.pos.z, -60.0f, 60.0f, "%.1f" );
 			ImGui::Text( "Intensity/Color" );
 			ImGui::SliderFloat( "Intensity", &pcb.diffuseIntensity, 0.01f, 2.0f, "%.2f" );
-			ImGui::ColorEdit3( "Material Color", &pcb.materialColor.x );
 			ImGui::ColorEdit3( "Ambient", &pcb.ambient.x );
 			ImGui::ColorEdit3( "Diffuse Color", &pcb.diffuseColor.x );
 			ImGui::Text( "Falloff" );
@@ -40,7 +39,6 @@ namespace Hydro::gfx
 	void PointLight::Reset() noexcept
 	{
 		pcb.pos = { 0.0f,0.0f,0.0f };
-		pcb.materialColor = { 0.7f, 0.7f, 0.9f };
 		pcb.ambient = { 0.05f, 0.05f, 0.05f };
 		pcb.diffuseColor = { 1.0f, 1.0f, 1.0f };
 		pcb.diffuseIntensity = 1.0f;

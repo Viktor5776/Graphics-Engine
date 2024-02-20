@@ -11,7 +11,8 @@ namespace Hydro::gfx
 		std::uniform_real_distribution<float>& ddist,
 		std::uniform_real_distribution<float>& odist,
 		std::uniform_real_distribution<float>& rdist,
-		std::uniform_real_distribution<float>& bdist )
+		std::uniform_real_distribution<float>& bdist,
+		std::uniform_real_distribution<float>& cdist )
 		:
 		r( rdist( rng ) ),
 		droll( ddist( rng ) ),
@@ -60,6 +61,16 @@ namespace Hydro::gfx
 		}
 
 		AddBind( std::make_unique<TransformCbuf>( gfx, *this ) );
+
+		struct MaterialConsts
+		{
+			DirectX::XMFLOAT3 color;
+			float padding;
+		} mat;
+
+		mat.color = { cdist(rng), cdist(rng), cdist(rng) };
+
+		AddBind( std::make_unique<PixelConstantBuffer<MaterialConsts>>( gfx, mat, 1 ) );
 
 		DirectX::XMStoreFloat3x3(
 			&mt,
