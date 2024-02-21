@@ -15,11 +15,11 @@ namespace Hydro::gfx
 
 	void TransformCbuf::Bind( Graphics& gfx ) noexcept
 	{
-		const auto model = parent.GetTransformXM();
+		const auto modelView = parent.GetTransformXM() * gfx.GetCamera();
 		const Transforms tf =
 		{
-			DirectX::XMMatrixTranspose( model ),
-			DirectX::XMMatrixTranspose( model * gfx.GetCamera() * gfx.GetProjection() )
+			DirectX::XMMatrixTranspose( modelView ),
+			DirectX::XMMatrixTranspose( modelView * gfx.GetProjection() )
 		};
 
 		pVcbuf->Update( gfx, tf );

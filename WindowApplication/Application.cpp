@@ -44,7 +44,7 @@ void WindowApplication::DoFrame()
 	float dt = timer.Mark() * speed_factor;
 	window.Gfx().BeginFrame( 0.07f, 0.0f, 0.12f );
 	window.Gfx().SetCamera( cam.GetMatrix() );
-	light.Bind( window.Gfx() );
+	light.Bind( window.Gfx(), cam.GetMatrix() );
 
 	for( auto& b : drawables )
 	{
@@ -56,7 +56,7 @@ void WindowApplication::DoFrame()
 	//Imgui window to control simulation speed
 	if( ImGui::Begin( "Simulation speed " ) )
 	{
-		ImGui::SliderFloat( "Speed", &speed_factor, 0.0f, 10.0f, "%.2f" );
+		ImGui::SliderFloat( "Speed", &speed_factor, 0.0f, 6.0f, "%.4f" );
 		ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate );
 		ImGui::Text( "Status: %s ( hold space to pause )", window.kbd.KeyIsPressed( VK_SPACE ) ?  "Paused" : "Running" );
 	}

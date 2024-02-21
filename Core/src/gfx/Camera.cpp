@@ -3,7 +3,6 @@
 
 namespace Hydro::gfx
 {
-
     DirectX::XMMATRIX Camera::GetMatrix() const noexcept
     {
         const auto pos = DirectX::XMVector3Transform(
@@ -15,6 +14,7 @@ namespace Hydro::gfx
 			DirectX::XMVectorZero(),
 			DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f )
 		) * DirectX::XMMatrixRotationRollPitchYaw( pitch, -yaw, roll );
+
     }
 
     void Camera::SpawnControlWindow() noexcept

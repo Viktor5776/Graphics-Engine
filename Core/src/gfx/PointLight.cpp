@@ -53,9 +53,12 @@ namespace Hydro::gfx
 		mesh.Draw( gfx );
 	}
 
-	void PointLight::Bind( Graphics& gfx ) const noexcept
+	void PointLight::Bind( Graphics& gfx, DirectX::FXMMATRIX view ) const noexcept
 	{
-		cbuf.Update( gfx, { pcb } );
+		auto dataCopy = pcb;
+		const auto pos = DirectX::XMLoadFloat3( &dataCopy.pos );
+		DirectX::XMStoreFloat3( &dataCopy.pos, DirectX::XMVector3Transform( pos, view ) );
+		cbuf.Update( gfx, { dataCopy } );
 		cbuf.Bind( gfx );
 	}
 
