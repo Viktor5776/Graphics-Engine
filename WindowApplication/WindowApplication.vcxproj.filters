@@ -34,6 +34,12 @@
     <Image Include="Images\kappa50.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Images\Box.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\cube.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -41,13 +47,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shaders\ColorIndexVS.hlsl" />
-    <FxCompile Include="shaders\ColorIndexPS.hlsl" />
     <FxCompile Include="shaders\TextureVS.hlsl" />
     <FxCompile Include="shaders\TexturePS.hlsl" />
     <FxCompile Include="shaders\SolidVS.hlsl" />
     <FxCompile Include="shaders\SolidPS.hlsl" />
     <FxCompile Include="shaders\PhongVS.hlsl" />
     <FxCompile Include="shaders\PhongPS.hlsl" />
+    <FxCompile Include="shaders\TexturedPhongPS.hlsl" />
+    <FxCompile Include="shaders\TexturedPhongVS.hlsl" />
   </ItemGroup>
 </Project>

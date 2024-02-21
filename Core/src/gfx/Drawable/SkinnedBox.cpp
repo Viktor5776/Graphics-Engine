@@ -13,48 +13,52 @@ namespace Hydro::gfx
 		std::uniform_real_distribution<float>& odist,
 		std::uniform_real_distribution<float>& rdist )
 		:
-		r( rdist( rng ) ),
-		droll( ddist( rng ) ),
-		dpitch( ddist( rng ) ),
-		dyaw( ddist( rng ) ),
-		dphi( odist( rng ) ),
-		dtheta( odist( rng ) ),
-		dchi( odist( rng ) ),
-		chi( adist( rng ) ),
-		theta( adist( rng ) ),
-		phi( adist( rng ) )
+		r( 0 ),
+		droll( 0 ),
+		dpitch( 0 ),
+		dyaw( 0 ),
+		dphi( 0 ),
+		dtheta( 0 ),
+		dchi( 0 ),
+		chi( 0 ),
+		theta( 0 ),
+		phi( 0 )
 	{
-		namespace dx = DirectX;
 
 		if( !IsStaticInitialized() )
 		{
 			struct Vertex
 			{
-				dx::XMFLOAT3 pos;
+				DirectX::XMFLOAT3 pos;
+				DirectX::XMFLOAT3 n;
 				struct
 				{
 					float u;
 					float v;
-				} tex;
+				} tc;
 			};
-			const auto model = Cube::MakeSkinned<Vertex>();
+			auto model = Cube::MakeIndependentSkinned<Vertex>();
+			model.SetNormalsIndependentFlat();
 
 			AddStaticBind( std::make_unique<VertexBuffer>( gfx, model.vertices ) );
 
 			AddStaticBind( std::make_unique<Texture>( gfx, Hydro::utility::Surface::FromFile( "Images\\cube.png" ) ) );
 
-			auto pvs = std::make_unique<VertexShader>( gfx, L"TextureVS.cso" );
+			AddStaticBind( std::make_unique<Sampler>( gfx ) );
+
+			auto pvs = std::make_unique<VertexShader>( gfx, L"TexturedPhongVS.cso" );
 			auto pvsbc = pvs->GetBytecode();
 			AddStaticBind( std::move( pvs ) );
 
-			AddStaticBind( std::make_unique<PixelShader>( gfx, L"TexturePS.cso" ) );
+			AddStaticBind( std::make_unique<PixelShader>( gfx, L"TexturedPhongPS.cso" ) );
 
 			AddStaticIndexBuffer( std::make_unique<IndexBuffer>( gfx, model.indices ) );
 
 			const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 			{
 				{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
-				{ "TexCoord",0,DXGI_FORMAT_R32G32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0 },
+				{ "Normal",0,DXGI_FORMAT_R32G32B32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0 },
+				{ "TexCoord",0,DXGI_FORMAT_R32G32_FLOAT,0,24,D3D11_INPUT_PER_VERTEX_DATA,0 },
 			};
 			AddStaticBind( std::make_unique<InputLayout>( gfx, ied, pvsbc ) );
 
@@ -66,6 +70,15 @@ namespace Hydro::gfx
 		}
 
 		AddBind( std::make_unique<TransformCbuf>( gfx, *this ) );
+
+		struct MaterialConsts
+		{
+			float specularIntensity = 0.6f;
+			float specularPower = 30.0f;
+			float padding[2];
+		} mat;
+
+		AddBind( std::make_unique<PixelConstantBuffer<MaterialConsts>>( gfx, mat, 1 ) );
 	}
 
 	void SkinnedBox::Update( float dt ) noexcept

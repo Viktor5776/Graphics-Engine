@@ -31,8 +31,6 @@
     <ClInclude Include="src\gfx\Drawable\Drawable.h" />
     <ClInclude Include="src\gfx\Drawable\DrawableBase.h" />
     <ClInclude Include="src\gfx\Drawable\IndexedTriangleList.h" />
-    <ClInclude Include="src\gfx\Drawable\Plane.h" />
-    <ClInclude Include="src\gfx\Drawable\Sheet.h" />
     <ClInclude Include="src\gfx\Drawable\SkinnedBox.h" />
     <ClInclude Include="src\gfx\Drawable\SolidSphere.h" />
     <ClInclude Include="src\gfx\Drawable\Sphere.h" />
@@ -73,7 +71,6 @@
     <ClCompile Include="src\gfx\Camera.cpp" />
     <ClCompile Include="src\gfx\Drawable\Box.cpp" />
     <ClCompile Include="src\gfx\Drawable\Drawable.cpp" />
-    <ClCompile Include="src\gfx\Drawable\Sheet.cpp" />
     <ClCompile Include="src\gfx\Drawable\SkinnedBox.cpp" />
     <ClCompile Include="src\gfx\Drawable\SolidSphere.cpp" />
     <ClCompile Include="src\gfx\Graphics.cpp" />

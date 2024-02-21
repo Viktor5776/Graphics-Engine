@@ -125,4 +125,75 @@ public:
 			}
 		};
 	}
+
+	template<class V>
+	static IndexedTriangleList<V> MakeIndependentTextured()
+	{
+		auto itl = MakeIndependent<V>();
+
+		itl.vertices[0].tc = { 0.0f,0.0f };
+		itl.vertices[1].tc = { 1.0f,0.0f };
+		itl.vertices[2].tc = { 0.0f,1.0f };
+		itl.vertices[3].tc = { 1.0f,1.0f };
+		itl.vertices[4].tc = { 0.0f,0.0f };
+		itl.vertices[5].tc = { 1.0f,0.0f };
+		itl.vertices[6].tc = { 0.0f,1.0f };
+		itl.vertices[7].tc = { 1.0f,1.0f };
+		itl.vertices[8].tc = { 0.0f,0.0f };
+		itl.vertices[9].tc = { 1.0f,0.0f };
+		itl.vertices[10].tc = { 0.0f,1.0f };
+		itl.vertices[11].tc = { 1.0f,1.0f };
+		itl.vertices[12].tc = { 0.0f,0.0f };
+		itl.vertices[13].tc = { 1.0f,0.0f };
+		itl.vertices[14].tc = { 0.0f,1.0f };
+		itl.vertices[15].tc = { 1.0f,1.0f };
+		itl.vertices[16].tc = { 0.0f,0.0f };
+		itl.vertices[17].tc = { 1.0f,0.0f };
+		itl.vertices[18].tc = { 0.0f,1.0f };
+		itl.vertices[19].tc = { 1.0f,1.0f };
+		itl.vertices[20].tc = { 0.0f,0.0f };
+		itl.vertices[21].tc = { 1.0f,0.0f };
+		itl.vertices[22].tc = { 0.0f,1.0f };
+		itl.vertices[23].tc = { 1.0f,1.0f };
+
+		return itl;
+	}
+
+	template<class V>
+	static IndexedTriangleList<V> MakeIndependentSkinned()
+	{
+		auto itl = MakeIndependent<V>();
+
+		itl.vertices[0].tc = { 1.0f / 3.0f, 1.0f / 4.0f }; // Front
+		itl.vertices[1].tc = { 1.0f / 3.0f, 2.0f / 4.0f };
+		itl.vertices[2].tc = { 2.0f / 3.0f, 1.0f / 4.0f }; 
+		itl.vertices[3].tc = { 2.0f / 3.0f, 2.0f / 4.0f };
+
+		itl.vertices[4].tc = { 1.0f / 3.0f, 4.0f / 4.0f }; // Back
+		itl.vertices[5].tc = { 1.0f / 3.0f, 3.0f / 4.0f };
+		itl.vertices[6].tc = { 2.0f / 3.0f, 4.0f / 4.0f };
+		itl.vertices[7].tc = { 2.0f / 3.0f, 3.0f / 4.0f };
+
+		itl.vertices[8].tc = { 1.0f / 3.0f, 1.0f / 4.0f }; // Left
+		itl.vertices[9].tc = { 2.0f / 3.0f, 1.0f / 4.0f };
+		itl.vertices[10].tc = { 1.0f / 3.0f, 0.0f / 4.0f };
+		itl.vertices[11].tc = { 2.0f / 3.0f, 0.0f / 4.0f };
+
+		itl.vertices[12].tc = { 1.0f / 3.0f, 2.0f / 4.0f }; // Right
+		itl.vertices[13].tc = { 2.0f / 3.0f, 2.0f / 4.0f };
+		itl.vertices[14].tc = { 1.0f / 3.0f, 3.0f / 4.0f };
+		itl.vertices[15].tc = { 2.0f / 3.0f, 3.0f / 4.0f };
+
+		itl.vertices[16].tc = { 1.0f / 3.0f, 1.0f / 4.0f }; // Bottom
+		itl.vertices[17].tc = { 1.0f / 3.0f, 2.0f / 4.0f };
+		itl.vertices[18].tc = { 0.0f / 3.0f, 1.0f / 4.0f };
+		itl.vertices[19].tc = { 0.0f / 3.0f, 2.0f / 4.0f };
+
+		itl.vertices[20].tc = { 2.0f / 3.0f, 1.0f / 4.0f }; // Top
+		itl.vertices[21].tc = { 2.0f / 3.0f, 2.0f / 4.0f };
+		itl.vertices[22].tc = { 3.0f / 3.0f, 1.0f / 4.0f };
+		itl.vertices[23].tc = { 3.0f / 3.0f, 2.0f / 4.0f };
+
+		return itl;
+	}
 };

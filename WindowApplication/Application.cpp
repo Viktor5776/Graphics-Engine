@@ -2,7 +2,6 @@
 #include <Core/src/utility/Surface.h>
 #include <Core/src/utility/GDIPlusManager.h>
 #include <Core/src/gfx/Drawable/Box.h>
-#include <Core/src/gfx/Drawable/Sheet.h>
 #include <Core/src/gfx/Drawable/SkinnedBox.h>
 #include <Core/third/ImGui/imgui.h>
 #include <Core/third/ImGui/imgui_impl_dx11.h>
@@ -25,11 +24,19 @@ WindowApplication::WindowApplication()
 	std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
 	std::uniform_real_distribution<float> cdist{ 0.0f,1.0f };
 	
-	for( auto i = 0; i < 160; i++ )
+	for( auto i = 0; i < 40; i++ )
 	{
 		drawables.push_back( std::make_unique<gfx::Box>(
 			window.Gfx(), rng, adist,
 			ddist, odist, rdist, bdist, cdist
+		) );
+	}
+
+	for( auto i = 0; i < 1; i++ )
+	{
+		drawables.push_back( std::make_unique<gfx::SkinnedBox>(
+			window.Gfx(), rng, adist,
+			ddist, odist, rdist
 		) );
 	}
 
