@@ -4,6 +4,7 @@
 #include <assimp\scene.h>
 #include <assimp\postprocess.h>
 #include <assert.h>
+#include "../Vertex.h"
 
 namespace Hydro::gfx
 {
@@ -29,26 +30,25 @@ namespace Hydro::gfx
 	{
 		if( !IsStaticInitialized() )
 		{
-			struct Vertex
-			{
-				DirectX::XMFLOAT3 pos;
-				DirectX::XMFLOAT3 n;
-			};
+			DynamicVertexBuffer vbuf( std::move(
+				VertexLayout{}
+				.Append( VertexLayout::Position3D )
+				.Append( VertexLayout::Normal )
+			) );
+
 			Assimp::Importer imp;
 			const auto pModel = imp.ReadFile( "models\\suzanne.obj", aiProcess_Triangulate | aiProcess_JoinIdenticalVertices );
 			const auto pMesh = pModel->mMeshes[0];
 
-			std::vector<Vertex> vertices;
-			vertices.reserve( pMesh->mNumVertices );
 			for( unsigned int i = 0; i < pMesh->mNumVertices; i++ )
 			{
-				vertices.push_back( {
-					{ pMesh->mVertices[i].x * scale, pMesh->mVertices[i].y * scale, pMesh->mVertices[i].z * scale },
+				vbuf.EmplaceBack( 
+					DirectX::XMFLOAT3{ pMesh->mVertices[i].x * scale, pMesh->mVertices[i].y * scale, pMesh->mVertices[i].z * scale },
 					*reinterpret_cast<DirectX::XMFLOAT3*>(&pMesh->mNormals[i])
-				} );
+				 );
 			} 
 			std::vector<unsigned short> indices;
-			indices.reserve( pMesh->mNumFaces * 3 );
+			indices.reserve( static_cast<size_t>(pMesh->mNumFaces) * 3 );
 			for( unsigned int i = 0; i < pMesh->mNumFaces; i++ )
 			{
 				const auto& face = pMesh->mFaces[i];
@@ -58,7 +58,7 @@ namespace Hydro::gfx
 				indices.push_back( face.mIndices[2] );
 			}
 				
-			AddStaticBind( std::make_unique<VertexBuffer>( gfx, vertices ) );
+			AddStaticBind( std::make_unique<VertexBuffer>( gfx, vbuf ) );
 
 			auto pvs = std::make_unique<VertexShader>( gfx, L"PhongVS.cso" );
 			auto pvsbc = pvs->GetBytecode();
@@ -69,12 +69,7 @@ namespace Hydro::gfx
 
 			AddStaticIndexBuffer( std::make_unique<IndexBuffer>( gfx, indices ) );
 
-			const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
-			{
-				{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
-				{ "Normal",0,DXGI_FORMAT_R32G32B32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0 },
-			};
-			AddStaticBind( std::make_unique<InputLayout>( gfx, ied, pvsbc ) );
+			AddStaticBind( std::make_unique<InputLayout>( gfx, vbuf.GetLayout().GetD3DLayout(), pvsbc));
 
 			AddStaticBind( std::make_unique<Topology>( gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST ) );
 		}
@@ -90,7 +85,7 @@ namespace Hydro::gfx
 			alignas(16) DirectX::XMFLOAT3 color;
 			float specularIntensity = 0.6f;
 			float specularPower = 30.0f;
-			float padding[1];
+			float padding[1] = { 0 };
 		} mat;
 
 		mat.color = { cdist( rng ), cdist( rng ), cdist( rng ) };

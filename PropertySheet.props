@@ -17,6 +17,9 @@
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ConformanceMode>true</ConformanceMode>
+      <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
+      <ExternalTemplatesDiagnostics>false</ExternalTemplatesDiagnostics>
+      <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
     </ClCompile>
     <ProjectReference>
       <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>

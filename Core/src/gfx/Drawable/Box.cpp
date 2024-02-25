@@ -23,7 +23,8 @@ namespace Hydro::gfx
 		dchi( odist( rng ) ),
 		chi( adist( rng ) ),
 		theta( adist( rng ) ),
-		phi( adist( rng ) )
+		phi( adist( rng ) ),
+		mt()
 	{
 		if( !IsStaticInitialized() )
 		{
@@ -67,7 +68,7 @@ namespace Hydro::gfx
 			alignas(16) DirectX::XMFLOAT3 color;
 			float specularIntensity = 0.6f;
 			float specularPower = 30.0f;
-			float padding[1];
+			float padding[1] = { 0 };
 		} mat;
 
 		mat.color = { cdist(rng), cdist(rng), cdist(rng) };

@@ -75,7 +75,7 @@ namespace Hydro::gfx
 		{
 			float specularIntensity = 0.6f;
 			float specularPower = 30.0f;
-			float padding[2];
+			float padding[2] = { 0,0 };
 		} mat;
 
 		AddBind( std::make_unique<PixelConstantBuffer<MaterialConsts>>( gfx, mat, 1 ) );

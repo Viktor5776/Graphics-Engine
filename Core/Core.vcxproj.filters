@@ -150,7 +150,7 @@
     <ClInclude Include="src\gfx\Drawable\AssTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\VertexLayout.h">
+    <ClInclude Include="src\gfx\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

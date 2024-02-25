@@ -38,7 +38,7 @@
     <ClInclude Include="src\gfx\Graphics.h" />
     <ClInclude Include="src\gfx\GraphicsException.h" />
     <ClInclude Include="src\gfx\PointLight.h" />
-    <ClInclude Include="src\gfx\VertexLayout.h" />
+    <ClInclude Include="src\gfx\Vertex.h" />
     <ClInclude Include="src\utility\GDIPlusManager.h" />
     <ClInclude Include="src\utility\HydroException.h" />
     <ClInclude Include="src\utility\ImGuiManager.h" />

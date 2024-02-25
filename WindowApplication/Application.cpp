@@ -23,7 +23,7 @@ WindowApplication::WindowApplication()
 	std::uniform_real_distribution<float> rdist{ 6.0f,20.0f };
 	std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
 	std::uniform_real_distribution<float> cdist{ 0.0f,1.0f };
-	
+
 	for( auto i = 0; i < 40; i++ )
 	{
 		drawables.push_back( std::make_unique<gfx::Box>(
