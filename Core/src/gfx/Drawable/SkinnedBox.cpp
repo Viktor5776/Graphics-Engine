@@ -13,16 +13,16 @@ namespace Hydro::gfx
 		std::uniform_real_distribution<float>& odist,
 		std::uniform_real_distribution<float>& rdist )
 		:
-		r( 0 ),
-		droll( 0 ),
-		dpitch( 0 ),
-		dyaw( 0 ),
-		dphi( 0 ),
-		dtheta( 0 ),
-		dchi( 0 ),
-		chi( 0 ),
-		theta( 0 ),
-		phi( 0 )
+		r( rdist( rng ) ),
+		droll( ddist( rng ) ),
+		dpitch( ddist( rng ) ),
+		dyaw( ddist( rng ) ),
+		dphi( odist( rng ) ),
+		dtheta( odist( rng ) ),
+		dchi( odist( rng ) ),
+		chi( adist( rng ) ),
+		theta( adist( rng ) ),
+		phi( adist( rng ) )
 	{
 
 		if( !IsStaticInitialized() )

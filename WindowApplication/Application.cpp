@@ -6,7 +6,7 @@
 #include <Core/third/ImGui/imgui.h>
 #include <Core/third/ImGui/imgui_impl_dx11.h>
 #include <Core/third/ImGui/imgui_impl_win32.h>
-
+#include <Core/src/gfx/Drawable/AssTest.h>
 
 using namespace Hydro;
 utility::GDIPlusManager gdipm;
@@ -32,11 +32,19 @@ WindowApplication::WindowApplication()
 		) );
 	}
 
-	for( auto i = 0; i < 1; i++ )
+	for( auto i = 0; i < 40; i++ )
 	{
 		drawables.push_back( std::make_unique<gfx::SkinnedBox>(
 			window.Gfx(), rng, adist,
 			ddist, odist, rdist
+		) );
+	}
+
+	for( auto i = 0; i < 40; i++ )
+	{
+		drawables.push_back( std::make_unique<gfx::AssTest>(
+			window.Gfx(), rng, adist,
+			ddist, odist, rdist, cdist, 1.0f
 		) );
 	}
 
@@ -74,4 +82,5 @@ void WindowApplication::DoFrame()
 	light.SpawnControlWindow();
 	
 	window.Gfx().EndFrame();
+
 }
