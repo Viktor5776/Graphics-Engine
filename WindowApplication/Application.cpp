@@ -16,38 +16,6 @@ WindowApplication::WindowApplication()
 	App( 1280, 720 ),
 	light( window.Gfx(), 0.5f )
 {
-	std::mt19937 rng{ std::random_device{}() };
-	std::uniform_real_distribution<float> adist{ 0.0f,3.1415 * 2.0f };
-	std::uniform_real_distribution<float> ddist{ 0.0f,3.1415 * 0.5f };
-	std::uniform_real_distribution<float> odist{ 0.0f,3.1415 * 0.08f };
-	std::uniform_real_distribution<float> rdist{ 6.0f,20.0f };
-	std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
-	std::uniform_real_distribution<float> cdist{ 0.0f,1.0f };
-
-	for( auto i = 0; i < 40; i++ )
-	{
-		drawables.push_back( std::make_unique<gfx::Box>(
-			window.Gfx(), rng, adist,
-			ddist, odist, rdist, bdist, cdist
-		) );
-	}
-
-	for( auto i = 0; i < 40; i++ )
-	{
-		drawables.push_back( std::make_unique<gfx::SkinnedBox>(
-			window.Gfx(), rng, adist,
-			ddist, odist, rdist
-		) );
-	}
-
-	for( auto i = 0; i < 40; i++ )
-	{
-		drawables.push_back( std::make_unique<gfx::AssTest>(
-			window.Gfx(), rng, adist,
-			ddist, odist, rdist, cdist, 1.0f
-		) );
-	}
-
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 80.0f ) );
 }
 
@@ -61,11 +29,10 @@ void WindowApplication::DoFrame()
 	window.Gfx().SetCamera( cam.GetMatrix() );
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 
-	for( auto& b : drawables )
-	{
-		b->Update( window.kbd.KeyIsPressed( VK_SPACE ) ? 0.0f : dt );
-		b->Draw( window.Gfx() );
-	}
+	const auto transform = DirectX::XMMatrixRotationRollPitchYaw( pos.roll, pos.pitch, pos.yaw ) *
+		DirectX::XMMatrixTranslation( pos.x, pos.y, pos.z );
+	nano.Draw( window.Gfx(), transform  );
+	
 	light.Draw( window.Gfx() );
 
 	//Imgui window to control simulation speed
@@ -80,7 +47,24 @@ void WindowApplication::DoFrame()
 	//Imgui window to control camera and light
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
+	ShowModelWindow();
 	
 	window.Gfx().EndFrame();
 
+}
+
+void WindowApplication::ShowModelWindow()
+{
+	if( ImGui::Begin( "Model" ) )
+	{
+		ImGui::Text( "Position" );
+		ImGui::SliderFloat( "X", &pos.x, -20.0f, 20.0f, "%.1f" );
+		ImGui::SliderFloat( "Y", &pos.y, -20.0f, 20.0f, "%.1f" );
+		ImGui::SliderFloat( "Z", &pos.z, -20.0f, 20.0f, "%.1f" );
+		ImGui::Text( "Orientation" );
+		ImGui::SliderAngle( "Roll", &pos.roll, -180.0f, 180.0f );
+		ImGui::SliderAngle( "Pitch", &pos.pitch, -180.0f, 180.0f );
+		ImGui::SliderAngle( "Yaw", &pos.yaw, -180.0f, 180.0f );
+	}
+	ImGui::End();
 }
