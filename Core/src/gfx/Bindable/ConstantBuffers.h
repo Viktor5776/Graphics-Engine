@@ -2,7 +2,7 @@
 #include "Bindable.h"
 #include "../GraphicsException.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	template<typename C>
 	class ConstantBuffer : public Bindable

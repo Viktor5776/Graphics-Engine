@@ -1,7 +1,7 @@
 #pragma once
 #include "../Graphics.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	class Bindable
 	{

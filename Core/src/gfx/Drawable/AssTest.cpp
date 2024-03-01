@@ -1,5 +1,5 @@
 #include "AssTest.h"
-#include "../Bindable/BindableBase.h"
+#include "../Bindable/BindableCommon.h"
 #include <assimp\Importer.hpp>
 #include <assimp\scene.h>
 #include <assimp\postprocess.h>
@@ -8,6 +8,7 @@
 
 namespace Hydro::gfx
 {
+	using namespace Bind;
 
 	AssTest::AssTest( Graphics& gfx, std::mt19937& rng, 
 		std::uniform_real_distribution<float>& adist, 

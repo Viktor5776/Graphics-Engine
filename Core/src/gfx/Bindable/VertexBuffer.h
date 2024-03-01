@@ -2,7 +2,7 @@
 #include "Bindable.h"
 #include "../Vertex.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	class VertexBuffer : public Bindable
 	{

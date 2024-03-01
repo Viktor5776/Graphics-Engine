@@ -1,6 +1,6 @@
 #include "VertexShader.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
     VertexShader::VertexShader( Graphics& gfx, const std::wstring& path )
     {

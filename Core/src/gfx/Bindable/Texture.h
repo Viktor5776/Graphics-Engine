@@ -2,7 +2,7 @@
 #include "Bindable.h"
 #include "../../utility/Surface.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	class Texture : public Bindable
 	{

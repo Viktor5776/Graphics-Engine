@@ -1,6 +1,6 @@
 #include "VertexBuffer.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 
 	void VertexBuffer::Bind( Graphics& gfx ) noexcept

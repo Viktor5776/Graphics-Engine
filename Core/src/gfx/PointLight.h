@@ -27,6 +27,6 @@ namespace Hydro::gfx
 	private:
 		PointLightCBuf pcb;
 		mutable SolidSphere mesh;
-		mutable PixelConstantBuffer<PointLightCBuf> cbuf;
+		mutable Bind::PixelConstantBuffer<PointLightCBuf> cbuf;
 	};
 }

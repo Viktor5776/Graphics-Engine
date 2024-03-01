@@ -1,11 +1,12 @@
  #include "SolidSphere.h"
-#include "../Bindable/BindableBase.h"
+#include "../Bindable/BindableCommon.h"
 #include "Sphere.h"
 
 namespace Hydro::gfx
 {
 	SolidSphere::SolidSphere( Graphics& gfx, float radius )
 	{
+		using namespace Bind;
 		if( !IsStaticInitialized() )
 		{
 			struct Vertex

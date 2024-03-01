@@ -1,6 +1,6 @@
 #include "TransformCbuf.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 
 	TransformCbuf::TransformCbuf( Graphics& gfx, const Drawable& parent )

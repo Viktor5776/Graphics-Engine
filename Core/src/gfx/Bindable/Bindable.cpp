@@ -1,6 +1,6 @@
 #include "Bindable.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 
     ID3D11DeviceContext* Bindable::GetContext( Graphics& gfx ) noexcept

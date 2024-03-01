@@ -5,6 +5,7 @@
 
 namespace Hydro::gfx
 {
+	using namespace Bind;
 
 	void Drawable::Draw( Graphics& gfx ) const noexcept(!_DEBUG)
 	{

@@ -1,7 +1,7 @@
 #pragma once
 #include "Bindable.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	class Sampler : public Bindable
 	{

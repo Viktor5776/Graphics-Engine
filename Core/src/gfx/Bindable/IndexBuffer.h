@@ -2,7 +2,7 @@
 #include "Bindable.h"
 #include <vector>
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	class IndexBuffer : public Bindable
 	{

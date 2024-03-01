@@ -3,7 +3,7 @@
 #include "../Drawable/Drawable.h"
 #include <DirectXMath.h>
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	class TransformCbuf : public Bindable
 	{

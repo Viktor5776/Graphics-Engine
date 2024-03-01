@@ -1,6 +1,6 @@
 #include "IndexBuffer.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	IndexBuffer::IndexBuffer( Graphics& gfx, const std::vector<unsigned short>& indices )
 		:

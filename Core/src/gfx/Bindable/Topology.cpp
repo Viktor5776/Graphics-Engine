@@ -1,6 +1,6 @@
 #include "Topology.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 
 	Topology::Topology( Graphics& gfx, D3D11_PRIMITIVE_TOPOLOGY topology )

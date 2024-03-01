@@ -6,7 +6,11 @@
 namespace Hydro::gfx
 {
 
-	class Bindable;
+	namespace Bind
+	{
+		class Bindable;
+		class IndexBuffer;
+	}
 
 	class Drawable
 	{
@@ -21,13 +25,13 @@ namespace Hydro::gfx
 		{};
 		virtual ~Drawable() = default;
 protected:
-		void AddBind( std::unique_ptr<Bindable> bind ) noexcept(!_DEBUG);
-		void AddIndexBuffer( std::unique_ptr<class IndexBuffer> ibuf ) noexcept(!_DEBUG);
+		void AddBind( std::unique_ptr<Bind::Bindable> bind ) noexcept(!_DEBUG);
+		void AddIndexBuffer( std::unique_ptr<Bind::IndexBuffer> ibuf ) noexcept(!_DEBUG);
 	private:
-		virtual const std::vector<std::unique_ptr<Bindable>>& GetStaticBinds() const noexcept = 0;
+		virtual const std::vector<std::unique_ptr<Bind::Bindable>>& GetStaticBinds() const noexcept = 0;
 	private:
-		const class IndexBuffer* pIndexBuffer = nullptr;
-		std::vector<std::unique_ptr<Bindable>> binds;
+		const class Bind::IndexBuffer* pIndexBuffer = nullptr;
+		std::vector<std::unique_ptr<Bind::Bindable>> binds;
 	};
 
 }

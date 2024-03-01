@@ -51,7 +51,7 @@
     <ClInclude Include="src\gfx\Bindable\Bindable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\Bindable\BindableBase.h">
+    <ClInclude Include="src\gfx\Bindable\BindableCommon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Bindable\ConstantBuffers.h">
@@ -81,9 +81,6 @@
     <ClInclude Include="src\gfx\Bindable\VertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\Drawable\Box.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\gfx\Drawable\DrawableBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -103,9 +100,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Drawable\Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gfx\Drawable\SkinnedBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="third\ImGui\imconfig.h">
@@ -153,7 +147,10 @@
     <ClInclude Include="src\gfx\Vertex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\Model.h">
+    <ClInclude Include="src\gfx\Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -209,9 +206,6 @@
     <ClCompile Include="src\gfx\Bindable\VertexShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gfx\Drawable\Box.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\utility\GDIPlusManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -222,9 +216,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\Bindable\Sampler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gfx\Drawable\SkinnedBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="third\ImGui\imgui.cpp">
@@ -258,6 +249,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\Drawable\AssTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Vertex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

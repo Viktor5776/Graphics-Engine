@@ -1,8 +1,5 @@
 #include "Application.h"
-#include <Core/src/utility/Surface.h>
 #include <Core/src/utility/GDIPlusManager.h>
-#include <Core/src/gfx/Drawable/Box.h>
-#include <Core/src/gfx/Drawable/SkinnedBox.h>
 #include <Core/third/ImGui/imgui.h>
 #include <Core/third/ImGui/imgui_impl_dx11.h>
 #include <Core/third/ImGui/imgui_impl_win32.h>

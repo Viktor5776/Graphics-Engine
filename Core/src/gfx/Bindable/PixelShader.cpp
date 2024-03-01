@@ -1,6 +1,6 @@
 #include "PixelShader.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	PixelShader::PixelShader( Graphics& gfx, const std::wstring& path )
 	{

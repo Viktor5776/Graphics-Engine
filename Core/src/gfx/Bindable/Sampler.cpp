@@ -1,7 +1,7 @@
 #include "Sampler.h"
 #include "../GraphicsException.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	Sampler::Sampler( Graphics& gfx )
 	{

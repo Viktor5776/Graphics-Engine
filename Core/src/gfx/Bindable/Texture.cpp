@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "../GraphicsException.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Bind
 {
 	Texture::Texture( Graphics& gfx, const Hydro::utility::Surface& s )
 	{
