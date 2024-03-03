@@ -11,14 +11,14 @@
 namespace Hydro::gfx
 {
 
-	Graphics::Graphics( HWND hWnd )
+	Graphics::Graphics( HWND hWnd, int width, int height )
 		:
 		projection( DirectX::XMMatrixIdentity() ),
 		camera( DirectX::XMMatrixIdentity() )
 	{
 		DXGI_SWAP_CHAIN_DESC sd = {};
-		sd.BufferDesc.Width = 0;
-		sd.BufferDesc.Height = 0;
+		sd.BufferDesc.Width = width;
+		sd.BufferDesc.Height = height;
 		sd.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 		sd.BufferDesc.RefreshRate.Numerator = 0;
 		sd.BufferDesc.RefreshRate.Denominator = 0;
@@ -74,8 +74,8 @@ namespace Hydro::gfx
 		// create depth stensil texture
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencil;
 		D3D11_TEXTURE2D_DESC descDepth = {};
-		descDepth.Width = 1280u;
-		descDepth.Height = 720u;
+		descDepth.Width = (UINT)width;
+		descDepth.Height = (UINT)height;
 		descDepth.MipLevels = 1u;
 		descDepth.ArraySize = 1u;
 		descDepth.Format = DXGI_FORMAT_D32_FLOAT;
@@ -96,8 +96,8 @@ namespace Hydro::gfx
 
 		// configure viewport
 		D3D11_VIEWPORT vp;
-		vp.Width = 1280.0f;
-		vp.Height = 720.0f;
+		vp.Width = (float)width;
+		vp.Height = (float)height;
 		vp.MinDepth = 0.0f;
 		vp.MaxDepth = 1.0f;
 		vp.TopLeftX = 0.0f;

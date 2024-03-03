@@ -59,7 +59,7 @@ namespace Hydro::win
 
 		ShowWindow( hWnd, SW_SHOW );
 
-		pGfx = std::make_unique<gfx::Graphics>( hWnd );
+		pGfx = std::make_unique<gfx::Graphics>( hWnd, width, height );
 
 		ImGui_ImplWin32_Init( hWnd );
 	}
