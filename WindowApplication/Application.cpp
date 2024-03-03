@@ -3,7 +3,6 @@
 #include <Core/third/ImGui/imgui.h>
 #include <Core/third/ImGui/imgui_impl_dx11.h>
 #include <Core/third/ImGui/imgui_impl_win32.h>
-#include <Core/src/gfx/Drawable/AssTest.h>
 
 using namespace Hydro;
 utility::GDIPlusManager gdipm;
@@ -26,9 +25,7 @@ void WindowApplication::DoFrame()
 	window.Gfx().SetCamera( cam.GetMatrix() );
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 
-	const auto transform = DirectX::XMMatrixRotationRollPitchYaw( pos.roll, pos.pitch, pos.yaw ) *
-		DirectX::XMMatrixTranslation( pos.x, pos.y, pos.z );
-	nano.Draw( window.Gfx(), transform  );
+	nano.Draw( window.Gfx() );
 	
 	light.Draw( window.Gfx() );
 
@@ -44,24 +41,8 @@ void WindowApplication::DoFrame()
 	//Imgui window to control camera and light
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	ShowModelWindow();
+	nano.ShowWindow( "nano" );
 	
 	window.Gfx().EndFrame();
 
-}
-
-void WindowApplication::ShowModelWindow()
-{
-	if( ImGui::Begin( "Model" ) )
-	{
-		ImGui::Text( "Position" );
-		ImGui::SliderFloat( "X", &pos.x, -20.0f, 20.0f, "%.1f" );
-		ImGui::SliderFloat( "Y", &pos.y, -20.0f, 20.0f, "%.1f" );
-		ImGui::SliderFloat( "Z", &pos.z, -20.0f, 20.0f, "%.1f" );
-		ImGui::Text( "Orientation" );
-		ImGui::SliderAngle( "Roll", &pos.roll, -180.0f, 180.0f );
-		ImGui::SliderAngle( "Pitch", &pos.pitch, -180.0f, 180.0f );
-		ImGui::SliderAngle( "Yaw", &pos.yaw, -180.0f, 180.0f );
-	}
-	ImGui::End();
 }
