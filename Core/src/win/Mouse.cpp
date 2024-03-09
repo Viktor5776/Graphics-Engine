@@ -8,6 +8,17 @@ namespace Hydro::win
 		return { x,y };
 	}
 
+	std::optional<Mouse::RawDelta> Mouse::ReadRawDelta() noexcept
+	{
+		if( rawDeltaBuffer.empty() )
+		{
+			return std::nullopt;
+		}
+		const RawDelta d = rawDeltaBuffer.front();
+		rawDeltaBuffer.pop();
+		return d;
+	}
+
 	int Mouse::GetPosX() const noexcept
 	{
 		return x;
@@ -49,6 +60,21 @@ namespace Hydro::win
 		buffer = std::queue<Event>();
 	}
 
+	void Mouse::EnableRaw() noexcept
+	{
+		rawEnabled = true;
+	}
+
+	void Mouse::DisableRaw() noexcept
+	{
+		rawEnabled = false;
+	}
+
+	bool Mouse::RawEnabled() const noexcept
+	{
+		return rawEnabled;
+	}
+
 	//Window Interface
 	void Mouse::OnMouseMove( int x_in, int y_in ) noexcept
 	{
@@ -73,6 +99,12 @@ namespace Hydro::win
 
 		buffer.push( Mouse::Event( Mouse::Event::Type::Enter, *this ) );
 		TrimBuffer();
+	}
+
+	void Mouse::OnRawDelta( int dx, int dy ) noexcept
+	{
+		rawDeltaBuffer.push( { dx,dy } );
+		TrimRawInputBuffer();
 	}
 
 	void Mouse::OnLeftPressed() noexcept
@@ -130,6 +162,14 @@ namespace Hydro::win
 		while( buffer.size() > bufferSize )
 		{
 			buffer.pop();
+		}
+	}
+
+	void Mouse::TrimRawInputBuffer() noexcept
+	{
+		while( rawDeltaBuffer.size() > bufferSize )
+		{
+			rawDeltaBuffer.pop();
 		}
 	}
 

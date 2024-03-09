@@ -62,6 +62,16 @@ namespace Hydro::win
 		pGfx = std::make_unique<gfx::Graphics>( hWnd, width, height );
 
 		ImGui_ImplWin32_Init( hWnd );
+
+		RAWINPUTDEVICE rid;
+		rid.usUsagePage = 0x01;
+		rid.usUsage = 0x02;
+		rid.dwFlags = 0;
+		rid.hwndTarget = nullptr;
+		if( RegisterRawInputDevices( &rid, 1, sizeof( rid ) ) == FALSE )
+		{
+			throw WIN_EXCEPT( GetLastError() );
+		}
 	}
 
 	Window::~Window()
@@ -74,6 +84,27 @@ namespace Hydro::win
 	void Window::SetTitle( const std::wstring& title )
 	{
 		SetWindowText( hWnd, title.c_str() );
+	}
+
+	void Window::EnableCursor() noexcept
+	{
+		cursorEnabled = true;
+		ShowCursor();
+		ImGui::GetIO().ConfigFlags &= ~ImGuiConfigFlags_NoMouse;
+		FreeCursor();
+	}
+
+	void Window::DisableCursor() noexcept
+	{
+		cursorEnabled = false;
+		HideCursor();
+		ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NoMouse;
+		ConfineCursor();
+	}
+
+	bool Window::CursorEnabled() const noexcept
+	{
+		return cursorEnabled;
 	}
 
 	std::optional<int> Window::ProcessMessages()
@@ -97,6 +128,29 @@ namespace Hydro::win
 	gfx::Graphics& Window::Gfx()
 	{
 		return *pGfx;
+	}
+
+	void Window::HideCursor() noexcept
+	{
+		while( ::ShowCursor( FALSE ) >= 0 );
+	}
+
+	void Window::ShowCursor() noexcept
+	{
+		while( ::ShowCursor( TRUE ) < 0 );
+	}
+
+	void Window::ConfineCursor() noexcept
+	{
+		RECT rect;
+		GetClientRect( hWnd, &rect );
+		MapWindowPoints( hWnd, nullptr, reinterpret_cast<POINT*>( &rect ), 2 );
+		ClipCursor( &rect );
+	}
+
+	void Window::FreeCursor() noexcept
+	{
+		ClipCursor( nullptr );
 	}
 
 	LRESULT CALLBACK Window::HandleMsgSetup( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam ) 
@@ -143,6 +197,21 @@ namespace Hydro::win
 			//Clear Keystate When Window Loses Focus
 		case WM_KILLFOCUS:
 			kbd.ClearState();
+			break;
+		case WM_ACTIVATE:
+			if( !cursorEnabled )
+			{
+				if( wParam & WA_ACTIVE )
+				{
+					ConfineCursor();
+					HideCursor();
+				}
+				else
+				{
+					FreeCursor();
+					ShowCursor();
+				}
+			}
 			break;
 			/********** KEYBOARD MESSAGES **********/
 		case WM_KEYDOWN:
@@ -216,6 +285,12 @@ namespace Hydro::win
 			}
 			break;
 		case WM_LBUTTONDOWN:
+			SetForegroundWindow( hWnd );
+			if( !cursorEnabled )
+			{
+				ConfineCursor();
+				HideCursor();
+			}
 			//Remove Message if Imgui Wants to Capture
 			if( imio.WantCaptureKeyboard )
 			{
@@ -263,6 +338,44 @@ namespace Hydro::win
 			}
 			mouse.OnWheelPressed();
 			break;
+		/********** END Mouse MESSAGES **********/
+
+		/********** RAW MOUSE MESSAGES **********/
+		case WM_INPUT:
+		{
+			if( !mouse.RawEnabled() )
+			{
+				break;
+			}
+			UINT size = 0;
+			
+			if( GetRawInputData(
+				reinterpret_cast<HRAWINPUT>(lParam),
+				RID_INPUT,
+				nullptr,
+				&size,
+				sizeof( RAWINPUTHEADER ) ) == -1 )
+			{
+				break;
+			}
+			rawBuffer.resize( size );
+			if( GetRawInputData(
+				reinterpret_cast<HRAWINPUT>(lParam),
+				RID_INPUT,
+				rawBuffer.data(),
+				&size,
+				sizeof( RAWINPUTHEADER ) ) != size )
+			{
+				break;
+			}
+			auto& ri = reinterpret_cast<const RAWINPUT&>( *rawBuffer.data() );
+			if( ri.header.dwType == RIM_TYPEMOUSE &&
+				(ri.data.mouse.lLastX != 0 || ri.data.mouse.lLastY != 0) )
+			{
+				mouse.OnRawDelta( ri.data.mouse.lLastX, ri.data.mouse.lLastY );
+			}
+			break;
+		}
 		}
 
 		return DefWindowProc( hWnd, msg, wParam, lParam );

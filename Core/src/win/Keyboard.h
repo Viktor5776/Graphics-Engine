@@ -1,6 +1,7 @@
 #pragma once
 #include <queue>
 #include <bitset>
+#include <optional>
 
 namespace Hydro::win
 {
@@ -54,11 +55,11 @@ namespace Hydro::win
 		Keyboard& operator=( const Keyboard& ) = delete;
 		//Key Event
 		bool KeyIsPressed( unsigned char keycode ) const noexcept;
-		Event ReadKey() noexcept;
+		std::optional<Event> ReadKey() noexcept;
 		bool KeyIsEmpty() const noexcept;
 		void FlushKey() noexcept;
 		//Char Event
-		char ReadChar() noexcept;
+		std::optional<char> ReadChar() noexcept;
 		bool CharIsEmpty() const noexcept;
 		void FlushChar() noexcept;
 		void Flush() noexcept;

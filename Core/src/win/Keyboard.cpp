@@ -8,7 +8,7 @@ namespace Hydro::win
 		return keystates[keycode];
 	}
 
-	Keyboard::Event Keyboard::ReadKey() noexcept
+	std::optional<Keyboard::Event> Keyboard::ReadKey() noexcept
 	{
 		if( keybuffer.size() > 0u )
 		{
@@ -16,10 +16,7 @@ namespace Hydro::win
 			keybuffer.pop();
 			return e;
 		}
-		else
-		{
-			return Keyboard::Event();
-		}
+		return {};
 	}
 
 	bool Keyboard::KeyIsEmpty() const noexcept
@@ -33,7 +30,7 @@ namespace Hydro::win
 	}
 
 	//Char Event
-	char Keyboard::ReadChar() noexcept
+	std::optional<char> Keyboard::ReadChar() noexcept
 	{
 		if( charbuffer.size() > 0u )
 		{
@@ -41,10 +38,7 @@ namespace Hydro::win
 			charbuffer.pop();
 			return charcode;
 		}
-		else
-		{
-			return 0;
-		}
+		return {};
 	}
 
 	bool Keyboard::CharIsEmpty() const noexcept
