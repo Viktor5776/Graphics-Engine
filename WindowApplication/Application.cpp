@@ -13,7 +13,6 @@ WindowApplication::WindowApplication()
 	light( window.Gfx(), 0.5f )
 {
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 80.0f ) );
-	window.DisableCursor();
 }
 
 WindowApplication::~WindowApplication()
@@ -31,8 +30,14 @@ void WindowApplication::DoFrame()
 	
 	while( const auto e = window.kbd.ReadKey() )
 	{
-		if( e->IsPress() && e->GetCode() == VK_INSERT )
+		if( !e->IsPress() )
 		{
+			continue;
+		}
+
+		switch( e->GetCode() )
+		{
+		case VK_ESCAPE:
 			if( window.CursorEnabled() )
 			{
 				window.DisableCursor();
@@ -43,6 +48,44 @@ void WindowApplication::DoFrame()
 				window.EnableCursor();
 				window.mouse.DisableRaw();
 			}
+			break;
+		}
+	}
+
+	//Camera Movement
+	if( !window.CursorEnabled() )
+	{
+		if( window.kbd.KeyIsPressed( 'W' ) )
+		{
+			cam.Translate( { 0.0f,0.0f,dt } );
+		}
+		if( window.kbd.KeyIsPressed( 'A' ) )
+		{
+			cam.Translate( { -dt,0.0f,0.0f } );
+		}
+		if( window.kbd.KeyIsPressed( 'S' ) )
+		{
+			cam.Translate( { 0.0f,0.0f,-dt } );
+		}
+		if( window.kbd.KeyIsPressed( 'D' ) )
+		{
+			cam.Translate( { dt,0.0f,0.0f } );
+		}
+		if( window.kbd.KeyIsPressed( 'R' ) )
+		{
+			cam.Translate( { 0.0f,dt,0.0f } );
+		}
+		if( window.kbd.KeyIsPressed( 'F' ) )
+		{
+			cam.Translate( { 0.0f,-dt,0.0f } );
+		}
+	}
+
+	while( const auto delta = window.mouse.ReadRawDelta() )
+	{
+		if( !window.CursorEnabled() )
+		{
+			cam.Rotate( delta->x, delta->y );
 		}
 	}
 
@@ -59,25 +102,10 @@ void WindowApplication::DoFrame()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	nano.ShowWindow( "nano" );
-	ShowRawInputWindow();
 
 	window.Gfx().EndFrame();
 
 }
 
-void WindowApplication::ShowRawInputWindow()
-{
-	while( const auto d = window.mouse.ReadRawDelta() )
-	{
-		x += d->x;
-		y += d->y;
-	}
-	if( ImGui::Begin( "Raw Input" ) )
-	{
-		ImGui::Text( "Tally: (%d,%d)", x, y );
-		ImGui::Text( "Cursor: %s", window.CursorEnabled() ? "enabled" : "disabled" );
-	}
-	ImGui::End();
-}
 
 

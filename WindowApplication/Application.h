@@ -14,9 +14,7 @@ public:
 	~WindowApplication();
 private:
 	void DoFrame() override;
-	void ShowRawInputWindow();
 private:
-	int x = 0, y = 0;
 	Hydro::gfx::Camera cam;
 	Hydro::utility::Timer timer;
 	Hydro::gfx::PointLight light;
