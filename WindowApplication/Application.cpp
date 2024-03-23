@@ -85,7 +85,7 @@ void WindowApplication::DoFrame()
 	{
 		if( !window.CursorEnabled() )
 		{
-			cam.Rotate( delta->x, delta->y );
+			cam.Rotate( (float)delta->x, (float)delta->y );
 		}
 	}
 
