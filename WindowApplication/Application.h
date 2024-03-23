@@ -19,7 +19,7 @@ private:
 	Hydro::utility::Timer timer;
 	Hydro::gfx::PointLight light;
 	float speed_factor = 1.0f;
-	Hydro::gfx::Model nano{ window.Gfx(), "models/nano.gltf" };
+	Hydro::gfx::Model nano{ window.Gfx(), "models/nano-hierarchy.gltf" };
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()

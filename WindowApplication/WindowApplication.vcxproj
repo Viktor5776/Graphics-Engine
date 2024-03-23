@@ -90,6 +90,23 @@
     <Image Include="Images\Box.jpg" />
     <Image Include="Images\cube.png" />
     <Image Include="Images\kappa50.png" />
+    <Image Include="models\nano_textured\arm_dif.png" />
+    <Image Include="models\nano_textured\arm_showroom_ddn.png" />
+    <Image Include="models\nano_textured\arm_showroom_spec.png" />
+    <Image Include="models\nano_textured\body_dif.png" />
+    <Image Include="models\nano_textured\body_showroom_ddn.png" />
+    <Image Include="models\nano_textured\body_showroom_spec.png" />
+    <Image Include="models\nano_textured\glass_ddn.png" />
+    <Image Include="models\nano_textured\glass_dif.png" />
+    <Image Include="models\nano_textured\hand_dif.png" />
+    <Image Include="models\nano_textured\hand_showroom_ddn.png" />
+    <Image Include="models\nano_textured\hand_showroom_spec.png" />
+    <Image Include="models\nano_textured\helmet_diff.png" />
+    <Image Include="models\nano_textured\helmet_showroom_ddn.png" />
+    <Image Include="models\nano_textured\helmet_showroom_spec.png" />
+    <Image Include="models\nano_textured\leg_dif.png" />
+    <Image Include="models\nano_textured\leg_showroom_ddn.png" />
+    <Image Include="models\nano_textured\leg_showroom_spec.png" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -119,6 +136,18 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="models\nano_textured\LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="models\boxy.gltf" />
+    <None Include="models\nano-hierarchy.gltf" />
+    <None Include="models\nano_textured\nanosuit.mtl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="models\nano_textured\nanosuit.obj" />
+    <Object Include="models\suzanne.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
