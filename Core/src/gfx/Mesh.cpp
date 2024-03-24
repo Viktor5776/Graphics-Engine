@@ -1,6 +1,8 @@
 #include "Mesh.h"
 #include "../../third/ImGui/imgui.h"
+#include "../utility/Surface.h"
 #include <unordered_map>
+#include <sstream>
 
 namespace Hydro::gfx
 {
@@ -172,7 +174,7 @@ namespace Hydro::gfx
 
 		for( size_t i = 0; i < pScene->mNumMeshes; i++ )
 		{
-			meshPtrs.push_back( ParseMesh( gfx, *pScene->mMeshes[i] ) );
+			meshPtrs.push_back( ParseMesh( gfx, *pScene->mMeshes[i], pScene->mMaterials ) );
 		}
 		int nextId = 0;
 		pRoot = ParseNode( nextId, *pScene->mRootNode );
@@ -189,7 +191,7 @@ namespace Hydro::gfx
 	{
 		pWindow->Show( windowName, *pRoot );
 	}
-	std::unique_ptr<Mesh> Model::ParseMesh( Graphics& gfx, const aiMesh& mesh )
+	std::unique_ptr<Mesh> Model::ParseMesh( Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials )
 	{
 		namespace dx = DirectX;
 
@@ -197,13 +199,15 @@ namespace Hydro::gfx
 			VertexLayout{}
 			.Append( VertexLayout::Position3D )
 			.Append( VertexLayout::Normal )
+			.Append( VertexLayout::Texture2D )
 		) );
 
 		for( unsigned int i = 0; i < mesh.mNumVertices; i++ )
 		{
 			vbuf.EmplaceBack(
 				*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mVertices[i]),
-				*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mNormals[i])
+				*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mNormals[i]),
+				*reinterpret_cast<dx::XMFLOAT2*>(&mesh.mTextureCoords[0][i])
 			);
 		}
 
@@ -220,6 +224,16 @@ namespace Hydro::gfx
 
 		std::vector<std::unique_ptr<Bind::Bindable>> bindablePtrs;
 
+		if( mesh.mMaterialIndex >= 0 )
+		{
+			using namespace std::string_literals;
+			auto& material = *pMaterials[mesh.mMaterialIndex];
+			aiString texFileName;
+			material.GetTexture( aiTextureType_DIFFUSE, 0, &texFileName );
+			bindablePtrs.push_back( std::make_unique<Bind::Texture>( gfx, utility::Surface::FromFile( "models\\nano_textured\\"s + texFileName.C_Str() ) ) );
+			bindablePtrs.push_back( std::make_unique<Bind::Sampler>( gfx ) );
+		}
+
 		bindablePtrs.push_back( std::make_unique<Bind::VertexBuffer>( gfx, vbuf ) );
 
 		bindablePtrs.push_back( std::make_unique<Bind::IndexBuffer>( gfx, indices ) );
@@ -234,10 +248,9 @@ namespace Hydro::gfx
 
 		struct PSMaterialConstant
 		{
-			DirectX::XMFLOAT3 color = { 0.6f,0.6f,0.8f };
 			float specularIntensity = 0.6f;
 			float specularPower = 30.0f;
-			float padding[3] = { 0,0,0 };
+			float padding[2] = { 0,0 };
 		} pmc;
 		bindablePtrs.push_back( std::make_unique<Bind::PixelConstantBuffer<PSMaterialConstant>>( gfx, pmc, 1u ) );
 

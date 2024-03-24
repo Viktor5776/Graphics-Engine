@@ -145,10 +145,6 @@
     <None Include="models\nano-hierarchy.gltf" />
     <None Include="models\nano_textured\nanosuit.mtl" />
   </ItemGroup>
-  <ItemGroup>
-    <Object Include="models\nano_textured\nanosuit.obj" />
-    <Object Include="models\suzanne.obj" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

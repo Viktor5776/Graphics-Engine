@@ -111,8 +111,4 @@
     <None Include="models\boxy.gltf" />
     <None Include="models\nano-hierarchy.gltf" />
   </ItemGroup>
-  <ItemGroup>
-    <Object Include="models\nano_textured\nanosuit.obj" />
-    <Object Include="models\suzanne.obj" />
-  </ItemGroup>
 </Project>
