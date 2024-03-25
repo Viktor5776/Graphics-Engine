@@ -12,7 +12,7 @@ WindowApplication::WindowApplication()
 	App( 1280, 720 ),
 	light( window.Gfx(), 0.5f )
 {
-	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 80.0f ) );
+	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 40.0f ) );
 }
 
 WindowApplication::~WindowApplication()

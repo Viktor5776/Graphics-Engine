@@ -9,13 +9,8 @@ cbuffer LightCBuf
     float attQuad;
 };
 
-cbuffer ObjectCBuf : register( b1 )
-{
-    float specularIntensity;
-    float specularPower;
-};
-
 Texture2D tex;
+Texture2D spec;
 
 SamplerState splr;
 
@@ -33,7 +28,12 @@ float4 main( float3 worldPos : Position, float3 n : Normal, float2 tc : Texcoord
     const float3 w = n * dot( vToL, n );
     const float3 r = w * 2.0f - vToL;
     // specular intensity
-    const float3 specular = att * (diffuseColor * diffuseIntensity) * specularIntensity * pow( max( 0.0f, dot( normalize( -r ), normalize( worldPos ) ) ), specularPower );
+    
+    float4 sampledSpec = spec.Sample( splr, tc );
+    float3 specularReflectionColor = sampledSpec.rgb;
+    float specularPower = pow( 2.0f, sampledSpec.a * 13.0f );
+    
+    const float3 specular = att * pow( max( 0.0f, dot( normalize( -r ), normalize( worldPos ) ) ), specularPower );
 	// final color
-    return float4( saturate(( diffuse + ambient ) * tex.Sample( splr, tc ).rgb + specular ),1.0f );
+    return float4( saturate(( diffuse + ambient ) * tex.Sample( splr, tc ).rgb + specular * specularReflectionColor ), 1.0f);
 }

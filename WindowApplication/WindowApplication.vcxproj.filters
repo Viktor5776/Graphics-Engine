@@ -102,6 +102,7 @@
     <FxCompile Include="shaders\SolidPS.hlsl" />
     <FxCompile Include="shaders\PhongVS.hlsl" />
     <FxCompile Include="shaders\PhongPS.hlsl" />
+    <FxCompile Include="shaders\PhongPSSpecMap.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="models\nano_textured\LICENSE.txt" />

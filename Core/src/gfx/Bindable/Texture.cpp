@@ -3,7 +3,9 @@
 
 namespace Hydro::gfx::Bind
 {
-	Texture::Texture( Graphics& gfx, const Hydro::utility::Surface& s )
+	Texture::Texture( Graphics& gfx, const Hydro::utility::Surface& s, UINT slot )
+		:
+		slot( slot )
 	{
 		HRESULT hr;
 
@@ -36,6 +38,6 @@ namespace Hydro::gfx::Bind
 
 	void Texture::Bind( Graphics& gfx ) noexcept
 	{
-		GetContext( gfx )->PSSetShaderResources( 0u, 1u, pTextureView.GetAddressOf() );
+		GetContext( gfx )->PSSetShaderResources( slot, 1u, pTextureView.GetAddressOf() );
 	}
 }
