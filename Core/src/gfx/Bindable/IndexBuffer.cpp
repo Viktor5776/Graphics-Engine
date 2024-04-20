@@ -1,9 +1,16 @@
 #include "IndexBuffer.h"
+#include "BindableCodex.h"
 
 namespace Hydro::gfx::Bind
 {
 	IndexBuffer::IndexBuffer( Graphics& gfx, const std::vector<unsigned short>& indices )
 		:
+		IndexBuffer( gfx,"?",indices )
+	{}
+
+	IndexBuffer::IndexBuffer( Graphics& gfx, std::string tag, const std::vector<unsigned short>& indices )
+		:
+		tag(tag),
 		count( (UINT)indices.size() )
 	{
 		HRESULT hr;
@@ -28,5 +35,23 @@ namespace Hydro::gfx::Bind
 	UINT IndexBuffer::GetCount() const noexcept
 	{
 		return count;
+	}
+
+	std::shared_ptr<IndexBuffer> IndexBuffer::Resolve( Graphics& gfx, const std::string& tag,
+		const std::vector<unsigned short>& indices )
+	{
+		assert( tag != "?" );
+		return Codex::Resolve<IndexBuffer>( gfx, tag, indices );
+	}
+
+	std::string IndexBuffer::GenerateUID_( const std::string& tag )
+	{
+		using namespace std::string_literals;
+		return typeid(IndexBuffer).name() + "#"s + tag;
+	}
+
+	std::string IndexBuffer::GetUID() const noexcept
+	{
+		return GenerateUID_( tag );
 	}
 }

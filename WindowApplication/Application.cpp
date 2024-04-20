@@ -26,6 +26,7 @@ void WindowApplication::DoFrame()
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 
 	nano.Draw( window.Gfx() );
+	nano2.Draw( window.Gfx() );
 	light.Draw( window.Gfx() );
 	
 	while( const auto e = window.kbd.ReadKey() )
@@ -102,6 +103,7 @@ void WindowApplication::DoFrame()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	nano.ShowWindow( "nano" );
+	nano2.ShowWindow( "nano2" );
 
 	window.Gfx().EndFrame();
 

@@ -14,24 +14,29 @@ namespace Hydro::gfx
 
 	class Drawable
 	{
-		template<class T>
-		friend class DrawableBase;
 	public:
 		Drawable() = default;
 		Drawable( const Drawable& ) = delete;
 		virtual DirectX::XMMATRIX GetTransformXM() const noexcept = 0;
 		void Draw( Graphics& gfx ) const noexcept(!_DEBUG);
-		virtual void Update( float dt ) noexcept
-		{};
 		virtual ~Drawable() = default;
-protected:
-		void AddBind( std::unique_ptr<Bind::Bindable> bind ) noexcept(!_DEBUG);
-		void AddIndexBuffer( std::unique_ptr<Bind::IndexBuffer> ibuf ) noexcept(!_DEBUG);
-	private:
-		virtual const std::vector<std::unique_ptr<Bind::Bindable>>& GetStaticBinds() const noexcept = 0;
+	protected:
+		template<class T>
+		T* QueryBindable() noexcept
+		{
+			for( const auto& pb : binds )
+			{
+				if( const T* pt = dynamic_cast<T*>(pb.get()) )
+				{
+					return const_cast<T*>( pt );
+				}
+			}
+			return nullptr;
+		}
+		void AddBind( std::shared_ptr<Bind::Bindable> bind ) noexcept(!_DEBUG);
 	private:
 		const class Bind::IndexBuffer* pIndexBuffer = nullptr;
-		std::vector<std::unique_ptr<Bind::Bindable>> binds;
+		std::vector<std::shared_ptr<Bind::Bindable>> binds;
 	};
 
 }

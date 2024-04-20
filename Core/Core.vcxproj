@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="src\app\App.h" />
     <ClInclude Include="src\app\EntryPoint.h" />
+    <ClInclude Include="src\gfx\Bindable\BindableCodex.h" />
     <ClInclude Include="src\gfx\Bindable\Bindable.h" />
     <ClInclude Include="src\gfx\Bindable\BindableCommon.h" />
     <ClInclude Include="src\gfx\Bindable\ConstantBuffers.h" />
@@ -28,7 +29,6 @@
     <ClInclude Include="src\gfx\Camera.h" />
     <ClInclude Include="src\gfx\Color.h" />
     <ClInclude Include="src\gfx\Drawable\Drawable.h" />
-    <ClInclude Include="src\gfx\Drawable\DrawableBase.h" />
     <ClInclude Include="src\gfx\Drawable\IndexedTriangleList.h" />
     <ClInclude Include="src\gfx\Drawable\SolidSphere.h" />
     <ClInclude Include="src\gfx\Drawable\Sphere.h" />

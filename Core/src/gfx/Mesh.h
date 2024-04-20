@@ -1,5 +1,5 @@
 #pragma once
-#include "Drawable/DrawableBase.h"
+#include "Drawable/Drawable.h"
 #include "Bindable/BindableCommon.h"
 #include "Vertex.h"
 #include <optional>
@@ -9,10 +9,10 @@
 
 namespace Hydro::gfx
 {
-	class Mesh : public DrawableBase<Mesh>
+	class Mesh : public Drawable
 	{
 	public:
-		Mesh( Graphics& gfx, std::vector<std::unique_ptr<Bind::Bindable>> bindPtrs );
+		Mesh( Graphics& gfx, std::vector<std::shared_ptr<Bind::Bindable>> bindPtrs );
 		void Draw( Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform ) const noexcept(!_DEBUG);
 		DirectX::XMMATRIX GetTransformXM() const noexcept override;
 	private:

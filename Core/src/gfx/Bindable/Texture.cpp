@@ -1,13 +1,19 @@
 #include "Texture.h"
 #include "../GraphicsException.h"
+#include "BindableCodex.h"
+#include "../../utility/Surface.h"
 
 namespace Hydro::gfx::Bind
 {
-	Texture::Texture( Graphics& gfx, const Hydro::utility::Surface& s, UINT slot )
+	Texture::Texture( Graphics& gfx, const std::string& path, UINT slot )
 		:
+		path( path ),
 		slot( slot )
 	{
 		HRESULT hr;
+
+		//load surface
+		const auto s = utility::Surface::FromFile( path );
 
 		D3D11_TEXTURE2D_DESC textureDesc = {};
 		textureDesc.Width = s.GetWidth();
@@ -39,5 +45,21 @@ namespace Hydro::gfx::Bind
 	void Texture::Bind( Graphics& gfx ) noexcept
 	{
 		GetContext( gfx )->PSSetShaderResources( slot, 1u, pTextureView.GetAddressOf() );
+	}
+
+	std::shared_ptr<Texture> Texture::Resolve( Graphics& gfx, const std::string& path, UINT slot )
+	{
+		return Codex::Resolve<Texture>( gfx, path, slot );
+	}
+
+	std::string Texture::GenerateUID( const std::string& path, UINT slot )
+	{
+		using namespace std::string_literals;
+		return typeid(Texture).name() + "#"s + path + "#" + std::to_string( slot );
+	}
+
+	std::string Texture::GetUID() const noexcept
+	{
+		return GenerateUID( path, slot );
 	}
 }

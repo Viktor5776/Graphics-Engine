@@ -8,27 +8,16 @@ namespace Hydro::gfx
 {
 
 	// Mesh
-	Mesh::Mesh( Graphics& gfx, std::vector<std::unique_ptr<Bind::Bindable>> bindPtrs )
+	Mesh::Mesh( Graphics& gfx, std::vector<std::shared_ptr<Bind::Bindable>> bindPtrs )
 	{
-		if( !IsStaticInitialized() )
-		{
-			AddStaticBind( std::make_unique<Bind::Topology>( gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST ) );
-		}
+		AddBind( Bind::Topology::Resolve( gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST ) );
 
 		for( auto& pb : bindPtrs )
 		{
-			if( auto pi = dynamic_cast<Bind::IndexBuffer*>(pb.get()) )
-			{
-				AddIndexBuffer( std::unique_ptr<Bind::IndexBuffer>{ pi } );
-				pb.release();
-			}
-			else
-			{
-				AddBind( std::move( pb ) );
-			}
+			AddBind( std::move( pb ) );
 		}
 
-		AddBind( std::make_unique<Bind::TransformCbuf>( gfx, *this ) );
+		AddBind( std::make_shared<Bind::TransformCbuf>( gfx, *this ) );
 	}
 	void Mesh::Draw( Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform ) const noexcept(!_DEBUG)
 	{
@@ -194,6 +183,7 @@ namespace Hydro::gfx
 	std::unique_ptr<Mesh> Model::ParseMesh( Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials )
 	{
 		namespace dx = DirectX;
+		using namespace Bind;
 
 		DynamicVertexBuffer vbuf( std::move(
 			VertexLayout{}
@@ -222,45 +212,52 @@ namespace Hydro::gfx
 			indices.push_back( face.mIndices[2] );
 		}
 
-		std::vector<std::unique_ptr<Bind::Bindable>> bindablePtrs;
+		std::vector<std::shared_ptr<Bindable>> bindablePtrs;
 
+		using namespace std::string_literals;
+		const auto base = "Models\\nano_textured\\"s;
 		bool hasSpecularMap = false;
 		float shininess = 35.0f;
 		if( mesh.mMaterialIndex >= 0 )
 		{
-			using namespace std::string_literals;
+			
 			auto& material = *pMaterials[mesh.mMaterialIndex];
+			
 			aiString texFileName;
 			material.GetTexture( aiTextureType_DIFFUSE, 0, &texFileName );
-			bindablePtrs.push_back( std::make_unique<Bind::Texture>( gfx, utility::Surface::FromFile( "models\\nano_textured\\"s + texFileName.C_Str() ), 0u ) );
+			bindablePtrs.push_back( Texture::Resolve (gfx, base + texFileName.C_Str(), 0u) );
 			
 			if( material.GetTexture( aiTextureType_SPECULAR, 0, &texFileName ) == aiReturn_SUCCESS )
 			{
-				bindablePtrs.push_back( std::make_unique<Bind::Texture>( gfx, utility::Surface::FromFile( "models\\nano_textured\\"s + texFileName.C_Str() ), 1u ) );
+				bindablePtrs.push_back( Texture::Resolve( gfx, base + texFileName.C_Str(), 1u ) );
 				hasSpecularMap = true;
 			}
 			else
 			{
 				material.Get( AI_MATKEY_SHININESS, shininess );
 			}
-			bindablePtrs.push_back( std::make_unique<Bind::Sampler>( gfx ) );
+			bindablePtrs.push_back( Sampler::Resolve( gfx ) );
 		}
 
-		bindablePtrs.push_back( std::make_unique<Bind::VertexBuffer>( gfx, vbuf ) );
+		auto meshTag = base + "%" + mesh.mName.C_Str();
 
-		bindablePtrs.push_back( std::make_unique<Bind::IndexBuffer>( gfx, indices ) );
+		bindablePtrs.push_back( VertexBuffer::Resolve( gfx, meshTag, vbuf ) );
 
-		auto pvs = std::make_unique<Bind::VertexShader>( gfx, L"PhongVS.cso" );
+		bindablePtrs.push_back( IndexBuffer::Resolve( gfx, meshTag, indices ) );
+
+		auto pvs = VertexShader::Resolve( gfx, "PhongVS.cso" );
 		auto pvsbc = pvs->GetBytecode();
 		bindablePtrs.push_back( std::move( pvs ) );
 
+		bindablePtrs.push_back( InputLayout::Resolve( gfx, vbuf.GetLayout(), pvsbc ) );
+		
 		if( hasSpecularMap )
 		{
-				bindablePtrs.push_back( std::make_unique<Bind::PixelShader>( gfx, L"PhongPSSpecMap.cso" ) );
+				bindablePtrs.push_back( PixelShader::Resolve( gfx, "PhongPSSpecMap.cso" ) );
 		}
 		else
 		{
-				bindablePtrs.push_back( std::make_unique<Bind::PixelShader>( gfx, L"PhongPS.cso" ) );
+				bindablePtrs.push_back( PixelShader::Resolve( gfx, "PhongPS.cso" ) );
 
 				struct PSMaterialConstant
 				{
@@ -269,10 +266,9 @@ namespace Hydro::gfx
 					float padding[2] = { 0,0 };
 				} pmc;
 				pmc.specularPower = shininess;
-				bindablePtrs.push_back( std::make_unique<Bind::PixelConstantBuffer<PSMaterialConstant>>( gfx, pmc, 1u ) );
+				bindablePtrs.push_back( PixelConstantBuffer<PSMaterialConstant>::Resolve( gfx, pmc, 1u ) );
 		}
 
-		bindablePtrs.push_back( std::make_unique<Bind::InputLayout>( gfx, vbuf.GetLayout().GetD3DLayout(), pvsbc ) );
 
 		
 

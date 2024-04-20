@@ -19,7 +19,8 @@ private:
 	Hydro::utility::Timer timer;
 	Hydro::gfx::PointLight light;
 	float speed_factor = 1.0f;
-	Hydro::gfx::Model nano{ window.Gfx(), "models/nano_textured/nanosuit.obj" };
+	Hydro::gfx::Model nano{ window.Gfx(), "models\\nano_textured\\nanosuit.obj" };
+	Hydro::gfx::Model nano2{ window.Gfx(),"Models\\nano_textured\\nanosuit.obj" };
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()
