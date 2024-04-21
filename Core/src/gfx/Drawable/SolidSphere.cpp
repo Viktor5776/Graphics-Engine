@@ -26,7 +26,7 @@ namespace Hydro::gfx
 		{
 			float color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		} colorConst;
-		AddBind( PixelConstantBuffer<PSColorConstant>::Resolve( gfx, colorConst ) );
+		AddBind( PixelConstantBuffer<PSColorConstant>::Resolve( gfx, colorConst, 1u ) );
 
 		AddBind( InputLayout::Resolve( gfx, model.vertices.GetLayout(), pvsbc));
 

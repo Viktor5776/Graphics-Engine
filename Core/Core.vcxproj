@@ -30,8 +30,10 @@
     <ClInclude Include="src\gfx\Color.h" />
     <ClInclude Include="src\gfx\Drawable\Drawable.h" />
     <ClInclude Include="src\gfx\Drawable\IndexedTriangleList.h" />
+    <ClInclude Include="src\gfx\Drawable\Plane.h" />
     <ClInclude Include="src\gfx\Drawable\SolidSphere.h" />
     <ClInclude Include="src\gfx\Drawable\Sphere.h" />
+    <ClInclude Include="src\gfx\Drawable\TestPlane.h" />
     <ClInclude Include="src\gfx\Graphics.h" />
     <ClInclude Include="src\gfx\GraphicsException.h" />
     <ClInclude Include="src\gfx\Mesh.h" />
@@ -71,6 +73,7 @@
     <ClCompile Include="src\gfx\Camera.cpp" />
     <ClCompile Include="src\gfx\Drawable\Drawable.cpp" />
     <ClCompile Include="src\gfx\Drawable\SolidSphere.cpp" />
+    <ClCompile Include="src\gfx\Drawable\TestPlane.cpp" />
     <ClCompile Include="src\gfx\Graphics.cpp" />
     <ClCompile Include="src\gfx\GraphicsException.cpp" />
     <ClCompile Include="src\gfx\Mesh.cpp" />

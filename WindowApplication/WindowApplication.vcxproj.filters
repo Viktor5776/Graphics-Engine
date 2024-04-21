@@ -91,6 +91,12 @@
     <Image Include="models\nano_textured\leg_showroom_spec.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Images\brickwall.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\brickwall_normal.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">

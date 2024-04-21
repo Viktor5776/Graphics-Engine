@@ -158,7 +158,9 @@ namespace Hydro::gfx
 		Assimp::Importer imp;
 		const auto pScene = imp.ReadFile( fileName.c_str(),
 			aiProcess_Triangulate |
-			aiProcess_JoinIdenticalVertices
+			aiProcess_JoinIdenticalVertices |
+			aiProcess_ConvertToLeftHanded |
+			aiProcess_GenNormals
 		);
 
 		for( size_t i = 0; i < pScene->mNumMeshes; i++ )

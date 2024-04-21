@@ -88,6 +88,8 @@
   <ItemGroup>
     <Image Include="icons\HydroDirectX.ico" />
     <Image Include="Images\Box.jpg" />
+    <Image Include="Images\brickwall.jpg" />
+    <Image Include="Images\brickwall_normal.jpg" />
     <Image Include="Images\cube.png" />
     <Image Include="Images\kappa50.png" />
     <Image Include="models\nano_textured\arm_dif.png" />

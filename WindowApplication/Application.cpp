@@ -12,6 +12,7 @@ WindowApplication::WindowApplication()
 	App( 1280, 720 ),
 	light( window.Gfx(), 0.5f )
 {
+	plane.SetPos( { 1.0f,17.0f,-1.0f } );
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 40.0f ) );
 }
 
@@ -26,8 +27,8 @@ void WindowApplication::DoFrame()
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 
 	nano.Draw( window.Gfx() );
-	nano2.Draw( window.Gfx() );
 	light.Draw( window.Gfx() );
+	plane.Draw( window.Gfx() );
 	
 	while( const auto e = window.kbd.ReadKey() )
 	{
@@ -103,7 +104,6 @@ void WindowApplication::DoFrame()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	nano.ShowWindow( "nano" );
-	nano2.ShowWindow( "nano2" );
 
 	window.Gfx().EndFrame();
 

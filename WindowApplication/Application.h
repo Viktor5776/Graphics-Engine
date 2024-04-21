@@ -4,6 +4,7 @@
 #include <Core/src/utility/Timer.h>
 #include <Core/src/gfx/Drawable/Drawable.h>
 #include <Core/src/gfx/Mesh.h>
+#include <Core/src/gfx/Drawable/TestPlane.h>
 #include <Core/src/gfx/PointLight.h>
 #include <Core/src/gfx/Camera.h>
 
@@ -20,7 +21,7 @@ private:
 	Hydro::gfx::PointLight light;
 	float speed_factor = 1.0f;
 	Hydro::gfx::Model nano{ window.Gfx(), "models\\nano_textured\\nanosuit.obj" };
-	Hydro::gfx::Model nano2{ window.Gfx(),"Models\\nano_textured\\nanosuit.obj" };
+	Hydro::gfx::TestPlane plane{ window.Gfx(), 3.0f };
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()
