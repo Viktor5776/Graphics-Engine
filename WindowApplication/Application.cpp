@@ -104,6 +104,7 @@ void WindowApplication::DoFrame()
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	nano.ShowWindow( "nano" );
+	plane.SpawnControlWindow( window.Gfx() );
 
 	window.Gfx().EndFrame();
 

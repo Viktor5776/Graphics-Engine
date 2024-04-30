@@ -21,30 +21,30 @@ namespace Hydro::gfx
 			const int nVertices_x = divisions_x + 1;
 			const int nVertices_y = divisions_y + 1;
 
-			const float step_x = width / nVertices_x;
-			const float step_y = height / nVertices_y;
-			const float step_u = 1.0f / nVertices_x;
-			const float step_v = 1.0f / nVertices_y;
-
 			DynamicVertexBuffer vb{ std::move( layout ) };
 
-			for( int y = 0; y < nVertices_y; y++ )
 			{
-				for( int x = 0; x < nVertices_x; x++ )
+				const float side_x = width / 2.0f;
+				const float side_y = height / 2.0f;
+				const float divisionSize_x = width / float( divisions_x );
+				const float divisionSize_y = height / float( divisions_y );
+				const float divisionSize_x_tc = 1.0f / float( divisions_x );
+				const float divisionSize_y_tc = 1.0f / float( divisions_y );
+
+				for( int y = 0, i = 0; y < nVertices_y; y++ )
 				{
-					DirectX::XMFLOAT3 calculatedPos;
-					auto p = DirectX::XMVectorSet( x * step_x, y * step_y, 0.0f, 0.0f );
-					DirectX::XMStoreFloat3( &calculatedPos, p );
-
-					DirectX::XMFLOAT3 calculatedNormal;
-					auto n = DirectX::XMVectorSet( 0.0f, 0.0f, -1.0f, 0.0f );
-					DirectX::XMStoreFloat3( &calculatedNormal, n );
-
-					DirectX::XMFLOAT2 calculatedTex;
-					auto uv = DirectX::XMVectorSet( x * step_u, y * step_v, 0.0f, 0.0f );
-					DirectX::XMStoreFloat2( &calculatedTex, uv );
-
-					vb.EmplaceBack( calculatedPos, calculatedNormal, calculatedTex );
+					const float y_pos = float( y ) * divisionSize_y - 1.0f;
+					const float y_pos_tc = 1.0f - float( y ) * divisionSize_y_tc;
+					for( int x = 0; x < nVertices_x; x++, i++ )
+					{
+						const float x_pos = float( x ) * divisionSize_x - 1.0f;
+						const float x_pos_tc = float( x ) * divisionSize_x_tc;
+						vb.EmplaceBack(
+							DirectX::XMFLOAT3{ x_pos,y_pos,0.0f },
+							DirectX::XMFLOAT3{ 0.0f,0.0f,-1.0f },
+							DirectX::XMFLOAT2{ x_pos_tc,y_pos_tc }
+						);
+					}
 				}
 			}
 
