@@ -17,6 +17,12 @@ cbuffer ObjectCBuf : register( b1 )
     float padding[1];
 };
 
+cbuffer TransformCbuf
+{
+    matrix modelView;
+    matrix modelViewProj;
+};
+
 Texture2D tex;
 Texture2D nmap;
 SamplerState splr;
@@ -26,9 +32,10 @@ float4 main( float3 worldPos : Position, float3 n : Normal, float2 tc : Texcoord
     if( normalMapEnabled )
     {
         float3 tmp = nmap.Sample( splr, tc ).xyz;
-        n.x = tmp.x * 2 - 1.0f;
-        n.y = -tmp.y * 2 + 1.0f;
+        n.x = tmp.x * 2.0f - 1.0f;
+        n.y = -tmp.y * 2.0f + 1.0f;
         n.z = -tmp.z;
+        n = mul( n, ( float3x3 ) modelView );
     }
 	// fragment to light vector data
     const float3 vToL = lightPos - worldPos;

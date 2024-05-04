@@ -153,6 +153,9 @@
     <ClInclude Include="src\gfx\Drawable\TestPlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\TransformCbufPixel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -255,6 +258,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\Drawable\TestPlane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\TransformCbufPixel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

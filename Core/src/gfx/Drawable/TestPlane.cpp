@@ -2,6 +2,7 @@
 #include "TestPlane.h"
 #include "Plane.h"
 #include "../Bindable/BindableCommon.h"
+#include "../Bindable/TransformCbufPixel.h"
 #include "../../../third/ImGui/imgui.h"
 
 namespace Hydro::gfx
@@ -32,7 +33,7 @@ namespace Hydro::gfx
 
 		AddBind( Topology::Resolve( gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST ) );
 
-		AddBind( std::make_shared<TransformCbuf>( gfx, *this ) );
+		AddBind( std::make_shared<TransformCbufPixel>( gfx, *this, 0u, 2u ) );
 	}
 
 	void TestPlane::SetPos( DirectX::XMFLOAT3 pos ) noexcept

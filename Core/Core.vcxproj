@@ -24,6 +24,7 @@
     <ClInclude Include="src\gfx\Bindable\Texture.h" />
     <ClInclude Include="src\gfx\Bindable\Topology.h" />
     <ClInclude Include="src\gfx\Bindable\TransformCbuf.h" />
+    <ClInclude Include="src\gfx\Bindable\TransformCbufPixel.h" />
     <ClInclude Include="src\gfx\Bindable\VertexBuffer.h" />
     <ClInclude Include="src\gfx\Bindable\VertexShader.h" />
     <ClInclude Include="src\gfx\Camera.h" />
@@ -68,6 +69,7 @@
     <ClCompile Include="src\gfx\Bindable\Texture.cpp" />
     <ClCompile Include="src\gfx\Bindable\Topology.cpp" />
     <ClCompile Include="src\gfx\Bindable\TransformCbuf.cpp" />
+    <ClCompile Include="src\gfx\Bindable\TransformCbufPixel.cpp" />
     <ClCompile Include="src\gfx\Bindable\VertexBuffer.cpp" />
     <ClCompile Include="src\gfx\Bindable\VertexShader.cpp" />
     <ClCompile Include="src\gfx\Camera.cpp" />
