@@ -12,7 +12,8 @@ WindowApplication::WindowApplication()
 	App( 1280, 720 ),
 	light( window.Gfx(), 0.5f )
 {
-	plane.SetPos( { 1.0f,17.0f,-1.0f } );
+	wall.SetRootTransform( DirectX::XMMatrixTranslation( -1.5f, 0.0f, 0.0f ) );
+	tp.SetPos( { 1.5f,0.0f,0.0f } );
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 40.0f ) );
 }
 
@@ -26,9 +27,10 @@ void WindowApplication::DoFrame()
 	window.Gfx().SetCamera( cam.GetMatrix() );
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 
-	nano.Draw( window.Gfx() );
+	//nano.Draw( window.Gfx() );
+	wall.Draw( window.Gfx() );
+	tp.Draw( window.Gfx() );
 	light.Draw( window.Gfx() );
-	plane.Draw( window.Gfx() );
 	
 	while( const auto e = window.kbd.ReadKey() )
 	{
@@ -103,8 +105,9 @@ void WindowApplication::DoFrame()
 	//Imgui window to control camera and light
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	nano.ShowWindow( "nano" );
-	plane.SpawnControlWindow( window.Gfx() );
+	//nano.ShowWindow( "nano" );
+	wall.ShowWindow();
+	tp.SpawnControlWindow( window.Gfx() );
 
 	window.Gfx().EndFrame();
 

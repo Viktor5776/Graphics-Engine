@@ -25,7 +25,7 @@ namespace Hydro::gfx
 		auto pvsbc = pvs->GetBytecode();
 		AddBind( std::move( pvs ) );
 
-		AddBind( PixelShader::Resolve( gfx, "PhongPSNormalMap.cso" ) );
+		AddBind( PixelShader::Resolve( gfx, "PhongPSNormalMapObject.cso" ) );
 
 		AddBind( PixelConstantBuffer<PSMaterialConstant>::Resolve( gfx, pmc, 1u ) );
 

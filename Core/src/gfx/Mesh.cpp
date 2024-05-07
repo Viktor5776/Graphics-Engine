@@ -160,7 +160,8 @@ namespace Hydro::gfx
 			aiProcess_Triangulate |
 			aiProcess_JoinIdenticalVertices |
 			aiProcess_ConvertToLeftHanded |
-			aiProcess_GenNormals
+			aiProcess_GenNormals |
+			aiProcess_CalcTangentSpace
 		);
 
 		for( size_t i = 0; i < pScene->mNumMeshes; i++ )
@@ -178,10 +179,17 @@ namespace Hydro::gfx
 		}
 		pRoot->Draw( gfx, DirectX::XMMatrixIdentity() );
 	}
+
 	void Model::ShowWindow( const char* windowName ) noexcept
 	{
 		pWindow->Show( windowName, *pRoot );
 	}
+
+	void Model::SetRootTransform( DirectX::FXMMATRIX tf ) noexcept
+	{
+		pRoot->SetAppliedTransform( tf );
+	}
+
 	std::unique_ptr<Mesh> Model::ParseMesh( Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials )
 	{
 		namespace dx = DirectX;
@@ -191,6 +199,8 @@ namespace Hydro::gfx
 			VertexLayout{}
 			.Append( VertexLayout::Position3D )
 			.Append( VertexLayout::Normal )
+			.Append( VertexLayout::Tangent )
+			.Append( VertexLayout::Bitangent )
 			.Append( VertexLayout::Texture2D )
 		) );
 
@@ -199,6 +209,8 @@ namespace Hydro::gfx
 			vbuf.EmplaceBack(
 				*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mVertices[i]),
 				*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mNormals[i]),
+				*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mTangents[i]),
+				*reinterpret_cast<dx::XMFLOAT3*>(&mesh.mBitangents[i]),
 				*reinterpret_cast<dx::XMFLOAT2*>(&mesh.mTextureCoords[0][i])
 			);
 		}
@@ -217,7 +229,7 @@ namespace Hydro::gfx
 		std::vector<std::shared_ptr<Bindable>> bindablePtrs;
 
 		using namespace std::string_literals;
-		const auto base = "Models\\nano_textured\\"s;
+		const auto base = "Models\\brick_wall\\"s;
 		bool hasSpecularMap = false;
 		float shininess = 35.0f;
 		if( mesh.mMaterialIndex >= 0 )
@@ -238,6 +250,9 @@ namespace Hydro::gfx
 			{
 				material.Get( AI_MATKEY_SHININESS, shininess );
 			}
+			material.GetTexture( aiTextureType_NORMALS, 0, &texFileName );
+			bindablePtrs.push_back( Texture::Resolve( gfx, base + texFileName.C_Str(), 2u ) );
+
 			bindablePtrs.push_back( Sampler::Resolve( gfx ) );
 		}
 
@@ -247,7 +262,7 @@ namespace Hydro::gfx
 
 		bindablePtrs.push_back( IndexBuffer::Resolve( gfx, meshTag, indices ) );
 
-		auto pvs = VertexShader::Resolve( gfx, "PhongVS.cso" );
+		auto pvs = VertexShader::Resolve( gfx, "PhongVSNormalMap.cso" );
 		auto pvsbc = pvs->GetBytecode();
 		bindablePtrs.push_back( std::move( pvs ) );
 
@@ -255,17 +270,27 @@ namespace Hydro::gfx
 		
 		if( hasSpecularMap )
 		{
-				bindablePtrs.push_back( PixelShader::Resolve( gfx, "PhongPSSpecMap.cso" ) );
+			bindablePtrs.push_back( PixelShader::Resolve( gfx, "PhongPSSpecNormalMap.cso" ) );
+
+			struct PSMaterialConstant
+			{
+				BOOL  normalMapEnabled = TRUE;
+				float padding[3];
+			} pmc;
+			// this is CLEARLY an issue... all meshes will share same mat const, but may have different
+			// Ns (specular power) specified for each in the material properties... bad conflict
+			bindablePtrs.push_back( PixelConstantBuffer<PSMaterialConstant>::Resolve( gfx, pmc, 1u ) );
 		}
 		else
 		{
-				bindablePtrs.push_back( PixelShader::Resolve( gfx, "PhongPS.cso" ) );
+				bindablePtrs.push_back( PixelShader::Resolve( gfx, "PhongPSNormalMap.cso" ) );
 
 				struct PSMaterialConstant
 				{
-					float specularIntensity = 0.8f;
-					float specularPower = 40.0f;
-					float padding[2] = { 0,0 };
+					float specularIntensity = 0.18f;
+					float specularPower = 0.0f;
+					BOOL normalMapEnabled = TRUE;
+					float padding[1];
 				} pmc;
 				pmc.specularPower = shininess;
 				bindablePtrs.push_back( PixelConstantBuffer<PSMaterialConstant>::Resolve( gfx, pmc, 1u ) );

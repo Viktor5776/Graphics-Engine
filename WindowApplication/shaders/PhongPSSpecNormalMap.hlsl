@@ -11,14 +11,13 @@ cbuffer LightCBuf
 
 cbuffer ObjectCBuf
 {
-    float specularIntensity;
-    float specularPower;
     bool normalMapEnabled;
-    float padding[1];
+    float padding[3];
 };
 
 Texture2D tex;
-Texture2D nmap : register( t2 );
+Texture2D spec;
+Texture2D nmap;
 
 SamplerState splr;
 
@@ -34,11 +33,10 @@ float4 main( float3 viewPos : Position, float3 n : Normal, float3 tan : Tangent,
             normalize( bitan ),
             normalize( n )
         );
-        // unpack the normal from map into tangent space        
+        // unpack normal data
         const float3 normalSample = nmap.Sample( splr, tc ).xyz;
         n = normalSample * 2.0f - 1.0f;
         n.y = -n.y;
-        n.z = -n.z;
         // bring normal from tanspace into view space
         n = mul( n, tanToView );
     }
@@ -54,7 +52,10 @@ float4 main( float3 viewPos : Position, float3 n : Normal, float3 tan : Tangent,
     const float3 w = n * dot( vToL, n );
     const float3 r = w * 2.0f - vToL;
 	// calculate specular intensity based on angle between viewing vector and reflection vector, narrow with power function
-    const float3 specular = att * (diffuseColor * diffuseIntensity) * specularIntensity * pow( max( 0.0f, dot( normalize( -r ), normalize( viewPos ) ) ), specularPower );
+    const float4 specularSample = spec.Sample( splr, tc );
+    const float3 specularReflectionColor = specularSample.rgb;
+    const float specularPower = pow( 2.0f, specularSample.a * 13.0f );
+    const float3 specular = att * (diffuseColor * diffuseIntensity) * pow( max( 0.0f, dot( normalize( -r ), normalize( viewPos ) ) ), specularPower );
 	// final color
-    return float4( saturate( (diffuse + ambient) * tex.Sample( splr, tc ).rgb + specular ), 1.0f );
+    return float4( saturate( (diffuse + ambient) * tex.Sample( splr, tc ).rgb + specular * specularReflectionColor ), 1.0f );
 }

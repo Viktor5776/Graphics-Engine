@@ -97,6 +97,12 @@
     <Image Include="Images\brickwall_normal.jpg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="models\brick_wall\brick_wall_normal.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="models\brick_wall\brick_wall_diffuse.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -108,8 +114,10 @@
     <FxCompile Include="shaders\SolidPS.hlsl" />
     <FxCompile Include="shaders\PhongVS.hlsl" />
     <FxCompile Include="shaders\PhongPS.hlsl" />
-    <FxCompile Include="shaders\PhongPSSpecMap.hlsl" />
+    <FxCompile Include="shaders\PhongPSSpecNormalMap.hlsl" />
     <FxCompile Include="shaders\PhongPSNormalMap.hlsl" />
+    <FxCompile Include="shaders\PhongVSNormalMap.hlsl" />
+    <FxCompile Include="shaders\PhongPSNormalMapObject.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="models\nano_textured\LICENSE.txt" />
@@ -118,5 +126,6 @@
     <None Include="models\nano_textured\nanosuit.mtl" />
     <None Include="models\boxy.gltf" />
     <None Include="models\nano-hierarchy.gltf" />
+    <None Include="models\brick_wall\brick_wall.mtl" />
   </ItemGroup>
 </Project>

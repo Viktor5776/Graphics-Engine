@@ -45,6 +45,7 @@ namespace Hydro::gfx
 		Model( Graphics& gfx, const std::string fileName );
 		void Draw( Graphics& gfx ) const noexcept(!_DEBUG);
 		void ShowWindow( const char* windowName = nullptr ) noexcept;
+		void SetRootTransform( DirectX::FXMMATRIX tf ) noexcept;
 		~Model() noexcept;
 	private:
 		static std::unique_ptr<Mesh> ParseMesh( Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials );

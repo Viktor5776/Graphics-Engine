@@ -38,7 +38,7 @@ namespace Hydro::gfx
 
 	void PointLight::Reset() noexcept
 	{
-		pcb.pos = { 1.5f,14.0f,-4.5f };
+		pcb.pos = { 0.0f,4.0f,-4.5f };
 		pcb.ambient = { 0.05f, 0.05f, 0.05f };
 		pcb.diffuseColor = { 1.0f, 1.0f, 1.0f };
 		pcb.diffuseIntensity = 1.0f;
