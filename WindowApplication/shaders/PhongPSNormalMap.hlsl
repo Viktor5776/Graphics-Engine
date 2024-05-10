@@ -38,10 +38,11 @@ float4 main( float3 viewPos : Position, float3 n : Normal, float3 tan : Tangent,
         const float3 normalSample = nmap.Sample( splr, tc ).xyz;
         n = normalSample * 2.0f - 1.0f;
         n.y = -n.y;
-        n.z = -n.z;
+        
         // bring normal from tanspace into view space
         n = mul( n, tanToView );
     }
+    
 	// fragment to light vector data
     const float3 vToL = lightPos - viewPos;
     const float distToL = length( vToL );
