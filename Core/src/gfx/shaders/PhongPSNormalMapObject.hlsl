@@ -17,33 +17,34 @@ cbuffer ObjectCBuf
     float padding[1];
 };
 
+cbuffer TransformCBuf
+{
+    matrix modelView;
+    matrix modelViewProj;
+};
+
+
+
 Texture2D tex;
 Texture2D nmap : register( t2 );
 
 SamplerState splr;
 
 
-float4 main( float3 viewPos : Position, float3 viewNormal : Normal, float3 tan : Tangent, float3 bitan : Bitangent, float2 tc : Texcoord ) : SV_Target
+float4 main( float3 viewPos : Position, float3 viewNormal : Normal, float2 tc : Texcoord ) : SV_Target
 {
-    // sample normal from map if normal mapping enabled
+	// sample normal from map if normal mapping enabled
     if ( normalMapEnabled )
     {
-        // build the tranform (rotation) into tangent space
-        const float3x3 tanToView = float3x3(
-            normalize( tan ),
-            normalize( bitan ),
-            normalize( viewNormal )
-        );
-        // unpack the normal from map into tangent space        
+        //sample and unpack normal data
         const float3 normalSample = nmap.Sample( splr, tc ).xyz;
         float3 tanNormal;
-        tanNormal = normalSample * 2.0f - 1.0f;
-        tanNormal.y = -tanNormal.y;
-        
-        // bring normal from tanspace into view space
-        viewNormal = mul( tanNormal, tanToView );
+        tanNormal.x = normalSample.x * 2.0f - 1.0f;
+        tanNormal.y = -normalSample.y * 2.0f + 1.0f;
+        tanNormal.z = -normalSample.z * 2.0f + 1.0f;
+        // bring normal from object space into view space
+        viewNormal = normalize( mul( tanNormal, ( float3x3 ) modelView ) );
     }
-    
 	// fragment to light vector data
     const float3 vToL = lightPos - viewPos;
     const float distToL = length( vToL );

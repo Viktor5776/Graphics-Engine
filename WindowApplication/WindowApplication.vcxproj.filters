@@ -110,18 +110,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shaders\SolidVS.hlsl" />
-    <FxCompile Include="shaders\SolidPS.hlsl" />
-    <FxCompile Include="shaders\PhongVS.hlsl" />
-    <FxCompile Include="shaders\PhongPS.hlsl" />
-    <FxCompile Include="shaders\PhongPSSpecNormalMap.hlsl" />
-    <FxCompile Include="shaders\PhongPSNormalMap.hlsl" />
-    <FxCompile Include="shaders\PhongVSNormalMap.hlsl" />
-    <FxCompile Include="shaders\PhongPSNormalMapObject.hlsl" />
-    <FxCompile Include="shaders\PhongVSNotex.hlsl" />
-    <FxCompile Include="shaders\PhongPSNotex.hlsl" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="models\nano_textured\LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
