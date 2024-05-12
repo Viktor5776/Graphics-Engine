@@ -20,7 +20,6 @@ namespace Hydro::gfx
 		virtual DirectX::XMMATRIX GetTransformXM() const noexcept = 0;
 		void Draw( Graphics& gfx ) const noexcept(!_DEBUG);
 		virtual ~Drawable() = default;
-	protected:
 		template<class T>
 		T* QueryBindable() noexcept
 		{
@@ -33,6 +32,7 @@ namespace Hydro::gfx
 			}
 			return nullptr;
 		}
+	protected:
 		void AddBind( std::shared_ptr<Bind::Bindable> bind ) noexcept(!_DEBUG);
 	private:
 		const class Bind::IndexBuffer* pIndexBuffer = nullptr;

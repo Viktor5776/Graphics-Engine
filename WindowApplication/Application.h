@@ -20,9 +20,7 @@ private:
 	Hydro::utility::Timer timer;
 	Hydro::gfx::PointLight light;
 	float speed_factor = 1.0f;
-	Hydro::gfx::Model wall{ window.Gfx(), "models\\brick_wall\\brick_wall.obj" };
-	Hydro::gfx::TestPlane tp{ window.Gfx(),1.0f };
-	//Hydro::gfx::Model nano{ window.Gfx(), "models\\nano_textured\\nanosuit.obj" };
+	Hydro::gfx::Model gobber{ window.Gfx(), "models\\gobber\\GoblinX.obj" };
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()

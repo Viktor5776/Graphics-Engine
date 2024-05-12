@@ -98,6 +98,7 @@ Hydro::utility::Surface Hydro::utility::Surface::FromFile( const std::string& na
 	unsigned int pitch = 0;
 	std::unique_ptr<Color[]> pBuffer = nullptr;
 
+	bool alphaLoaded = false;
 	{
 		// convert filenam to wide string (for Gdiplus)
 		wchar_t wideName[512];
@@ -123,11 +124,15 @@ Hydro::utility::Surface Hydro::utility::Surface::FromFile( const std::string& na
 				Gdiplus::Color c;
 				bitmap.GetPixel( x, y, &c );
 				pBuffer[((size_t)y) * pitch + x] = c.GetValue();
+				if( c.GetAlpha() != 255 )
+				{
+					alphaLoaded = true;
+				}
 			}
 		}
 	}
 
-	return Surface( width, height, std::move( pBuffer ) );
+	return Surface( width, height, std::move( pBuffer ), alphaLoaded );
 }
 
 void Hydro::utility::Surface::Save( const std::string& filename ) const
@@ -202,11 +207,17 @@ void Hydro::utility::Surface::Copy( const Surface& src ) noexcept(!_DEBUG)
 	memcpy( pBuffer.get(), src.pBuffer.get(), ((size_t)width) * height * sizeof( Color ) );
 }
 
-Hydro::utility::Surface::Surface( unsigned int width, unsigned int height, std::unique_ptr<Color[]> pBufferParam ) noexcept
+bool Hydro::utility::Surface::AlphaLoaded() const noexcept
+{
+	return alphaLoaded;
+}
+
+Hydro::utility::Surface::Surface( unsigned int width, unsigned int height, std::unique_ptr<Color[]> pBufferParam, bool alphaLoaded ) noexcept
 	:
 	width( width ),
 	height( height ),
-	pBuffer( std::move( pBufferParam ) )
+	pBuffer( std::move( pBufferParam ) ),
+	alphaLoaded( alphaLoaded )
 {}
 
 

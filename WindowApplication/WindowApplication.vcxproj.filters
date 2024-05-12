@@ -118,6 +118,8 @@
     <FxCompile Include="shaders\PhongPSNormalMap.hlsl" />
     <FxCompile Include="shaders\PhongVSNormalMap.hlsl" />
     <FxCompile Include="shaders\PhongPSNormalMapObject.hlsl" />
+    <FxCompile Include="shaders\PhongVSNotex.hlsl" />
+    <FxCompile Include="shaders\PhongPSNotex.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="models\nano_textured\LICENSE.txt" />
