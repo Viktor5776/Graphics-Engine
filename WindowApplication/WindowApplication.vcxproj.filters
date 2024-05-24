@@ -43,22 +43,13 @@
     <Image Include="models\nano_textured\arm_dif.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="models\nano_textured\arm_showroom_ddn.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="models\nano_textured\arm_showroom_spec.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="models\nano_textured\body_dif.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="models\nano_textured\body_showroom_ddn.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="models\nano_textured\body_showroom_spec.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\nano_textured\glass_ddn.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="models\nano_textured\glass_dif.png">
@@ -67,16 +58,10 @@
     <Image Include="models\nano_textured\hand_dif.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="models\nano_textured\hand_showroom_ddn.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="models\nano_textured\hand_showroom_spec.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="models\nano_textured\helmet_diff.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="models\nano_textured\helmet_showroom_ddn.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="models\nano_textured\helmet_showroom_spec.png">
@@ -85,22 +70,19 @@
     <Image Include="models\nano_textured\leg_dif.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="models\nano_textured\leg_showroom_ddn.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="models\nano_textured\leg_showroom_spec.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Images\brickwall.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Images\brickwall_normal.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="models\brick_wall\brick_wall_normal.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="models\brick_wall\brick_wall_diffuse.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\brickwall_normal_obj.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

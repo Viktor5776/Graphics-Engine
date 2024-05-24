@@ -39,7 +39,7 @@ namespace Hydro::gfx
 	void PointLight::Reset() noexcept
 	{
 		pcb.pos = { 2.0f,9.0f,-17.0f };
-		pcb.ambient = { 0.4f, 0.4f, 0.4f };
+		pcb.ambient = { 0.2f, 0.2f, 0.2f };
 		pcb.diffuseColor = { 1.0f, 1.0f, 1.0f };
 		pcb.diffuseIntensity = 1.0f;
 		pcb.attConst = 1.0f;
@@ -56,9 +56,9 @@ namespace Hydro::gfx
 	void PointLight::Bind( Graphics& gfx, DirectX::FXMMATRIX view ) const noexcept
 	{
 		auto dataCopy = pcb;
-		const auto pos = DirectX::XMLoadFloat3( &dataCopy.pos );
+		const auto pos = DirectX::XMLoadFloat3( &pcb.pos );
 		DirectX::XMStoreFloat3( &dataCopy.pos, DirectX::XMVector3Transform( pos, view ) );
-		cbuf.Update( gfx, { dataCopy } );
+		cbuf.Update( gfx, dataCopy );
 		cbuf.Bind( gfx );
 	}
 

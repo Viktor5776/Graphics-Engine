@@ -12,6 +12,10 @@ WindowApplication::WindowApplication()
 	App( 1280, 720 ),
 	light( window.Gfx(), 0.5f )
 {
+	wall.SetRootTransform( DirectX::XMMatrixTranslation( -12.0f, 0.0f, 0.0f ) );
+	tp.SetPos( { 12.0f,0.0f,0.0f } );
+	gobber.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, 0.0f, -4.0f ) );
+	nano.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, -7.0f, 6.0f ) );
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 40.0f ) );
 }
 
@@ -24,7 +28,10 @@ void WindowApplication::DoFrame()
 	window.Gfx().BeginFrame( 0.07f, 0.0f, 0.12f );
 	window.Gfx().SetCamera( cam.GetMatrix() );
 	light.Bind( window.Gfx(), cam.GetMatrix() );
-
+	
+	wall.Draw( window.Gfx() );
+	tp.Draw( window.Gfx() );
+	nano.Draw( window.Gfx() );
 	gobber.Draw( window.Gfx() );
 	light.Draw( window.Gfx() );
 	
@@ -101,7 +108,10 @@ void WindowApplication::DoFrame()
 	//Imgui window to control camera and light
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	gobber.ShowWindow( window.Gfx(), "gobber" );
+	wall.ShowWindow( window.Gfx(), "Wall" );
+	gobber.ShowWindow( window.Gfx(), "gobber" ); 
+	tp.SpawnControlWindow( window.Gfx() );
+	nano.ShowWindow( window.Gfx(), "Nano" );
 
 	window.Gfx().EndFrame();
 

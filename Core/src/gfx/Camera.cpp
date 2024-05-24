@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "../../third/ImGui/imgui.h"
+#include "../utility/HydroMath.h"
 
 namespace Hydro::gfx
 {
@@ -53,9 +54,7 @@ namespace Hydro::gfx
 
     void Camera::Rotate( float dx, float dy ) noexcept
     {
-        static constexpr float PI = 3.1415f;
-        yaw = yaw + dx * rotationSpeed > PI*2 ? yaw + dx * rotationSpeed - PI*2 : 
-            yaw + dx * rotationSpeed < -PI * 2 ? yaw + dx * rotationSpeed + PI * 2 : yaw + dx * rotationSpeed;
+        yaw = wrap_angle( yaw + dx * rotationSpeed );
         pitch = std::clamp( pitch + dy * rotationSpeed, -PI / 2.0f, PI / 2.0f );
     }
 

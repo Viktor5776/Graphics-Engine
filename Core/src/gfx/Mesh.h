@@ -8,6 +8,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include <type_traits>
+#include <filesystem>
 #include <Core\third\ImGui\imgui.h>
 
 namespace Hydro::gfx
@@ -46,6 +47,7 @@ namespace Hydro::gfx
 		Node( int id, const std::string& name, std::vector<Mesh*> meshPtrs, const DirectX::XMMATRIX& transform ) noexcept(!_DEBUG);
 		void Draw( Graphics& gfx, DirectX::FXMMATRIX accumulatedTransform ) const noexcept(!_DEBUG);
 		void SetAppliedTransform( DirectX::FXMMATRIX transform ) noexcept;
+		const DirectX::XMFLOAT4X4& GetAppliedTransform() const noexcept;
 		int GetId() const noexcept;
 		void ShowTree( Node*& pSelectedNode ) const noexcept;
 		template<class T>
@@ -116,13 +118,14 @@ namespace Hydro::gfx
 	class Model
 	{
 	public:
-		Model( Graphics& gfx, const std::string fileName );
+		Model( Graphics& gfx, const std::string& pathString, float scale = 1.0f );
 		void Draw( Graphics& gfx ) const noexcept(!_DEBUG);
 		void ShowWindow( Graphics& gfx, const char* windowName = nullptr ) noexcept;
 		void SetRootTransform( DirectX::FXMMATRIX tf ) noexcept;
 		~Model() noexcept;
 	private:
-		static std::unique_ptr<Mesh> ParseMesh( Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials );
+		static std::unique_ptr<Mesh> ParseMesh( Graphics& gfx, const aiMesh& mesh, 
+			const aiMaterial* const* pMaterials, const std::filesystem::path& path, float scale );
 		std::unique_ptr<Node> ParseNode( int& nextId, const aiNode& node ) noexcept;
 	private:
 		std::unique_ptr<Node> pRoot;

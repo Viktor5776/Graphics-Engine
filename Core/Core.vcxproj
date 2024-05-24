@@ -42,6 +42,8 @@
     <ClInclude Include="src\gfx\Vertex.h" />
     <ClInclude Include="src\utility\GDIPlusManager.h" />
     <ClInclude Include="src\utility\HydroException.h" />
+    <ClInclude Include="src\utility\HydroMath.h" />
+    <ClInclude Include="src\utility\HydroXM.h" />
     <ClInclude Include="src\utility\ImGuiManager.h" />
     <ClInclude Include="src\utility\Surface.h" />
     <ClInclude Include="src\utility\Timer.h" />
@@ -83,6 +85,7 @@
     <ClCompile Include="src\gfx\Vertex.cpp" />
     <ClCompile Include="src\utility\GDIPlusManager.cpp" />
     <ClCompile Include="src\utility\HydroException.cpp" />
+    <ClCompile Include="src\utility\HydroXM.cpp" />
     <ClCompile Include="src\utility\Surface.cpp" />
     <ClCompile Include="src\win\Keyboard.cpp" />
     <ClCompile Include="src\win\Mouse.cpp" />
@@ -101,6 +104,12 @@
     <None Include="third\lib\zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="src\gfx\shaders\LightVectorData.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="src\gfx\shaders\PhongPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -120,6 +129,12 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="src\gfx\shaders\PhongPSNotex.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\PhongPSSpec.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
@@ -149,6 +164,16 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
+    <FxCompile Include="src\gfx\shaders\PointLight.hlsl">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\ShaderOps.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
     <FxCompile Include="src\gfx\shaders\SolidPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -160,6 +185,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\Transform.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <PropertyGroup Label="Globals">

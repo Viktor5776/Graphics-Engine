@@ -156,6 +156,12 @@
     <ClInclude Include="src\gfx\Bindable\TransformCbufPixel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\utility\HydroXM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utility\HydroMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -263,6 +269,9 @@
     <ClCompile Include="src\gfx\Bindable\TransformCbufPixel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\utility\HydroXM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third\lib\assimp-vc140-mt.dll" />
@@ -279,5 +288,10 @@
     <FxCompile Include="src\gfx\shaders\PhongVSNotex.hlsl" />
     <FxCompile Include="src\gfx\shaders\SolidPS.hlsl" />
     <FxCompile Include="src\gfx\shaders\SolidVS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\ShaderOps.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PointLight.hlsl" />
+    <FxCompile Include="src\gfx\shaders\LightVectorData.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Transform.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongPSSpec.hlsl" />
   </ItemGroup>
 </Project>
