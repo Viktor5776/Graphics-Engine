@@ -21,10 +21,11 @@ private:
 	Hydro::gfx::PointLight light;
 	float speed_factor = 1.0f;
 	//Models
-	Hydro::gfx::Model gobber{ window.Gfx(), "models\\gobber\\GoblinX.obj", 6.0f };
-	Hydro::gfx::Model wall{ window.Gfx(), "models\\brick_wall\\brick_wall.obj", 6.0f };
-	Hydro::gfx::TestPlane tp{ window.Gfx(),6.0f };
-	Hydro::gfx::Model nano{ window.Gfx(), "models\\nano_textured\\nanosuit.obj", 2.0f };
+	Hydro::gfx::Model sponza{ window.Gfx(), "models\\Sponza\\sponza.obj", 1.0f / 20.0f };
+	//Hydro::gfx::Model gobber{ window.Gfx(), "models\\gobber\\GoblinX.obj", 6.0f };
+	//Hydro::gfx::Model wall{ window.Gfx(), "models\\brick_wall\\brick_wall.obj", 6.0f };
+	//Hydro::gfx::TestPlane tp{ window.Gfx(),6.0f };
+	//Hydro::gfx::Model nano{ window.Gfx(), "models\\nano_textured\\nanosuit.obj", 2.0f };
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()

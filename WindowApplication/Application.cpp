@@ -12,11 +12,11 @@ WindowApplication::WindowApplication()
 	App( 1280, 720 ),
 	light( window.Gfx(), 0.5f )
 {
-	wall.SetRootTransform( DirectX::XMMatrixTranslation( -12.0f, 0.0f, 0.0f ) );
-	tp.SetPos( { 12.0f,0.0f,0.0f } );
-	gobber.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, 0.0f, -4.0f ) );
-	nano.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, -7.0f, 6.0f ) );
-	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 40.0f ) );
+	//wall.SetRootTransform( DirectX::XMMatrixTranslation( -12.0f, 0.0f, 0.0f ) );
+	//tp.SetPos( { 12.0f,0.0f,0.0f } );
+	//gobber.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, 0.0f, -4.0f ) );
+	//nano.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, -7.0f, 6.0f ) );
+	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 400.0f ) );
 }
 
 WindowApplication::~WindowApplication()
@@ -29,10 +29,11 @@ void WindowApplication::DoFrame()
 	window.Gfx().SetCamera( cam.GetMatrix() );
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 	
-	wall.Draw( window.Gfx() );
-	tp.Draw( window.Gfx() );
-	nano.Draw( window.Gfx() );
-	gobber.Draw( window.Gfx() );
+	//wall.Draw( window.Gfx() );
+	//tp.Draw( window.Gfx() );
+	//nano.Draw( window.Gfx() );
+	//gobber.Draw( window.Gfx() );
+	sponza.Draw( window.Gfx() );
 	light.Draw( window.Gfx() );
 	
 	while( const auto e = window.kbd.ReadKey() )
@@ -108,10 +109,11 @@ void WindowApplication::DoFrame()
 	//Imgui window to control camera and light
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	wall.ShowWindow( window.Gfx(), "Wall" );
-	gobber.ShowWindow( window.Gfx(), "gobber" ); 
-	tp.SpawnControlWindow( window.Gfx() );
-	nano.ShowWindow( window.Gfx(), "Nano" );
+	//wall.ShowWindow( window.Gfx(), "Wall" );
+	//gobber.ShowWindow( window.Gfx(), "gobber" ); 
+	//tp.SpawnControlWindow( window.Gfx() );
+	//nano.ShowWindow( window.Gfx(), "Nano" );
+	sponza.ShowWindow( window.Gfx(), "Sponza" );
 
 	window.Gfx().EndFrame();
 
