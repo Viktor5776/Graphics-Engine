@@ -1,11 +1,10 @@
 #include "Application.h"
-#include <Core/src/utility/GDIPlusManager.h>
 #include <Core/third/ImGui/imgui.h>
 #include <Core/third/ImGui/imgui_impl_dx11.h>
 #include <Core/third/ImGui/imgui_impl_win32.h>
+#include <dxtex/DirectXTex.h>
 
 using namespace Hydro;
-utility::GDIPlusManager gdipm;
 
 WindowApplication::WindowApplication()
 	:
@@ -15,7 +14,8 @@ WindowApplication::WindowApplication()
 	//wall.SetRootTransform( DirectX::XMMatrixTranslation( -12.0f, 0.0f, 0.0f ) );
 	//tp.SetPos( { 12.0f,0.0f,0.0f } );
 	//gobber.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, 0.0f, -4.0f ) );
-	//nano.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, -7.0f, 6.0f ) );
+	//nano.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, -7.0f, 6.0f ) );;
+
 	bluePlane.SetPos( cam.GetPos() );
 	redPlane.SetPos( cam.GetPos() );
 

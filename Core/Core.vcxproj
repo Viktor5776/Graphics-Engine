@@ -42,7 +42,6 @@
     <ClInclude Include="src\gfx\Mesh.h" />
     <ClInclude Include="src\gfx\PointLight.h" />
     <ClInclude Include="src\gfx\Vertex.h" />
-    <ClInclude Include="src\utility\GDIPlusManager.h" />
     <ClInclude Include="src\utility\HydroException.h" />
     <ClInclude Include="src\utility\HydroMath.h" />
     <ClInclude Include="src\utility\HydroXM.h" />
@@ -54,6 +53,14 @@
     <ClInclude Include="src\win\Mouse.h" />
     <ClInclude Include="src\win\Window.h" />
     <ClInclude Include="src\win\WindowException.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\BC.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\BCDirectCompute.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\d3dx12.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\DDS.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\DirectXTex.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\DirectXTexP.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\filters.h" />
+    <ClInclude Include="third\dxtex\include\dxtex\scoped.h" />
     <ClInclude Include="third\ImGui\imconfig.h" />
     <ClInclude Include="third\ImGui\imgui.h" />
     <ClInclude Include="third\ImGui\imgui_impl_dx11.h" />
@@ -87,7 +94,6 @@
     <ClCompile Include="src\gfx\Mesh.cpp" />
     <ClCompile Include="src\gfx\PointLight.cpp" />
     <ClCompile Include="src\gfx\Vertex.cpp" />
-    <ClCompile Include="src\utility\GDIPlusManager.cpp" />
     <ClCompile Include="src\utility\HydroException.cpp" />
     <ClCompile Include="src\utility\HydroXM.cpp" />
     <ClCompile Include="src\utility\Surface.cpp" />
@@ -104,6 +110,7 @@
     <ClCompile Include="third\ImGui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="third\dxtex\include\dxtex\DirectXTex.inl" />
     <None Include="third\lib\assimp-vc140-mt.dll" />
     <None Include="third\lib\zlib1.dll" />
   </ItemGroup>
@@ -239,12 +246,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)third\assimp\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)third\assimp\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)third\assimp\include\;$(ProjectDir)third\dxtex\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)third\assimp\;$(LibraryPath);$(ProjectDir)third\dxtex\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir)third\assimp\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)third\assimp\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)third\assimp\include\;$(ProjectDir)third\dxtex\include\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)third\assimp\;$(LibraryPath);$(ProjectDir)third\dxtex\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
