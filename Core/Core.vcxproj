@@ -16,10 +16,12 @@
     <ClInclude Include="src\gfx\Bindable\BindableCodex.h" />
     <ClInclude Include="src\gfx\Bindable\Bindable.h" />
     <ClInclude Include="src\gfx\Bindable\BindableCommon.h" />
+    <ClInclude Include="src\gfx\Bindable\Blender.h" />
     <ClInclude Include="src\gfx\Bindable\ConstantBuffers.h" />
     <ClInclude Include="src\gfx\Bindable\IndexBuffer.h" />
     <ClInclude Include="src\gfx\Bindable\InputLayout.h" />
     <ClInclude Include="src\gfx\Bindable\PixelShader.h" />
+    <ClInclude Include="src\gfx\Bindable\Rasterizer.h" />
     <ClInclude Include="src\gfx\Bindable\Sampler.h" />
     <ClInclude Include="src\gfx\Bindable\Texture.h" />
     <ClInclude Include="src\gfx\Bindable\Topology.h" />
@@ -64,9 +66,11 @@
   <ItemGroup>
     <ClCompile Include="src\app\App.cpp" />
     <ClCompile Include="src\gfx\Bindable\Bindable.cpp" />
+    <ClCompile Include="src\gfx\Bindable\Blender.cpp" />
     <ClCompile Include="src\gfx\Bindable\IndexBuffer.cpp" />
     <ClCompile Include="src\gfx\Bindable\InputLayout.cpp" />
     <ClCompile Include="src\gfx\Bindable\PixelShader.cpp" />
+    <ClCompile Include="src\gfx\Bindable\Rasterizer.cpp" />
     <ClCompile Include="src\gfx\Bindable\Sampler.cpp" />
     <ClCompile Include="src\gfx\Bindable\Texture.cpp" />
     <ClCompile Include="src\gfx\Bindable\Topology.cpp" />
@@ -141,6 +145,12 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="src\gfx\shaders\PhongPSSpecNormalMap.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\PhongPSSpecNormMask.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>

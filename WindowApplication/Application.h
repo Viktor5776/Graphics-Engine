@@ -22,6 +22,9 @@ private:
 	float speed_factor = 1.0f;
 	//Models
 	Hydro::gfx::Model sponza{ window.Gfx(), "models\\Sponza\\sponza.obj", 1.0f / 20.0f };
+
+	Hydro::gfx::TestPlane bluePlane{ window.Gfx(),6.0f,{ 0.3f,0.3f,1.0f,0.0f } };
+	Hydro::gfx::TestPlane redPlane{ window.Gfx(),6.0f,{ 1.0f,0.3f,0.3f,0.0f } };
 	//Hydro::gfx::Model gobber{ window.Gfx(), "models\\gobber\\GoblinX.obj", 6.0f };
 	//Hydro::gfx::Model wall{ window.Gfx(), "models\\brick_wall\\brick_wall.obj", 6.0f };
 	//Hydro::gfx::TestPlane tp{ window.Gfx(),6.0f };

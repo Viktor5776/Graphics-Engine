@@ -13,6 +13,7 @@ namespace Hydro::gfx
 		void Reset() noexcept;
 		void Rotate(float dx, float dy) noexcept;
 		void Translate(DirectX::XMFLOAT3 translation) noexcept;
+		DirectX::XMFLOAT3 GetPos() const noexcept;
 	private:
 	private:
 		DirectX::XMFLOAT3 pos;

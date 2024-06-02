@@ -72,4 +72,8 @@ namespace Hydro::gfx
 		};
     }
 
+    DirectX::XMFLOAT3 Camera::GetPos() const noexcept
+    {
+        return pos;
+    }
 }

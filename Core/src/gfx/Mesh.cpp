@@ -234,6 +234,7 @@ namespace Hydro::gfx
 
 		bool hasSpecularMap = false;
 		bool hasAlphaGloss = false;
+		bool hasAlphaDiffuse = false;
 		bool hasNormalMap = false;
 		bool hasDiffuseMap = false;
 		float shininess = 2.0f;
@@ -247,7 +248,9 @@ namespace Hydro::gfx
 
 			if( material.GetTexture( aiTextureType_DIFFUSE, 0, &texFileName ) == aiReturn_SUCCESS )
 			{
-				bindablePtrs.push_back( Texture::Resolve( gfx, rootPath + texFileName.C_Str() ) );
+				auto tex = Texture::Resolve( gfx, rootPath + texFileName.C_Str() );
+				hasAlphaDiffuse = tex->HasAlpha();
+				bindablePtrs.push_back( std::move( tex ) );
 				hasDiffuseMap = true;
 			}
 			else
@@ -328,7 +331,9 @@ namespace Hydro::gfx
 			auto pvsbc = pvs->GetBytecode();
 			bindablePtrs.push_back( std::move( pvs ) );
 
-			bindablePtrs.push_back( PixelShader::Resolve( gfx, "PhongPSSpecNormalMap.cso" ) );
+			bindablePtrs.push_back( PixelShader::Resolve( gfx,
+				hasAlphaDiffuse ? "PhongPSSpecNormMask.cso" : "PhongPSSpecNormalMap.cso"
+			) );
 
 			bindablePtrs.push_back( InputLayout::Resolve( gfx, vbuf.GetLayout(), pvsbc ) );
 
@@ -556,6 +561,12 @@ namespace Hydro::gfx
 		{
 			throw std::runtime_error( "terrible combination of textures in material smh" );
 		}
+
+		// anything with alpha diffuse is 2-sided IN SPONZA, need a better way
+		// of signalling 2-sidedness to be more general in the future
+		bindablePtrs.push_back( Rasterizer::Resolve( gfx, hasAlphaDiffuse ) );
+
+		bindablePtrs.push_back( Blender::Resolve( gfx, false ) );
 
 		return std::make_unique<Mesh>( gfx, std::move( bindablePtrs ) );
 	}

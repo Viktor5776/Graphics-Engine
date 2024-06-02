@@ -162,6 +162,12 @@
     <ClInclude Include="src\utility\HydroMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\Blender.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\Rasterizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -272,6 +278,12 @@
     <ClCompile Include="src\utility\HydroXM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\Blender.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\Rasterizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third\lib\assimp-vc140-mt.dll" />
@@ -293,5 +305,6 @@
     <FxCompile Include="src\gfx\shaders\LightVectorData.hlsl" />
     <FxCompile Include="src\gfx\shaders\Transform.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongPSSpec.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongPSSpecNormMask.hlsl" />
   </ItemGroup>
 </Project>
