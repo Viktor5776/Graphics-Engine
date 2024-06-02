@@ -14,6 +14,8 @@ namespace Hydro::gfx::Bind
 		std::string GetUID() const noexcept override;
 		bool HasAlpha() const noexcept;
 	private:
+		static UINT CalculateNumberOfMipLevels( UINT width, UINT height ) noexcept;
+	private:
 		UINT slot;
 	protected:
 		bool hasAlpha = false;
