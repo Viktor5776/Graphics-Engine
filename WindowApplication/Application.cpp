@@ -16,8 +16,8 @@ WindowApplication::WindowApplication()
 	//gobber.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, 0.0f, -4.0f ) );
 	//nano.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, -7.0f, 6.0f ) );;
 
-	bluePlane.SetPos( cam.GetPos() );
-	redPlane.SetPos( cam.GetPos() );
+	//bluePlane.SetPos( cam.GetPos() );
+	//redPlane.SetPos( cam.GetPos() );
 
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 400.0f ) );
 }
@@ -37,9 +37,14 @@ void WindowApplication::DoFrame()
 	//nano.Draw( window.Gfx() );
 	//gobber.Draw( window.Gfx() );
 	sponza.Draw( window.Gfx() );
+	//bluePlane.Draw( window.Gfx() );
+	//redPlane.Draw( window.Gfx() );
+	cube.Draw( window.Gfx() );
+	cube2.Draw( window.Gfx() );
+	cube.DrawOutline( window.Gfx() );
+	cube2.DrawOutline( window.Gfx() );
+	//sponza.Draw( wnd.Gfx() );
 	light.Draw( window.Gfx() );
-	bluePlane.Draw( window.Gfx() );
-	redPlane.Draw( window.Gfx() );
 
 	while( const auto e = window.kbd.ReadKey() )
 	{
@@ -119,8 +124,10 @@ void WindowApplication::DoFrame()
 	//tp.SpawnControlWindow( window.Gfx() );
 	//nano.ShowWindow( window.Gfx(), "Nano" );
 	sponza.ShowWindow( window.Gfx(), "Sponza" );
-	bluePlane.SpawnControlWindow( window.Gfx(), "Blue Plane" );
-	redPlane.SpawnControlWindow( window.Gfx(), "Red Plane" );
+	//bluePlane.SpawnControlWindow( window.Gfx(), "Blue Plane" );
+	//redPlane.SpawnControlWindow( window.Gfx(), "Red Plane" );
+	cube.SpawnControlWindow( window.Gfx(), "Cube 1" );
+	cube2.SpawnControlWindow( window.Gfx(), "Cube 2" );
 
 	window.Gfx().EndFrame();
 

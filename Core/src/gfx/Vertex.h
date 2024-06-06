@@ -226,9 +226,10 @@ namespace Hydro::gfx
 	class DynamicVertexBuffer
 	{
 	public:
-		DynamicVertexBuffer( VertexLayout layout ) noexcept(!_DEBUG);
+		DynamicVertexBuffer( VertexLayout layout, size_t size = 0u ) noexcept(!_DEBUG);
 		const char* GetData() const noexcept(!_DEBUG);
 		const VertexLayout& GetLayout() const noexcept;
+		void Resize( size_t newSize ) noexcept(!_DEBUG);
 		size_t Size() const noexcept(!_DEBUG);
 		size_t SizeBytes() const noexcept(!_DEBUG);
 		template<typename ...Params>

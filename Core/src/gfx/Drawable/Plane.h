@@ -11,7 +11,7 @@ namespace Hydro::gfx
 	class Plane
 	{
 	public:
-		static IndexedTriangleList MakeTesselatedTextured( DynamicVertexBuffer layout, int divisions_x, int divisions_y )
+		static IndexedTriangleList MakeTesselatedTextured( VertexLayout layout, int divisions_x, int divisions_y )
 		{
 			assert( divisions_x >= 1 );
 			assert( divisions_y >= 1 );

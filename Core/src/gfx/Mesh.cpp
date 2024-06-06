@@ -6,6 +6,7 @@
 #include <Core/src/utility/HydroXM.h>
 #include "LayoutCodex.h"
 #include "Bindable\ConstantBuffersEx.h"
+#include <Core/src/gfx/Bindable/Stencil.h>
 
 namespace Hydro::gfx
 {
@@ -684,6 +685,8 @@ namespace Hydro::gfx
 		bindablePtrs.push_back( Rasterizer::Resolve( gfx, hasAlphaDiffuse ) );
 
 		bindablePtrs.push_back( Blender::Resolve( gfx, false ) );
+
+		bindablePtrs.push_back( std::make_shared<Stencil>( gfx, Stencil::Mode::Off ) );
 
 		return std::make_unique<Mesh>( gfx, std::move( bindablePtrs ) );
 	}

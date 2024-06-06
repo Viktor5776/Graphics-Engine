@@ -157,10 +157,20 @@ namespace Hydro::gfx
 
 
 	// VertexBuffer
-	DynamicVertexBuffer::DynamicVertexBuffer( VertexLayout layout ) noexcept(!_DEBUG)
+	DynamicVertexBuffer::DynamicVertexBuffer( VertexLayout layout, size_t size ) noexcept(!_DEBUG)
 		:
-	layout( std::move( layout ) )
-	{}
+		layout( std::move( layout ) )
+	{
+		Resize( size );
+	}
+	void DynamicVertexBuffer::Resize( size_t newSize ) noexcept(!_DEBUG)
+	{
+		const auto size = Size();
+		if( size < newSize )
+		{
+			buffer.resize( buffer.size() + layout.Size() * (newSize - size) );
+		}
+	}
 	const char* DynamicVertexBuffer::GetData() const noexcept(!_DEBUG)
 	{
 		return buffer.data();

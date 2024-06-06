@@ -60,17 +60,6 @@ namespace Hydro::gfx
 		GFX_THROW_FAILED( pSwap->GetBuffer( 0, __uuidof( ID3D11Resource ), &pBackBuffer ) );
 		GFX_THROW_FAILED( pDevice->CreateRenderTargetView( pBackBuffer.Get(), nullptr, &pTarget));
 
-		// create depth stensil state
-		D3D11_DEPTH_STENCIL_DESC dsDesc = {};
-		dsDesc.DepthEnable = TRUE;
-		dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-		dsDesc.DepthFunc = D3D11_COMPARISON_LESS;
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDSState;
-		GFX_THROW_FAILED( pDevice->CreateDepthStencilState( &dsDesc, &pDSState ) );
-
-		// bind depth state
-		pContext->OMSetDepthStencilState( pDSState.Get(), 1u );
-
 		// create depth stensil texture
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> pDepthStencil;
 		D3D11_TEXTURE2D_DESC descDepth = {};
@@ -78,7 +67,7 @@ namespace Hydro::gfx
 		descDepth.Height = (UINT)height;
 		descDepth.MipLevels = 1u;
 		descDepth.ArraySize = 1u;
-		descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+		descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		descDepth.SampleDesc.Count = 1u;
 		descDepth.SampleDesc.Quality = 0u;
 		descDepth.Usage = D3D11_USAGE_DEFAULT;
@@ -87,7 +76,7 @@ namespace Hydro::gfx
 
 		// create view of depth stensil texture
 		D3D11_DEPTH_STENCIL_VIEW_DESC descDSV = {};
-		descDSV.Format = DXGI_FORMAT_D32_FLOAT;
+		descDSV.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		descDSV.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 		descDSV.Texture2D.MipSlice = 0u;
 		GFX_THROW_FAILED( pDevice->CreateDepthStencilView(
@@ -118,7 +107,7 @@ namespace Hydro::gfx
 		pContext->OMSetRenderTargets( 1u, pTarget.GetAddressOf(), pDSV.Get() );
 		const float color[] = { red, green, blue, 1.0f };
 		pContext->ClearRenderTargetView( pTarget.Get(), color );
-		pContext->ClearDepthStencilView( pDSV.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u );
+		pContext->ClearDepthStencilView( pDSV.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0u );
 		if( imguiEnabled )
 		{
 			ImGui_ImplDX11_NewFrame();

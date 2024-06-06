@@ -13,7 +13,7 @@ namespace Hydro::gfx
 	class Sphere
 	{
 	public:
-		static IndexedTriangleList MakeTesselated( DynamicVertexBuffer layout, int latDiv, int longDiv )
+		static IndexedTriangleList MakeTesselated( VertexLayout layout, int latDiv, int longDiv )
 		{
 			assert( latDiv >= 3 );
 			assert( longDiv >= 3 );
@@ -103,7 +103,7 @@ namespace Hydro::gfx
 
 			return { std::move( vb ),std::move( indices ) };
 		}
-		static IndexedTriangleList Make( std::optional<DynamicVertexBuffer> layout = std::nullopt )
+		static IndexedTriangleList Make( std::optional<VertexLayout> layout = std::nullopt )
 		{	
 			if( !layout )
 			{
