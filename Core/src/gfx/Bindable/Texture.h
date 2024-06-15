@@ -1,6 +1,6 @@
 #pragma once
 #include "Bindable.h"
-#include "../../utility/Surface.h"
+#include "../../misc/Surface.h"
 
 namespace Hydro::gfx::Bind
 {

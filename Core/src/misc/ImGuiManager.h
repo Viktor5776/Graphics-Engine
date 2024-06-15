@@ -3,7 +3,7 @@
 #include "../win/Window.h"
 #include "../gfx/Graphics.h"
 
-namespace Hydro::utility
+namespace Hydro::misc
 {
 	class ImGuiManager
 	{

@@ -27,7 +27,7 @@
     <ClInclude Include="src\win\HydroWin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\HydroException.h">
+    <ClInclude Include="src\misc\HydroException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\win\WindowException.h">
@@ -39,7 +39,7 @@
     <ClInclude Include="src\app\App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\Timer.h">
+    <ClInclude Include="src\misc\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\app\EntryPoint.h">
@@ -81,7 +81,7 @@
     <ClInclude Include="src\gfx\Bindable\VertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\Surface.h">
+    <ClInclude Include="src\misc\Surface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Bindable\Texture.h">
@@ -117,7 +117,7 @@
     <ClInclude Include="third\ImGui\imstb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\ImGuiManager.h">
+    <ClInclude Include="src\misc\ImGuiManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Camera.h">
@@ -153,10 +153,10 @@
     <ClInclude Include="src\gfx\Bindable\TransformCbufPixel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\HydroXM.h">
+    <ClInclude Include="src\misc\HydroXM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\utility\HydroMath.h">
+    <ClInclude Include="src\misc\HydroMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Bindable\Blender.h">
@@ -207,6 +207,30 @@
     <ClInclude Include="src\gfx\Drawable\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Pass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Job.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Step.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Technique.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\FrameCommander.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\NullPixelShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\misc\HydroUtility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\TechniqueProbe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -218,7 +242,7 @@
     <ClCompile Include="src\win\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utility\HydroException.cpp">
+    <ClCompile Include="src\misc\HydroException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\win\WindowException.cpp">
@@ -260,7 +284,7 @@
     <ClCompile Include="src\gfx\Bindable\VertexShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utility\Surface.cpp">
+    <ClCompile Include="src\misc\Surface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\Bindable\Texture.cpp">
@@ -311,7 +335,7 @@
     <ClCompile Include="src\gfx\Bindable\TransformCbufPixel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\utility\HydroXM.cpp">
+    <ClCompile Include="src\misc\HydroXM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\Bindable\Blender.cpp">
@@ -327,6 +351,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\Drawable\TestCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Job.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Step.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Technique.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\NullPixelShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

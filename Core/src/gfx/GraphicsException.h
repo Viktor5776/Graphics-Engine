@@ -1,14 +1,14 @@
 #pragma once
-#include "../utility/HydroException.h"
+#include "../misc/HydroException.h"
 #include "../win/HydroWin.h"
 
 namespace Hydro::gfx
 {
-	class Exception : public utility::HydroException
+	class Exception : public misc::HydroException
 	{
 		using HydroException::HydroException;
 	};
-	class HrException : public utility::HydroException
+	class HrException : public misc::HydroException
 	{
 	public:
 		HrException( int line, const char* file, HRESULT hr ) noexcept;

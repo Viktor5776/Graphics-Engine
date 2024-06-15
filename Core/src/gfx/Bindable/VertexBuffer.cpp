@@ -8,10 +8,13 @@ namespace Hydro::gfx::Bind
 		:
 		VertexBuffer( gfx, "?", vbuf )
 	{}
+
+
 	VertexBuffer::VertexBuffer( Graphics& gfx, const std::string& tag, const DynamicVertexBuffer& vbuf )
 		:
 		stride( (UINT)vbuf.GetLayout().Size() ),
-		tag( tag )
+		tag( tag ),
+		layout( vbuf.GetLayout() )
 	{
 		HRESULT hr;
 
@@ -25,6 +28,11 @@ namespace Hydro::gfx::Bind
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = vbuf.GetData();
 		GFX_THROW_FAILED( GetDevice( gfx )->CreateBuffer( &bd, &sd, &pVertexBuffer ) );
+	}
+
+	const VertexLayout& VertexBuffer::GetLayout() const noexcept
+	{
+		return layout;
 	}
 
 	void VertexBuffer::Bind( Graphics& gfx ) noexcept

@@ -11,6 +11,9 @@ WindowApplication::WindowApplication()
 	App( 1280, 720 ),
 	light( window.Gfx(), 0.5f )
 {
+	cube.SetPos( { 4.0f,0.0f,0.0f } );
+	cube2.SetPos( { 0.0f,4.0f,0.0f } );
+
 	//wall.SetRootTransform( DirectX::XMMatrixTranslation( -12.0f, 0.0f, 0.0f ) );
 	//tp.SetPos( { 12.0f,0.0f,0.0f } );
 	//gobber.SetRootTransform( DirectX::XMMatrixTranslation( 0.0f, 0.0f, -4.0f ) );
@@ -32,19 +35,11 @@ void WindowApplication::DoFrame()
 	window.Gfx().SetCamera( cam.GetMatrix() );
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 	
-	//wall.Draw( window.Gfx() );
-	//tp.Draw( window.Gfx() );
-	//nano.Draw( window.Gfx() );
-	//gobber.Draw( window.Gfx() );
-	sponza.Draw( window.Gfx() );
-	//bluePlane.Draw( window.Gfx() );
-	//redPlane.Draw( window.Gfx() );
-	cube.Draw( window.Gfx() );
-	cube2.Draw( window.Gfx() );
-	cube.DrawOutline( window.Gfx() );
-	cube2.DrawOutline( window.Gfx() );
-	//sponza.Draw( wnd.Gfx() );
-	light.Draw( window.Gfx() );
+	light.Submit( fc );
+	cube.Submit( fc );
+	cube2.Submit( fc );
+
+	fc.Execute( window.Gfx() );
 
 	while( const auto e = window.kbd.ReadKey() )
 	{
@@ -116,21 +111,14 @@ void WindowApplication::DoFrame()
 	}
 	ImGui::End();
 	
-	//Imgui window to control camera and light
+	//Imgui windows
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
-	//wall.ShowWindow( window.Gfx(), "Wall" );
-	//gobber.ShowWindow( window.Gfx(), "gobber" ); 
-	//tp.SpawnControlWindow( window.Gfx() );
-	//nano.ShowWindow( window.Gfx(), "Nano" );
-	sponza.ShowWindow( window.Gfx(), "Sponza" );
-	//bluePlane.SpawnControlWindow( window.Gfx(), "Blue Plane" );
-	//redPlane.SpawnControlWindow( window.Gfx(), "Red Plane" );
 	cube.SpawnControlWindow( window.Gfx(), "Cube 1" );
 	cube2.SpawnControlWindow( window.Gfx(), "Cube 2" );
 
 	window.Gfx().EndFrame();
-
+	fc.Reset();
 }
 
 

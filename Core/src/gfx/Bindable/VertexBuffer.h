@@ -10,6 +10,7 @@ namespace Hydro::gfx::Bind
 		VertexBuffer( Graphics& gfx, const DynamicVertexBuffer& vbuf );
 		VertexBuffer( Graphics& gfx, const std::string& tag, const DynamicVertexBuffer& vbuf );
 		void Bind( Graphics& gfx ) noexcept override;
+		const VertexLayout& GetLayout() const noexcept;
 		static std::shared_ptr<VertexBuffer> Resolve( Graphics& gfx, const std::string& tag, const DynamicVertexBuffer& vbuf );
 		template<typename...Ignore>
 		static std::string GenerateUID( const std::string& tag, Ignore&&...ignore )
@@ -23,5 +24,6 @@ namespace Hydro::gfx::Bind
 		std::string tag;
 		UINT stride;
 		Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
+		VertexLayout layout;
 	};
 }

@@ -8,7 +8,7 @@
 
 
 
-namespace Hydro::utility
+namespace Hydro::misc
 {
 	class Surface
 	{

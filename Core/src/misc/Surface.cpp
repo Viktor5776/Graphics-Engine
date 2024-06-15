@@ -6,7 +6,7 @@
 #include <filesystem>
 
 
-namespace Hydro::utility
+namespace Hydro::misc
 {
 
 	Surface::Surface( unsigned int width, unsigned int height )

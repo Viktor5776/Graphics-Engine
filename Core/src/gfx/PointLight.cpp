@@ -1,5 +1,6 @@
 #include "PointLight.h"
 #include "../../third/ImGui/imgui.h"
+#include "Jobber\FrameCommander.h"
 
 namespace Hydro::gfx
 {
@@ -47,10 +48,10 @@ namespace Hydro::gfx
 		pcb.attQuad = 0.0075f;
 	}
 
-	void PointLight::Draw( Graphics& gfx ) const noexcept(!_DEBUG)
+	void PointLight::Submit( FrameCommander& frame ) const noexcept(!_DEBUG)
 	{
 		mesh.SetPos( pcb.pos );
-		mesh.Draw( gfx );
+		mesh.Submit( frame );
 	}
 
 	void PointLight::Bind( Graphics& gfx, DirectX::FXMMATRIX view ) const noexcept

@@ -1,7 +1,7 @@
 #pragma once
 #include <chrono>
 
-namespace Hydro::utility
+namespace Hydro::misc
 {
 	class Timer
 	{

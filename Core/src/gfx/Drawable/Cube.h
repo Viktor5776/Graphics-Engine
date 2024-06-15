@@ -4,7 +4,7 @@
 #include "../Vertex.h"
 #include "IndexedTriangleList.h"
 #include <DirectXMath.h>
-#include <Core/src/utility/HydroMath.h>
+#include <Core/src/misc/HydroMath.h>
 #include <array>
 
 

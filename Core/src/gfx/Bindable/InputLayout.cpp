@@ -25,6 +25,11 @@ namespace Hydro::gfx::Bind
 		GetContext( gfx )->IASetInputLayout( pInputLayout.Get() );
 	}
 
+	const VertexLayout InputLayout::GetLayout() const noexcept
+	{
+		return layout;
+	}
+
 	std::shared_ptr<InputLayout> InputLayout::Resolve( Graphics& gfx,
 		const VertexLayout& layout, ID3DBlob* pVertexShaderBytecode )
 	{

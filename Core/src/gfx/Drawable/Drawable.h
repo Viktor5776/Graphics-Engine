@@ -2,14 +2,17 @@
 #include "../Graphics.h"
 #include <DirectXMath.h>
 #include <memory>
+#include "../Jobber/Technique.h"
 
 namespace Hydro::gfx
 {
 
 	namespace Bind
 	{
-		class Bindable;
 		class IndexBuffer;
+		class VertexBuffer;
+		class Topology;
+		class InputLayout;
 	}
 
 	class Drawable
@@ -17,26 +20,17 @@ namespace Hydro::gfx
 	public:
 		Drawable() = default;
 		Drawable( const Drawable& ) = delete;
+		void AddTechnique( Technique tech_in ) noexcept;
 		virtual DirectX::XMMATRIX GetTransformXM() const noexcept = 0;
-		void Draw( Graphics& gfx ) const noexcept(!_DEBUG);
-		virtual ~Drawable() = default;
-		template<class T>
-		T* QueryBindable() noexcept
-		{
-			for( const auto& pb : binds )
-			{
-				if( const T* pt = dynamic_cast<T*>(pb.get()) )
-				{
-					return const_cast<T*>( pt );
-				}
-			}
-			return nullptr;
-		}
+		void Submit( class FrameCommander& frame ) const noexcept;
+		void Bind( Graphics& gfx ) const noexcept;
+		UINT GetIndexCount() const noexcept(!_DEBUG);
+		virtual ~Drawable();
 	protected:
-		void AddBind( std::shared_ptr<Bind::Bindable> bind ) noexcept(!_DEBUG);
-	private:
-		const class Bind::IndexBuffer* pIndexBuffer = nullptr;
-		std::vector<std::shared_ptr<Bind::Bindable>> binds;
+		std::shared_ptr<Bind::IndexBuffer> pIndices;
+		std::shared_ptr<Bind::VertexBuffer> pVertices;
+		std::shared_ptr<Bind::Topology> pTopology;
+		std::vector<Technique> techniques;
 	};
 
 }

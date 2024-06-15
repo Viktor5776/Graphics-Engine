@@ -2,7 +2,7 @@
 #include <exception>
 #include <string>
 
-namespace Hydro::utility
+namespace Hydro::misc
 {
 	class HydroException : public std::exception
 	{

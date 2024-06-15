@@ -1,10 +1,10 @@
 #pragma once
 #include "HydroWin.h"
-#include "../utility/HydroException.h"
+#include "../misc/HydroException.h"
 
 namespace Hydro::win
 {
-	class WindowException : public utility::HydroException
+	class WindowException : public misc::HydroException
 	{
 	public:
 		WindowException( int line, const char* file, HRESULT hr ) noexcept;

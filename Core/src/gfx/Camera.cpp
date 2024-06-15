@@ -1,6 +1,6 @@
 #include "Camera.h"
 #include "../../third/ImGui/imgui.h"
-#include "../utility/HydroMath.h"
+#include "../misc/HydroMath.h"
 
 namespace Hydro::gfx
 {

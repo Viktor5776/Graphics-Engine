@@ -1,7 +1,7 @@
 #include "HydroException.h"
 #include <sstream>
 
-namespace Hydro::utility
+namespace Hydro::misc
 {
 
 	HydroException::HydroException( int line, const char* file ) noexcept

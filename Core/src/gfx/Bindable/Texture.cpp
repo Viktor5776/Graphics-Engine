@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "../GraphicsException.h"
 #include "BindableCodex.h"
-#include "../../utility/Surface.h"
+#include "../../misc/Surface.h"
 
 namespace Hydro::gfx::Bind
 {
@@ -13,7 +13,7 @@ namespace Hydro::gfx::Bind
 		HRESULT hr;
 
 		//load surface
-		const auto s = utility::Surface::FromFile( path );
+		const auto s = misc::Surface::FromFile( path );
 		hasAlpha = s.AlphaLoaded();
 
 		D3D11_TEXTURE2D_DESC textureDesc = {};
@@ -31,13 +31,13 @@ namespace Hydro::gfx::Bind
 
 		D3D11_SUBRESOURCE_DATA sd = {};
 		sd.pSysMem = s.GetBufferPtr();
-		sd.SysMemPitch = s.GetWidth() * sizeof( Hydro::utility::Surface::Color );
+		sd.SysMemPitch = s.GetWidth() * sizeof( Hydro::misc::Surface::Color );
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
 		GFX_THROW_FAILED( GetDevice( gfx )->CreateTexture2D( &textureDesc, nullptr, &pTexture ) );
 
 		// write image data into top mip level
 		GetContext( gfx )->UpdateSubresource(
-			pTexture.Get(), 0u, nullptr, s.GetBufferPtrConst(), s.GetWidth() * sizeof( Hydro::utility::Surface::Color ), 0u
+			pTexture.Get(), 0u, nullptr, s.GetBufferPtrConst(), s.GetWidth() * sizeof( Hydro::misc::Surface::Color ), 0u
 		);
 		
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};

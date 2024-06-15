@@ -1,12 +1,19 @@
 #pragma once
 #include "../Graphics.h"
 
+namespace Hydro::gfx
+{
+	class Drawable;
+}
+
 namespace Hydro::gfx::Bind
 {
 	class Bindable
 	{
 	public:
 		virtual void Bind( Graphics& gfx ) noexcept = 0;
+		virtual void InitializeParentReference( const Drawable& ) noexcept
+		{}
 		virtual std::string GetUID() const noexcept
 		{
 			assert( false );

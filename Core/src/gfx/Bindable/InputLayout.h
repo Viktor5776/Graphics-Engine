@@ -11,6 +11,7 @@ namespace Hydro::gfx::Bind
 			VertexLayout layout,
 			ID3DBlob* pVertexShaderBytecode );
 		void Bind( Graphics& gfx ) noexcept override;
+		const VertexLayout GetLayout() const noexcept;
 		static std::shared_ptr<InputLayout> Resolve( Graphics& gfx, const VertexLayout& layout, ID3DBlob* pVertexShaderBytecode );
 		static std::string GenerateUID( const VertexLayout& layout, ID3DBlob* pVertexShaderBytecode = nullptr );
 		std::string GetUID() const noexcept override;

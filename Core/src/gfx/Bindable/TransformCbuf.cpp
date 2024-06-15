@@ -3,9 +3,7 @@
 namespace Hydro::gfx::Bind
 {
 
-	TransformCbuf::TransformCbuf( Graphics& gfx, const Drawable& parent, UINT slot )
-		:
-		parent( parent )
+	TransformCbuf::TransformCbuf( Graphics& gfx, UINT slot )
 	{
 		if( !pVcbuf )
 		{
@@ -18,15 +16,22 @@ namespace Hydro::gfx::Bind
 		UpdateBindImpl( gfx, GetTransforms( gfx ) );
 	}
 
+	void TransformCbuf::InitializeParentReference( const Drawable& parent ) noexcept
+	{
+		pParent = &parent;
+	}
+
 	void TransformCbuf::UpdateBindImpl( Graphics& gfx, const Transforms& tf ) noexcept
 	{
+		assert( pParent != nullptr );
 		pVcbuf->Update( gfx, tf );
 		pVcbuf->Bind( gfx );
 	}
 
 	TransformCbuf::Transforms TransformCbuf::GetTransforms( Graphics& gfx ) noexcept
 	{
-		const auto modelView = parent.GetTransformXM() * gfx.GetCamera();
+		assert( pParent != nullptr );
+		const auto modelView = pParent->GetTransformXM() * gfx.GetCamera();
 		return
 		{
 			DirectX::XMMatrixTranspose( modelView ),
