@@ -28,6 +28,14 @@ namespace Hydro::gfx
 		pVertices->Bind( gfx );
 	}
 
+	void Drawable::Accept( TechniqueProbe& probe )
+	{
+		for( auto& t : techniques )
+		{
+			t.Accept( probe );
+		}
+	}
+
 	UINT Drawable::GetIndexCount() const noexcept(!_DEBUG)
 	{
 		return pIndices->GetCount();

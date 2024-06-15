@@ -1,11 +1,11 @@
 #include "Mesh.h"
-#include "../../third/ImGui/imgui.h"
-#include "../misc/Surface.h"
+#include "../../../third/ImGui/imgui.h"
+#include "../../misc/Surface.h"
 #include <unordered_map>
 #include <sstream>
 #include <Core/src/misc/HydroXM.h>
-#include "LayoutCodex.h"
-#include "Bindable\ConstantBuffersEx.h"
+#include "../LayoutCodex.h"
+#include "../Bindable\ConstantBuffersEx.h"
 #include <Core/src/gfx/Bindable/Stencil.h>
 
 namespace Hydro::gfx

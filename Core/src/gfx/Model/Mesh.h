@@ -1,8 +1,8 @@
 #pragma once
-#include "Drawable/Drawable.h"
-#include "Bindable/BindableCommon.h"
-#include "Bindable/ConstantBuffers.h"
-#include "Vertex.h"
+#include "../Drawable/Drawable.h"
+#include "../Bindable/BindableCommon.h"
+#include "../Bindable/ConstantBuffers.h"
+#include "../Vertex.h"
 #include <optional>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <filesystem>
 #include <Core\third\ImGui\imgui.h>
-#include "DynamicConstant.h"
+#include "../DynamicConstant.h"
 
 namespace Hydro::gfx
 {

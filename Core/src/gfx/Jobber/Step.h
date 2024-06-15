@@ -3,6 +3,7 @@
 #include <memory>
 #include "../Bindable/Bindable.h"
 #include "../Graphics.h"
+#include "TechniqueProbe.h"
 
 namespace Hydro::gfx
 {
@@ -14,18 +15,6 @@ namespace Hydro::gfx
 			:
 			targetPass{ targetPass_in }
 		{}
-		//template<class B>
-		//B* QueryBindable() noexcept
-		//{
-		//	for( auto& pb : binds )
-		//	{
-		//		if( auto pt = dynamic_cast<T*>(pb.get()) )
-		//		{
-		//			return pt;
-		//		}
-		//	}
-		//	return nullptr;
-		//}
 		void AddBindable( std::shared_ptr<Bind::Bindable> bind_in ) noexcept
 		{
 			bindables.push_back( std::move( bind_in ) );
@@ -39,6 +28,14 @@ namespace Hydro::gfx
 			}
 		}
 		void InitializeParentReferences( const class Drawable& parent ) noexcept;
+		void Accept( TechniqueProbe& probe )
+		{
+			probe.SetStep( this );
+			for( auto& pb : bindables )
+			{
+				pb->Accept( probe );
+			}
+		}
 	private:
 		size_t targetPass;
 		std::vector<std::shared_ptr<Bind::Bindable>> bindables;

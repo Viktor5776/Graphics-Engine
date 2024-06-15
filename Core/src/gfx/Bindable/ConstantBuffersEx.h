@@ -1,6 +1,7 @@
 #pragma once
 #include "Bindable.h"
 #include "../DynamicConstant.h"
+#include "../Jobber/TechniqueProbe.h"
 
 namespace Hydro::gfx::Bind
 {
@@ -91,6 +92,13 @@ namespace Hydro::gfx::Bind
 				dirty = false;
 			}
 			PixelConstantBufferEX::Bind( gfx );
+		}
+		void Accept( TechniqueProbe& probe ) override
+		{
+			if( probe.VisitBuffer( buf ) )
+			{
+				dirty = true;
+			}
 		}
 	private:
 		bool dirty = false;

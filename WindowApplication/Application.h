@@ -3,7 +3,7 @@
 #include <Core/src/app/EntryPoint.h>
 #include <Core/src/misc/Timer.h>
 #include <Core/src/gfx/Drawable/Drawable.h>
-#include <Core/src/gfx/Mesh.h>
+#include <Core/src/gfx/Model/Mesh.h>
 #include <Core/src/gfx/Drawable/TestPlane.h>
 #include <Core/src/gfx/PointLight.h>
 #include <Core/src/gfx/Camera.h>
