@@ -163,18 +163,7 @@ namespace Hydro::gfx
 		size_t GetElementCount() const noexcept;
 		std::vector<D3D11_INPUT_ELEMENT_DESC> GetD3DLayout() const noexcept(!_DEBUG);
 		std::string GetCode() const noexcept(!_DEBUG);
-		template<ElementType Type>
-		bool Has() const noexcept
-		{
-			for( auto& e : elements )
-			{
-				if( e.GetType() == Type )
-				{
-					return true;
-				}
-			}
-			return false;
-		}
+		bool Has( ElementType type ) const noexcept;
 	private:
 		std::vector<Element> elements;
 	};
@@ -255,6 +244,7 @@ namespace Hydro::gfx
 	{
 	public:
 		DynamicVertexBuffer( VertexLayout layout, size_t size = 0u ) noexcept(!_DEBUG);
+		DynamicVertexBuffer( VertexLayout layout, const aiMesh& mesh );
 		const char* GetData() const noexcept(!_DEBUG);
 		const VertexLayout& GetLayout() const noexcept;
 		void Resize( size_t newSize ) noexcept(!_DEBUG);

@@ -4,9 +4,12 @@
 #include <memory>
 #include "../Jobber/Technique.h"
 
+struct aiMesh;
+
 namespace Hydro::gfx
 {
 	class TechniqueProbe;
+	class Material;
 
 	namespace Bind
 	{
@@ -20,6 +23,7 @@ namespace Hydro::gfx
 	{
 	public:
 		Drawable() = default;
+		Drawable( Graphics& gfx, const Material& mat, const aiMesh& mesh ) noexcept;
 		Drawable( const Drawable& ) = delete;
 		void AddTechnique( Technique tech_in ) noexcept;
 		virtual DirectX::XMMATRIX GetTransformXM() const noexcept = 0;

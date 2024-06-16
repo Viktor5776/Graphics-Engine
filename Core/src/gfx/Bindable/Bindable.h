@@ -1,5 +1,6 @@
 #pragma once
 #include "../Graphics.h"
+#include <memory>
 #include <string>
 
 namespace Hydro::gfx
@@ -27,5 +28,11 @@ namespace Hydro::gfx::Bind
 	protected:
 		static ID3D11DeviceContext* GetContext( Graphics& gfx ) noexcept;
 		static ID3D11Device* GetDevice( Graphics& gfx ) noexcept;
+	};
+
+	class CloningBindable : public Bindable
+	{
+	public:
+		virtual std::unique_ptr<CloningBindable> Clone() const noexcept = 0;
 	};
 }

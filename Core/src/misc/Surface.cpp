@@ -84,7 +84,7 @@ namespace Hydro::misc
 		mbstowcs_s( nullptr, wideName, name.c_str(), _TRUNCATE );
 
 		DirectX::ScratchImage scratch;
-		HRESULT hr = DirectX::LoadFromWICFile( wideName, DirectX::WIC_FLAGS_NONE, nullptr, scratch );
+		HRESULT hr = DirectX::LoadFromWICFile( wideName, DirectX::WIC_FLAGS_IGNORE_SRGB, nullptr, scratch );
 
 		if( FAILED( hr ) )
 		{

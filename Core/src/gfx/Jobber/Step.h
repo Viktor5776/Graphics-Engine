@@ -15,6 +15,26 @@ namespace Hydro::gfx
 			:
 			targetPass{ targetPass_in }
 		{}
+		Step( Step&& ) = default;
+		Step( const Step& src ) noexcept
+			:
+			targetPass( src.targetPass )
+		{
+			bindables.reserve( src.bindables.size() );
+			for( auto& pb : src.bindables )
+			{
+				if( auto* pCloning = dynamic_cast<const Bind::CloningBindable*>(pb.get()) )
+				{
+					bindables.push_back( pCloning->Clone() );
+				}
+				else
+				{
+					bindables.push_back( pb );
+				}
+			}
+		}
+		Step& operator=( const Step& ) = delete;
+		Step& operator=( Step&& ) = delete;
 		void AddBindable( std::shared_ptr<Bind::Bindable> bind_in ) noexcept
 		{
 			bindables.push_back( std::move( bind_in ) );

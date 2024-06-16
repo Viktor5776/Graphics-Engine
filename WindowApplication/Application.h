@@ -9,6 +9,7 @@
 #include <Core/src/gfx/Camera.h>
 #include <Core/src/gfx/Drawable/TestCube.h>
 #include <Core/src/gfx/Jobber/FrameCommander.h>
+#include <Core/src/gfx/Model/Material.h>
 
 class WindowApplication : public Hydro::app::App
 {
@@ -26,6 +27,7 @@ private:
 	//Models
 	Hydro::gfx::TestCube cube{ window.Gfx(),4.0f };
 	Hydro::gfx::TestCube cube2{ window.Gfx(),4.0f };
+	std::unique_ptr<Hydro::gfx::Mesh> pLoaded;
 
 	//Hydro::gfx::Model sponza{ window.Gfx(), "models\\Sponza\\sponza.obj", 1.0f / 20.0f };
 	//Hydro::gfx::TestPlane bluePlane{ window.Gfx(),6.0f,{ 0.3f,0.3f,1.0f,0.0f } };

@@ -2,6 +2,8 @@
 #include "../Bindable/IndexBuffer.h"
 #include "../Bindable/BindableCommon.h"
 #include "../Bindable/BindableCodex.h"
+#include <assimp\scene.h>
+#include "../Model/Material.h"
 
 namespace Hydro::gfx
 {
@@ -12,6 +14,18 @@ namespace Hydro::gfx
 		for( const auto& tech : techniques )
 		{
 			tech.Submit( frame, *this );
+		}
+	}
+
+	Drawable::Drawable( Graphics& gfx, const Material& mat, const aiMesh& mesh ) noexcept
+	{
+		pVertices = mat.MakeVertexBindable( gfx, mesh );
+		pIndices = mat.MakeIndexBindable( gfx, mesh );
+		pTopology = Bind::Topology::Resolve( gfx );
+
+		for( auto& t : mat.GetTechniques() )
+		{
+			AddTechnique( std::move( t ) );
 		}
 	}
 

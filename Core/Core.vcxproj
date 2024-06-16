@@ -113,6 +113,7 @@
     <ClCompile Include="src\gfx\Jobber\Step.cpp" />
     <ClCompile Include="src\gfx\Jobber\Technique.cpp" />
     <ClCompile Include="src\gfx\LayoutCodex.cpp" />
+    <ClCompile Include="src\gfx\Model\Material.cpp" />
     <ClCompile Include="src\gfx\Model\Mesh.cpp" />
     <ClCompile Include="src\gfx\PointLight.cpp" />
     <ClCompile Include="src\gfx\Vertex.cpp" />
@@ -149,7 +150,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\gfx\shaders\PhongPSNormalMap.hlsl">
+    <FxCompile Include="src\gfx\shaders\PhongDifNrmPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
@@ -191,7 +192,7 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="src\gfx\shaders\PhongVSNormalMap.hlsl">
+    <FxCompile Include="src\gfx\shaders\PhongDifNrmVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>

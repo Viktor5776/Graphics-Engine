@@ -368,6 +368,9 @@
     <ClCompile Include="src\gfx\Bindable\NullPixelShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\Model\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third\lib\assimp-vc140-mt.dll" />
@@ -378,12 +381,12 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\gfx\shaders\PhongPS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongPSNormalMap.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifNrmPS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongPSNormalMapObject.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongPSNotex.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongPSSpecNormalMap.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongVS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongVSNormalMap.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifNrmVS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongVSNotex.hlsl" />
     <FxCompile Include="src\gfx\shaders\SolidPS.hlsl" />
     <FxCompile Include="src\gfx\shaders\SolidVS.hlsl" />

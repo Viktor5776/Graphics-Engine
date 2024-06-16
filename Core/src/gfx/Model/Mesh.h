@@ -11,9 +11,12 @@
 #include <filesystem>
 #include <Core\third\ImGui\imgui.h>
 #include "../DynamicConstant.h"
+#include <string>
 
 namespace Hydro::gfx
 {
+	class Material;
+
 	class ModelException : public misc::HydroException
 	{
 	public:
@@ -28,7 +31,7 @@ namespace Hydro::gfx
 	class Mesh : public Drawable
 	{
 	public:
-		using Drawable::Drawable;
+		Mesh( Graphics& gfx, const Material& mat, const aiMesh& mesh ) noexcept(!_DEBUG);
 		DirectX::XMMATRIX GetTransformXM() const noexcept override;
 		void Submit( FrameCommander& frame, DirectX::FXMMATRIX accumulatedTranform ) const noexcept(!_DEBUG);
 	private:

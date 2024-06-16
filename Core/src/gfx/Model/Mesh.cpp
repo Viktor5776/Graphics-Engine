@@ -338,6 +338,11 @@ namespace Hydro::gfx
 		pRoot = ParseNode( nextId, *pScene->mRootNode );
 	}
 
+	Mesh::Mesh( Graphics& gfx, const Material& mat, const aiMesh& mesh ) noexcept(!_DEBUG)
+		:
+		Drawable( gfx, mat, mesh )
+	{}
+
 	void Model::Submit( FrameCommander& frame ) const noexcept(!_DEBUG)
 	{
 		// I'm still not happy about updating parameters (i.e. mutating a bindable GPU state
@@ -362,6 +367,7 @@ namespace Hydro::gfx
 
 	std::unique_ptr<Mesh> Model::ParseMesh( Graphics& gfx, const aiMesh& mesh, const aiMaterial* const* pMaterials, const std::filesystem::path& path, float scale )
 	{
+		return {};
 		//using namespace std::string_literals;
 		//using Dvtx::VertexLayout;
 		//using namespace Bind;
@@ -720,7 +726,7 @@ namespace Hydro::gfx
 		//bindablePtrs.push_back( std::make_shared<Stencil>( gfx,Stencil::Mode::Off ) );
 
 		//return std::make_unique<Mesh>( gfx,std::move( bindablePtrs ) );
-		return {};
+		//return {};
 	}
 
 	std::unique_ptr<Node> Model::ParseNode( int& nextId, const aiNode& node ) noexcept

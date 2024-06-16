@@ -10,8 +10,22 @@ namespace Hydro::gfx
 	}
 	VertexLayout& VertexLayout::Append( ElementType type ) noexcept(!_DEBUG)
 	{
-		elements.emplace_back( type, Size() );
+		if( !Has( type ) )
+		{
+			elements.emplace_back( type, Size() );
+		}
 		return *this;
+	}
+	bool VertexLayout::Has( ElementType type ) const noexcept
+	{
+		for( auto& e : elements )
+		{
+			if( e.GetType() == type )
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	size_t VertexLayout::Size() const noexcept(!_DEBUG)
 	{
@@ -127,6 +141,7 @@ namespace Hydro::gfx
 	{
 		Resize( size );
 	}
+
 	void DynamicVertexBuffer::Resize( size_t newSize ) noexcept(!_DEBUG)
 	{
 		const auto size = Size();
@@ -139,6 +154,30 @@ namespace Hydro::gfx
 	{
 		return buffer.data();
 	}
+
+	template<VertexLayout::ElementType type>
+	struct AttributeAiMeshFill
+	{
+		static constexpr void Exec( DynamicVertexBuffer* pBuf, const aiMesh& mesh ) noexcept(!_DEBUG)
+		{
+			for( auto end = mesh.mNumVertices, i = 0u; i < end; i++ )
+			{
+				(*pBuf)[i].Attr<type>() = VertexLayout::Map<type>::Extract( mesh, i );
+			}
+		}
+	};
+	DynamicVertexBuffer::DynamicVertexBuffer( VertexLayout layout_in, const aiMesh& mesh )
+		:
+		layout( std::move( layout_in ) )
+	{
+		Resize( mesh.mNumVertices );
+		Resize( mesh.mNumVertices );
+		for( size_t i = 0, end = layout.GetElementCount(); i < end; i++ )
+		{
+			VertexLayout::Bridge<AttributeAiMeshFill>( layout.ResolveByIndex( i ).GetType(), this, mesh );
+		}
+	}
+
 	const VertexLayout& DynamicVertexBuffer::GetLayout() const noexcept
 	{
 		return layout;

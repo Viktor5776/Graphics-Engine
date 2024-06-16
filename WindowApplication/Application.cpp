@@ -4,7 +4,9 @@
 #include <Core/third/ImGui/imgui_impl_win32.h>
 #include <dxtex/DirectXTex.h>
 
+
 using namespace Hydro;
+using namespace Hydro::gfx;
 
 WindowApplication::WindowApplication()
 	:
@@ -13,6 +15,21 @@ WindowApplication::WindowApplication()
 {
 	cube.SetPos( { 4.0f,0.0f,0.0f } );
 	cube2.SetPos( { 0.0f,4.0f,0.0f } );
+
+	{
+		std::string path = "Models\\brick_wall\\brick_wall.obj";
+		Assimp::Importer imp;
+		const auto pScene = imp.ReadFile( path,
+			aiProcess_Triangulate |
+			aiProcess_JoinIdenticalVertices |
+			aiProcess_ConvertToLeftHanded |
+			aiProcess_GenNormals |
+			aiProcess_CalcTangentSpace
+		);
+
+		Material mat{ window.Gfx(),*pScene->mMaterials[1],path };
+		pLoaded = std::make_unique<Mesh>( window.Gfx(), mat, *pScene->mMeshes[0] );
+	}
 
 	//wall.SetRootTransform( DirectX::XMMatrixTranslation( -12.0f, 0.0f, 0.0f ) );
 	//tp.SetPos( { 12.0f,0.0f,0.0f } );
@@ -36,8 +53,9 @@ void WindowApplication::DoFrame()
 	light.Bind( window.Gfx(), cam.GetMatrix() );
 	
 	light.Submit( fc );
-	cube.Submit( fc );
-	cube2.Submit( fc );
+	//cube.Submit( fc );
+	//cube2.Submit( fc );
+	pLoaded->Submit( fc, DirectX::XMMatrixIdentity() );
 
 	fc.Execute( window.Gfx() );
 
