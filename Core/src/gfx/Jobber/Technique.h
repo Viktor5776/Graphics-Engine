@@ -10,8 +10,9 @@ namespace Hydro::gfx
 	{
 	public:
 		Technique() = default;
-		Technique( std::string name ) noexcept
+		Technique( std::string name, bool startActive = true ) noexcept
 			:
+			active( startActive ),
 			name( name )
 		{}
 		void Submit( class FrameCommander& frame, const class Drawable& drawable ) const noexcept;

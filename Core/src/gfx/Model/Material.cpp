@@ -1,4 +1,7 @@
 #include "Material.h"
+#include "../DynamicConstant.h"
+#include "../Bindable/ConstantBuffersEx.h"
+
 
 namespace Hydro::gfx
 {
@@ -61,6 +64,7 @@ namespace Hydro::gfx
 					hasGlossAlpha = tex->HasAlpha();
 					step.AddBindable( std::move( tex ) );
 					pscLayout.Add<Dcb::Bool>( "useGlossAlpha" );
+					pscLayout.Add<Dcb::Bool>( "useSpecularMap" );
 				}
 				pscLayout.Add<Dcb::Float3>( "specularColor" );
 				pscLayout.Add<Dcb::Float>( "specularWeight" );
@@ -84,10 +88,10 @@ namespace Hydro::gfx
 			{
 				step.AddBindable( std::make_shared<TransformCbuf>( gfx, 0u ) );
 				step.AddBindable( Blender::Resolve( gfx, false ) );
-				auto pvs = VertexShader::Resolve( gfx, shaderCode + "VS.cso" );
+				auto pvs = VertexShader::Resolve( gfx, shaderCode + "_VS.cso" );
 				auto pvsbc = pvs->GetBytecode();
 				step.AddBindable( std::move( pvs ) );
-				step.AddBindable( PixelShader::Resolve( gfx, shaderCode + "PS.cso" ) );
+				step.AddBindable( PixelShader::Resolve( gfx, shaderCode + "_PS.cso" ) );
 				step.AddBindable( InputLayout::Resolve( gfx, vtxLayout, pvsbc ) );
 				if( hasTexture )
 				{
@@ -102,6 +106,7 @@ namespace Hydro::gfx
 					r = reinterpret_cast<DirectX::XMFLOAT3&>(color);
 				}
 				buf["useGlossAlpha"].SetIfExists( hasGlossAlpha );
+				buf["useSpecularMap"].SetIfExists( true );
 				if( auto r = buf["specularColor"]; r.Exists() )
 				{
 					aiColor3D color = { 0.18f,0.18f,0.18f };
@@ -117,19 +122,110 @@ namespace Hydro::gfx
 				}
 				buf["useNormalMap"].SetIfExists( true );
 				buf["normalMapWeight"].SetIfExists( 1.0f );
-				step.AddBindable( std::make_unique<Bind::CachingPixelConstantBufferEX>( gfx, std::move( buf ), 1u ) );
+				step.AddBindable( std::make_unique<Bind::CachingPixelConstantBufferEx>( gfx, std::move( buf ), 1u ) );
 			}
 			phong.AddStep( std::move( step ) );
 			techniques.push_back( std::move( phong ) );
 		}
 		// outline technique
 		{
+			Technique outline( "Outline",false );
+			{
+				Step mask( 1 );
+
+				auto pvs = VertexShader::Resolve( gfx, "Solid_VS.cso" );
+				auto pvsbc = pvs->GetBytecode();
+				mask.AddBindable( std::move( pvs ) );
+
+				// TODO: better sub-layout generation tech for future consideration maybe
+				mask.AddBindable( InputLayout::Resolve( gfx, vtxLayout, pvsbc ) );
+
+				mask.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
+
+				// TODO: might need to specify rasterizer when doubled-sided models start being used
+
+				outline.AddStep( std::move( mask ) );
+			}
+			{
+				Step draw( 2 );
+
+				// these can be pass-constant (tricky due to layout issues)
+				auto pvs = VertexShader::Resolve( gfx, "Offset_VS.cso" );
+				auto pvsbc = pvs->GetBytecode();
+				draw.AddBindable( std::move( pvs ) );
+
+				// this can be pass-constant
+				draw.AddBindable( PixelShader::Resolve( gfx, "Solid_PS.cso" ) );
+
+				{
+					Dcb::RawLayout lay;
+					lay.Add<Dcb::Float3>( "materialColor" );
+					auto buf = Dcb::Buffer( std::move( lay ) );
+					buf["materialColor"] = DirectX::XMFLOAT3{ 1.0f,0.4f,0.4f };
+					draw.AddBindable( std::make_shared<Bind::CachingPixelConstantBufferEx>( gfx, buf, 1u ) );
+				}
+
+				{
+					Dcb::RawLayout lay;
+					lay.Add<Dcb::Float>( "offset" );
+					auto buf = Dcb::Buffer( std::move( lay ) );
+					buf["offset"] = 0.1f;
+					draw.AddBindable( std::make_shared<Bind::CachingVertexConstantBufferEx>( gfx, buf, 1u ) );
+				}
+
+				// TODO: better sub-layout generation tech for future consideration maybe
+				draw.AddBindable( InputLayout::Resolve( gfx, vtxLayout, pvsbc ) );
+
+				draw.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
+
+				// TODO: might need to specify rasterizer when doubled-sided models start being used
+
+				outline.AddStep( std::move( draw ) );
+			}
+			techniques.push_back( std::move( outline ) );
 		}
 	}
 
 	DynamicVertexBuffer Material::ExtractVertices( const aiMesh& mesh ) const noexcept
 	{
 		return { vtxLayout,mesh };
+	}
+	std::vector<unsigned short> Material::ExtractIndices( const aiMesh& mesh ) const noexcept
+	{
+		std::vector<unsigned short> indices;
+		indices.reserve( mesh.mNumFaces * 3 );
+		for( unsigned int i = 0; i < mesh.mNumFaces; i++ )
+		{
+			const auto& face = mesh.mFaces[i];
+			assert( face.mNumIndices == 3 );
+			indices.push_back( face.mIndices[0] );
+			indices.push_back( face.mIndices[1] );
+			indices.push_back( face.mIndices[2] );
+		}
+		return indices;
+	}
+	std::shared_ptr<Bind::VertexBuffer> Material::MakeVertexBindable( Graphics& gfx, const aiMesh& mesh, float scale ) const noexcept(!_DEBUG)
+	{
+		auto vtc = ExtractVertices( mesh );
+		if( scale != 1.0f )
+		{
+			for( auto i = 0u; i < vtc.Size(); i++ )
+			{
+				DirectX::XMFLOAT3& pos = vtc[i].Attr<VertexLayout::ElementType::Position3D>();
+				pos.x *= scale;
+				pos.y *= scale;
+				pos.z *= scale;
+			}
+		}
+		return Bind::VertexBuffer::Resolve( gfx, MakeMeshTag( mesh ), std::move( vtc ) );
+	}
+	std::shared_ptr<Bind::IndexBuffer> Material::MakeIndexBindable( Graphics& gfx, const aiMesh& mesh ) const noexcept(!_DEBUG)
+	{
+		return Bind::IndexBuffer::Resolve( gfx, MakeMeshTag( mesh ), ExtractIndices( mesh ) );
+	}
+	std::string Material::MakeMeshTag( const aiMesh& mesh ) const noexcept
+	{
+		return modelPath + "%" + mesh.mName.C_Str();
 	}
 	std::vector<Technique> Material::GetTechniques() const noexcept
 	{

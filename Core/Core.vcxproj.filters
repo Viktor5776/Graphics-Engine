@@ -234,6 +234,18 @@
     <ClInclude Include="src\gfx\Model\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\Model\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Model\ModelException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Model\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Model\ModelProbe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -371,6 +383,15 @@
     <ClCompile Include="src\gfx\Model\Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\Model\Node.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Model\ModelException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Model\Model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third\lib\assimp-vc140-mt.dll" />
@@ -380,21 +401,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\gfx\shaders\PhongPS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongDifNrmPS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDif_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifNrm_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongPSNormalMapObject.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongPSNotex.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongPSSpecNormalMap.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongVS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongDifNrmVS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongVSNotex.hlsl" />
-    <FxCompile Include="src\gfx\shaders\SolidPS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\SolidVS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Phong_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifSpcNrm_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDif_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifNrm_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Phong_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Solid_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Solid_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\ShaderOps.hlsl" />
     <FxCompile Include="src\gfx\shaders\PointLight.hlsl" />
     <FxCompile Include="src\gfx\shaders\LightVectorData.hlsl" />
     <FxCompile Include="src\gfx\shaders\Transform.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongPSSpec.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongPSSpecNormMask.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifSpc_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifMskSpcNrm_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifMskSpcNrm_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifSpcNrm_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifSpc_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Offset_VS.hlsl" />
   </ItemGroup>
 </Project>
