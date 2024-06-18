@@ -246,6 +246,15 @@
     <ClInclude Include="src\gfx\Model\ModelProbe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\GraphicsResource\GraphicsResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\GraphicsResource\RenderTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\GraphicsResource\DepthStencil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -270,9 +279,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\GraphicsException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gfx\Bindable\Bindable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gfx\Bindable\IndexBuffer.cpp">
@@ -392,6 +398,15 @@
     <ClCompile Include="src\gfx\Model\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\GraphicsResource\GraphicsResource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\GraphicsResource\RenderTarget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\GraphicsResource\DepthStencil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third\lib\assimp-vc140-mt.dll" />
@@ -421,5 +436,7 @@
     <FxCompile Include="src\gfx\shaders\PhongDifSpcNrm_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifSpc_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Offset_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Fullscreen_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Blur_PS.hlsl" />
   </ItemGroup>
 </Project>

@@ -1,10 +1,10 @@
 #pragma once
-#include <string>
 #include <cassert>
 #include <DirectXMath.h>
 #include <vector>
 #include <memory>
 #include <optional>
+#include <string>
 
 // master list of leaf types that generates enum elements and various switches etc.
 #define LEAF_ELEMENT_TYPES \

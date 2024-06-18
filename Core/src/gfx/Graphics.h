@@ -10,6 +10,8 @@
 
 namespace Hydro::gfx
 {
+	class DepthStencil;
+
 	namespace Bind
 	{
 		class Bindable;
@@ -17,7 +19,7 @@ namespace Hydro::gfx
 
 	class Graphics
 	{
-		friend class Bind::Bindable;
+		friend class GraphicsResource;
 	public:
 		Graphics( HWND hWnd, int width, int height );
 		Graphics( const Graphics& ) = delete;
@@ -25,6 +27,8 @@ namespace Hydro::gfx
 		~Graphics();
 		void BeginFrame( float red, float green, float blue ) noexcept;
 		void EndFrame();
+		void BindSwapBuffer() noexcept;
+		void BindSwapBuffer( const DepthStencil& ds ) noexcept;
 		void DrawIndexed( UINT count ) noexcept(!_DEBUG);
 		void SetProjection( DirectX::FXMMATRIX proj ) noexcept;
 		DirectX::XMMATRIX GetProjection() const noexcept;
@@ -35,7 +39,11 @@ namespace Hydro::gfx
 		void EnableImgui() noexcept;
 		void DisableImgui() noexcept;
 		bool IsImguiEnabled() const noexcept;
+		UINT GetWidth() const noexcept;
+		UINT GetHeight() const noexcept;
 	private:
+		UINT width;
+		UINT height;
 		bool imguiEnabled = true;
 		DirectX::XMMATRIX projection;
 		DirectX::XMMATRIX camera;

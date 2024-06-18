@@ -45,6 +45,8 @@
     <ClInclude Include="src\gfx\DynamicConstant.h" />
     <ClInclude Include="src\gfx\Graphics.h" />
     <ClInclude Include="src\gfx\GraphicsException.h" />
+    <ClInclude Include="src\gfx\GraphicsResource\DepthStencil.h" />
+    <ClInclude Include="src\gfx\GraphicsResource\GraphicsResource.h" />
     <ClInclude Include="src\gfx\Jobber\FrameCommander.h" />
     <ClInclude Include="src\gfx\Jobber\Job.h" />
     <ClInclude Include="src\gfx\Jobber\Pass.h" />
@@ -59,6 +61,7 @@
     <ClInclude Include="src\gfx\Model\ModelProbe.h" />
     <ClInclude Include="src\gfx\Model\Node.h" />
     <ClInclude Include="src\gfx\PointLight.h" />
+    <ClInclude Include="src\gfx\GraphicsResource\RenderTarget.h" />
     <ClInclude Include="src\gfx\Vertex.h" />
     <ClInclude Include="src\misc\HydroException.h" />
     <ClInclude Include="src\misc\HydroMath.h" />
@@ -91,7 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\app\App.cpp" />
-    <ClCompile Include="src\gfx\Bindable\Bindable.cpp" />
     <ClCompile Include="src\gfx\Bindable\Blender.cpp" />
     <ClCompile Include="src\gfx\Bindable\IndexBuffer.cpp" />
     <ClCompile Include="src\gfx\Bindable\InputLayout.cpp" />
@@ -113,6 +115,8 @@
     <ClCompile Include="src\gfx\DynamicConstant.cpp" />
     <ClCompile Include="src\gfx\Graphics.cpp" />
     <ClCompile Include="src\gfx\GraphicsException.cpp" />
+    <ClCompile Include="src\gfx\GraphicsResource\DepthStencil.cpp" />
+    <ClCompile Include="src\gfx\GraphicsResource\GraphicsResource.cpp" />
     <ClCompile Include="src\gfx\Jobber\Job.cpp" />
     <ClCompile Include="src\gfx\Jobber\Step.cpp" />
     <ClCompile Include="src\gfx\Jobber\Technique.cpp" />
@@ -123,6 +127,7 @@
     <ClCompile Include="src\gfx\Model\ModelException.cpp" />
     <ClCompile Include="src\gfx\Model\Node.cpp" />
     <ClCompile Include="src\gfx\PointLight.cpp" />
+    <ClCompile Include="src\gfx\GraphicsResource\RenderTarget.cpp" />
     <ClCompile Include="src\gfx\Vertex.cpp" />
     <ClCompile Include="src\misc\HydroException.cpp" />
     <ClCompile Include="src\misc\HydroXM.cpp" />
@@ -145,6 +150,17 @@
     <None Include="third\lib\zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="src\gfx\shaders\Fullscreen_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\Blur_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="src\gfx\shaders\LightVectorData.hlsl">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

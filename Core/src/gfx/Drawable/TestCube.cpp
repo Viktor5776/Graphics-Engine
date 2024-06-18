@@ -31,18 +31,20 @@ namespace Hydro::gfx
 				only.AddBindable( Texture::Resolve( gfx, "Images\\brickwall.jpg" ) );
 				only.AddBindable( Sampler::Resolve( gfx ) );
 
-				auto pvs = VertexShader::Resolve( gfx, "PhongVS.cso" );
+				auto pvs = VertexShader::Resolve( gfx, "PhongDif_VS.cso" );
 				auto pvsbc = pvs->GetBytecode();
 				only.AddBindable( std::move( pvs ) );
 
-				only.AddBindable( PixelShader::Resolve( gfx, "PhongPS.cso" ) );
+				only.AddBindable( PixelShader::Resolve( gfx, "PhongDif_PS.cso" ) );
 
 				Dcb::RawLayout lay;
-				lay.Add<Dcb::Float>( "specularIntensity" );
-				lay.Add<Dcb::Float>( "specularPower" );
+				lay.Add<Dcb::Float3>( "specularColor" );
+				lay.Add<Dcb::Float>( "specularWeight" );
+				lay.Add<Dcb::Float>( "specularGloss" );
 				auto buf = Dcb::Buffer( std::move( lay ) );
-				buf["specularIntensity"] = 0.1f;
-				buf["specularPower"] = 20.0f;
+				buf["specularColor"] = DirectX::XMFLOAT3{ 1.0f,1.0f,1.0f };
+				buf["specularWeight"] = 0.1f;
+				buf["specularGloss"] = 20.0f;
 				only.AddBindable( std::make_shared<Bind::CachingPixelConstantBufferEx>( gfx, buf, 1u ) );
 
 				only.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), pvsbc ) );
@@ -59,7 +61,7 @@ namespace Hydro::gfx
 			{
 				Step mask( 1 );
 
-				auto pvs = VertexShader::Resolve( gfx, "SolidVS.cso" );
+				auto pvs = VertexShader::Resolve( gfx, "Solid_VS.cso" );
 				auto pvsbc = pvs->GetBytecode();
 				mask.AddBindable( std::move( pvs ) );
 
@@ -75,12 +77,12 @@ namespace Hydro::gfx
 			{
 				Step draw( 2 );
 
-				auto pvs = VertexShader::Resolve( gfx, "SolidVS.cso" );
+				auto pvs = VertexShader::Resolve( gfx, "Solid_VS.cso" );
 				auto pvsbc = pvs->GetBytecode();
 				draw.AddBindable( std::move( pvs ) );
 
 				// this can be pass-constant
-				draw.AddBindable( PixelShader::Resolve( gfx, "SolidPS.cso" ) );
+				draw.AddBindable( PixelShader::Resolve( gfx, "Solid_PS.cso" ) );
 
 				Dcb::RawLayout lay;
 				lay.Add<Dcb::Float4>( "color" );
@@ -91,41 +93,7 @@ namespace Hydro::gfx
 				// TODO: better sub-layout generation tech for future consideration maybe
 				draw.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), pvsbc ) );
 
-				// quick and dirty... nicer solution maybe takes a lamba... we'll see :)
-				class TransformCbufScaling : public TransformCbuf
-				{
-				public:
-					TransformCbufScaling( Graphics& gfx, float scale = 1.04 )
-						:
-						TransformCbuf( gfx ),
-						buf( MakeLayout() )
-					{
-						buf["scale"] = scale;
-					}
-					void Accept( TechniqueProbe& probe ) override
-					{
-						probe.VisitBuffer( buf );
-					}
-					void Bind( Graphics& gfx ) noexcept override
-					{
-						const float scale = buf["scale"];
-						const auto scaleMatrix = DirectX::XMMatrixScaling( scale, scale, scale );
-						auto xf = GetTransforms( gfx );
-						xf.modelView = xf.modelView * scaleMatrix;
-						xf.modelViewProj = xf.modelViewProj * scaleMatrix;
-						UpdateBindImpl( gfx, xf );
-					}
-				private:
-					static Dcb::RawLayout MakeLayout()
-					{
-						Dcb::RawLayout layout;
-						layout.Add<Dcb::Float>( "scale" );
-						return layout;
-					}
-				private:
-					Dcb::Buffer buf;
-				};
-				draw.AddBindable( std::make_shared<TransformCbufScaling>( gfx ) );
+				draw.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
 
 				// TODO: might need to specify rasterizer when doubled-sided models start being used
 

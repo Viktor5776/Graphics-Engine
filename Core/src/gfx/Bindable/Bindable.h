@@ -1,5 +1,6 @@
 #pragma once
 #include "../Graphics.h"
+#include "../GraphicsResource/GraphicsResource.h"
 #include <memory>
 #include <string>
 
@@ -11,7 +12,7 @@ namespace Hydro::gfx
 
 namespace Hydro::gfx::Bind
 {
-	class Bindable
+	class Bindable : public GraphicsResource
 	{
 	public:
 		virtual void Bind( Graphics& gfx ) noexcept = 0;
@@ -25,9 +26,6 @@ namespace Hydro::gfx::Bind
 			return "";
 		}
 		virtual ~Bindable() = default;
-	protected:
-		static ID3D11DeviceContext* GetContext( Graphics& gfx ) noexcept;
-		static ID3D11Device* GetDevice( Graphics& gfx ) noexcept;
 	};
 
 	class CloningBindable : public Bindable

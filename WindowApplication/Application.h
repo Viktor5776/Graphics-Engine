@@ -21,7 +21,7 @@ private:
 private:
 	float speed_factor = 1.0f;
 	Hydro::misc::Timer timer;
-	Hydro::gfx::FrameCommander fc;
+	Hydro::gfx::FrameCommander fc{ window.Gfx() };
 	Hydro::gfx::Camera cam;
 	Hydro::gfx::PointLight light;
 	//Models
