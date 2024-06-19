@@ -255,6 +255,9 @@
     <ClInclude Include="src\gfx\GraphicsResource\DepthStencil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\BlurPack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -438,5 +441,6 @@
     <FxCompile Include="src\gfx\shaders\Offset_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Fullscreen_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Blur_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\BlurOutline_PS.hlsl" />
   </ItemGroup>
 </Project>

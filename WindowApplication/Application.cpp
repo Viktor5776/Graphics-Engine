@@ -313,6 +313,7 @@ void WindowApplication::DoFrame()
 	light.SpawnControlWindow();
 	cube.SpawnControlWindow( window.Gfx(), "Cube 1" );
 	cube2.SpawnControlWindow( window.Gfx(), "Cube 2" );
+	fc.ShowWindows( window.Gfx() );
 
 	window.Gfx().EndFrame();
 	fc.Reset();

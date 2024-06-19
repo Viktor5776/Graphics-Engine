@@ -31,6 +31,7 @@
     <ClInclude Include="src\gfx\Bindable\TransformCbufPixel.h" />
     <ClInclude Include="src\gfx\Bindable\VertexBuffer.h" />
     <ClInclude Include="src\gfx\Bindable\VertexShader.h" />
+    <ClInclude Include="src\gfx\BlurPack.h" />
     <ClInclude Include="src\gfx\Camera.h" />
     <ClInclude Include="src\gfx\Color.h" />
     <ClInclude Include="src\gfx\Bindable\ConstantBuffersEx.h" />
@@ -150,6 +151,12 @@
     <None Include="third\lib\zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="src\gfx\shaders\BlurOutline_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="src\gfx\shaders\Fullscreen_VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
