@@ -32,9 +32,8 @@ namespace Hydro::gfx
 		{
 			ccb.Update( gfx, { FALSE } );
 		}
-		void ShowWindow( Graphics& gfx )
+		void RenderWidgets( Graphics& gfx )
 		{
-			ImGui::Begin( "Blur" );
 			bool filterChanged = false;
 			{
 				const char* items[] = { "Gauss","Box" };
@@ -78,7 +77,6 @@ namespace Hydro::gfx
 					SetKernelBox( gfx, radius );
 				}
 			}
-			ImGui::End();
 		}
 		// nTaps should be 6sigma - 1
 		// for more accurate coefs, need to integrate, but meh :/
