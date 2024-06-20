@@ -1,6 +1,10 @@
 #include "Material.h"
+#include "../Bindable/BindableCommon.h"
 #include "../DynamicConstant.h"
 #include "../Bindable/ConstantBuffersEx.h"
+#include "../Bindable/TransformCbufScaling.h"
+#include "../Bindable/Stencil.h"
+#include <filesystem>
 
 
 namespace Hydro::gfx
@@ -20,7 +24,7 @@ namespace Hydro::gfx
 		// phong technique
 		{
 			Technique phong{ "Phong" };
-			Step step( 0 );
+			Step step( "lambertian" );
 			std::string shaderCode = "Phong";
 			aiString texFileName;
 
@@ -87,7 +91,6 @@ namespace Hydro::gfx
 			// common (post)
 			{
 				step.AddBindable( std::make_shared<TransformCbuf>( gfx, 0u ) );
-				step.AddBindable( Blender::Resolve( gfx, false ) );
 				auto pvs = VertexShader::Resolve( gfx, shaderCode + "_VS.cso" );
 				auto pvsbc = pvs->GetBytecode();
 				step.AddBindable( std::move( pvs ) );
@@ -131,7 +134,7 @@ namespace Hydro::gfx
 		{
 			Technique outline( "Outline",false );
 			{
-				Step mask( 1 );
+				Step mask( "outlineMask" );
 
 				auto pvs = VertexShader::Resolve( gfx, "Solid_VS.cso" );
 				auto pvsbc = pvs->GetBytecode();
@@ -147,7 +150,7 @@ namespace Hydro::gfx
 				outline.AddStep( std::move( mask ) );
 			}
 			{
-				Step draw( 2 );
+				Step draw( "outlineDraw" );
 
 				// these can be pass-constant (tricky due to layout issues)
 				auto pvs = VertexShader::Resolve( gfx, "Solid_VS.cso" );
@@ -168,7 +171,7 @@ namespace Hydro::gfx
 				// TODO: better sub-layout generation tech for future consideration maybe
 				draw.AddBindable( InputLayout::Resolve( gfx, vtxLayout, pvsbc ) );
 
-				draw.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
+				draw.AddBindable( std::make_shared<TransformCbufScaling>( gfx,1.04f ) );
 
 				// TODO: might need to specify rasterizer when doubled-sided models start being used
 

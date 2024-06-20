@@ -35,7 +35,7 @@ namespace Hydro::gfx::Bind
 		GFX_THROW_FAILED( GetDevice( gfx )->CreateBlendState( &blendDesc, &pBlender ) );
 	}
 
-	void Blender::Bind( Graphics& gfx ) noexcept
+	void Blender::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		const float* data = factors ? factors->data() : nullptr;
 		GetContext( gfx )->OMSetBlendState( pBlender.Get(), data, 0xFFFFFFFFu );

@@ -40,7 +40,7 @@ namespace Hydro::gfx::Bind
 
 			GetDevice( gfx )->CreateDepthStencilState( &dsDesc, &pStencil );
 		}
-		void Bind( Graphics& gfx ) noexcept override
+		void Bind( Graphics& gfx ) noexcept(!_DEBUG) override
 		{
 			GetContext( gfx )->OMSetDepthStencilState( pStencil.Get(), 0xFF );
 		}

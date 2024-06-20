@@ -17,7 +17,7 @@ namespace Hydro::gfx::Bind
         ) );
     }
 
-    void VertexShader::Bind( Graphics& gfx ) noexcept
+    void VertexShader::Bind( Graphics& gfx ) noexcept(!_DEBUG)
     {
         GetContext( gfx )->VSSetShader( pVertexShader.Get(), nullptr, 0u );
     }

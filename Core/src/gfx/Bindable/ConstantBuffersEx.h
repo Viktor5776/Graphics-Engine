@@ -126,25 +126,4 @@ namespace Hydro::gfx::Bind
 
 	using CachingPixelConstantBufferEx = CachingConstantBufferEx<PixelConstantBufferEx>;
 	using CachingVertexConstantBufferEx = CachingConstantBufferEx<VertexConstantBufferEx>;
-
-	//class NocachePixelConstantBufferEx : public PixelConstantBufferEx
-	//{
-	//public:
-	//	NocachePixelConstantBufferEx( Graphics& gfx,const Dcb::CookedLayout& layout,UINT slot )
-	//		:
-	//		PixelConstantBufferEx( gfx,*layout.ShareRoot(),slot,nullptr ),
-	//		pLayoutRoot( layout.ShareRoot() )
-	//	{}
-	//	NocachePixelConstantBufferEx( Graphics& gfx,const Dcb::Buffer& buf,UINT slot )
-	//		:
-	//		PixelConstantBufferEx( gfx,buf.GetRootLayoutElement(),slot,&buf ),
-	//		pLayoutRoot( buf.ShareLayoutRoot() )
-	//	{}
-	//	const Dcb::LayoutElement& GetRootLayoutElement() const noexcept override
-	//	{
-	//		return *pLayoutRoot;
-	//	}
-	//private:
-	//	std::shared_ptr<Dcb::LayoutElement> pLayoutRoot;
-	//};
 }

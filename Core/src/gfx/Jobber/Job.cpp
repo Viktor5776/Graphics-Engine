@@ -2,7 +2,7 @@
 #include "Step.h"
 #include "../Drawable/Drawable.h"
 
-namespace Hydro::gfx
+namespace Hydro::gfx::Rgph
 {
 
 	Job::Job( const Step* pStep, const Drawable* pDrawable )

@@ -1,6 +1,5 @@
 #include "PointLight.h"
 #include "../../third/ImGui/imgui.h"
-#include "Jobber\FrameCommander.h"
 
 namespace Hydro::gfx
 {
@@ -48,10 +47,10 @@ namespace Hydro::gfx
 		pcb.attQuad = 0.0075f;
 	}
 
-	void PointLight::Submit( FrameCommander& frame ) const noexcept(!_DEBUG)
+	void PointLight::Submit() const noexcept(!_DEBUG)
 	{
 		mesh.SetPos( pcb.pos );
-		mesh.Submit( frame );
+		mesh.Submit();
 	}
 
 	void PointLight::Bind( Graphics& gfx, DirectX::FXMMATRIX view ) const noexcept
@@ -61,6 +60,11 @@ namespace Hydro::gfx
 		DirectX::XMStoreFloat3( &dataCopy.pos, DirectX::XMVector3Transform( pos, view ) );
 		cbuf.Update( gfx, dataCopy );
 		cbuf.Bind( gfx );
+	}
+
+	void PointLight::LinkTechniques( Rgph::RenderGraph& rg )
+	{
+		mesh.LinkTechniques( rg );
 	}
 
 }

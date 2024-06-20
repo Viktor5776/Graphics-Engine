@@ -15,7 +15,7 @@ namespace Hydro::gfx::Bind
 		GFX_THROW_FAILED( GetDevice( gfx )->CreateRasterizerState( &rasterDesc, &pRasterizer ) );
 	}
 
-	void Rasterizer::Bind( Graphics& gfx ) noexcept
+	void Rasterizer::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		GetContext( gfx )->RSSetState( pRasterizer.Get() );
 	}

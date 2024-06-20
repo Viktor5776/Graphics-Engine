@@ -27,7 +27,7 @@ namespace Hydro::gfx::Bind
 		GFX_THROW_FAILED( GetDevice( gfx )->CreateBuffer( &ibd, &isd, &pIndexBuffer ) );
 	}
 
-	void IndexBuffer::Bind( Graphics& gfx ) noexcept
+	void IndexBuffer::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		GetContext( gfx )->IASetIndexBuffer( pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 	}

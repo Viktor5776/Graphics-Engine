@@ -8,7 +8,7 @@ namespace Hydro::gfx::Bind
 	{
 	public:
 		Texture( Graphics& gfx, const std::string& path, UINT slot = 0 );
-		void Bind( Graphics& gfx ) noexcept override;
+		void Bind( Graphics& gfx ) noexcept(!_DEBUG) override;
 		static std::shared_ptr<Texture> Resolve( Graphics& gfx, const std::string& path, UINT slot = 0);
 		static std::string GenerateUID( const std::string& path, UINT slot = 0);
 		std::string GetUID() const noexcept override;

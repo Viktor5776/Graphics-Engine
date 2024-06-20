@@ -9,7 +9,7 @@ namespace Hydro::gfx::Bind
 		topology( topology )
 	{}
 
-	void Topology::Bind( Graphics& gfx ) noexcept
+	void Topology::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		GetContext( gfx )->IASetPrimitiveTopology( topology );
 	}

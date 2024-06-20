@@ -1,15 +1,21 @@
 #pragma once
 #include "../Graphics.h"
-#include "../Bindable/BindableCommon.h"
 #include <vector>
 #include <filesystem>
 #include "../Jobber/Technique.h"
+#include "../Vertex.h"
 
 struct aiMaterial;
 struct aiMesh;
 
 namespace Hydro::gfx
 {
+	namespace Bind
+	{
+		class VertexBuffer;
+		class IndexBuffer;
+	}
+
 	class Material
 	{
 	public:

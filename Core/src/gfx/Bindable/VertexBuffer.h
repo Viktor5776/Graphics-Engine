@@ -9,7 +9,7 @@ namespace Hydro::gfx::Bind
 	public:
 		VertexBuffer( Graphics& gfx, const DynamicVertexBuffer& vbuf );
 		VertexBuffer( Graphics& gfx, const std::string& tag, const DynamicVertexBuffer& vbuf );
-		void Bind( Graphics& gfx ) noexcept override;
+		void Bind( Graphics& gfx ) noexcept(!_DEBUG) override;
 		const VertexLayout& GetLayout() const noexcept;
 		static std::shared_ptr<VertexBuffer> Resolve( Graphics& gfx, const std::string& tag, const DynamicVertexBuffer& vbuf );
 		template<typename...Ignore>

@@ -51,7 +51,7 @@ namespace Hydro::gfx::Bind
 		GetContext( gfx )->GenerateMips( pTextureView.Get() );
 	}
 
-	void Texture::Bind( Graphics& gfx ) noexcept
+	void Texture::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		GetContext( gfx )->PSSetShaderResources( slot, 1u, pTextureView.GetAddressOf() );
 	}

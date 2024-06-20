@@ -5,14 +5,20 @@
 
 namespace Hydro::gfx
 {
+	namespace Rgph
+	{
+		class RenderGraph;
+	}
+
 	class PointLight
 	{
 	public:
 		PointLight( Graphics& gfx, float radius = 0.5f );
 		void SpawnControlWindow() noexcept;
 		void Reset() noexcept;
-		void Submit( class FrameCommander& frame) const noexcept(!_DEBUG);
+		void Submit() const noexcept(!_DEBUG);
 		void Bind( Graphics& gfx, DirectX::FXMMATRIX view ) const noexcept;
+		void LinkTechniques( Rgph::RenderGraph& );
 	private:
 		struct PointLightCBuf
 		{

@@ -20,7 +20,7 @@ namespace Hydro::gfx::Bind
 		) );
 	}
 
-	void InputLayout::Bind( Graphics& gfx ) noexcept
+	void InputLayout::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		GetContext( gfx )->IASetInputLayout( pInputLayout.Get() );
 	}

@@ -150,9 +150,6 @@
     <ClInclude Include="src\gfx\Drawable\TestPlane.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\Bindable\TransformCbufPixel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\misc\HydroXM.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -207,7 +204,7 @@
     <ClInclude Include="src\gfx\Drawable\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\Jobber\Pass.h">
+    <ClInclude Include="src\gfx\Jobber\Passlib\Base\Pass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Jobber\Job.h">
@@ -217,9 +214,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Jobber\Technique.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gfx\Jobber\FrameCommander.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gfx\Bindable\NullPixelShader.h">
@@ -246,16 +240,73 @@
     <ClInclude Include="src\gfx\Model\ModelProbe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\GraphicsResource\GraphicsResource.h">
+    <ClInclude Include="src\gfx\GraphicsResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\GraphicsResource\RenderTarget.h">
+    <ClInclude Include="src\gfx\Bindable\RenderTarget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\GraphicsResource\DepthStencil.h">
+    <ClInclude Include="src\gfx\Bindable\DepthStencil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gfx\BlurPack.h">
+    <ClInclude Include="src\gfx\Jobber\Passlib\Base\BindingPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\BlurOutlineDrawingPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Graphlib\BlurOutlineRenderGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\BufferClearPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\BufferResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\Base\FullscreenPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\HorizontalBlurPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\LambertianPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\OutlineDrawingPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\OutlineMaskGenerationPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\RenderGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\RenderGraphCompileException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\Base\RenderQueuePass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Graphlib\ScaleOutlineRenderGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\Base\Sink.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\Base\Source.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\StepLinkingProbe.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\TransformCbufScaling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\VerticalBlurPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\TestModelProbe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -356,9 +407,6 @@
     <ClCompile Include="src\gfx\Drawable\TestPlane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gfx\Bindable\TransformCbufPixel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\misc\HydroXM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -401,13 +449,58 @@
     <ClCompile Include="src\gfx\Model\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gfx\GraphicsResource\GraphicsResource.cpp">
+    <ClCompile Include="src\gfx\GraphicsResource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gfx\GraphicsResource\RenderTarget.cpp">
+    <ClCompile Include="src\gfx\Bindable\RenderTarget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gfx\GraphicsResource\DepthStencil.cpp">
+    <ClCompile Include="src\gfx\Bindable\DepthStencil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\Base\BindingPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Graphlib\BlurOutlineRenderGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\BufferClearPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\Base\FullscreenPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\HorizontalBlurPass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\Base\Pass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\RenderGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\RenderGraphCompileException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\Base\RenderQueuePass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Graphlib\ScaleOutlineRenderGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\Base\Sink.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\Base\Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\StepLinkingProbe.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\TransformCbufScaling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Jobber\Passlib\VerticalBlurPass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

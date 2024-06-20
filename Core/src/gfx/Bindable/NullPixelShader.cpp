@@ -1,13 +1,12 @@
 #include "NullPixelShader.h"
 #include "BindableCodex.h"
-#include "../../misc/HydroUtility.h"
 
 namespace Hydro::gfx::Bind
 {
 	NullPixelShader::NullPixelShader( Graphics& gfx )
 	{
 	}
-	void NullPixelShader::Bind( Graphics& gfx ) noexcept
+	void NullPixelShader::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		GetContext( gfx )->PSSetShader( nullptr, nullptr, 0u );
 	}

@@ -1,6 +1,5 @@
 #pragma once
-#include "../Graphics.h"
-#include "../GraphicsResource/GraphicsResource.h"
+#include "../GraphicsResource.h"
 #include <memory>
 #include <string>
 
@@ -8,6 +7,7 @@ namespace Hydro::gfx
 {
 	class Drawable;
 	class TechniqueProbe;
+	class Graphics;
 }
 
 namespace Hydro::gfx::Bind
@@ -15,7 +15,7 @@ namespace Hydro::gfx::Bind
 	class Bindable : public GraphicsResource
 	{
 	public:
-		virtual void Bind( Graphics& gfx ) noexcept = 0;
+		virtual void Bind( Graphics& gfx ) noexcept(!_DEBUG) = 0;
 		virtual void InitializeParentReference( const Drawable& ) noexcept
 		{}
 		virtual void Accept( TechniqueProbe& )

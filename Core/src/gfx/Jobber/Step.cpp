@@ -1,13 +1,14 @@
 #include "Step.h"
 #include "../Drawable/Drawable.h"
-#include "FrameCommander.h"
+#include "RenderGraph.h"
+#include "TechniqueProbe.h"
+#include "Passlib/Base/RenderQueuePass.h"
 
 namespace Hydro::gfx
 {
-
-	void Step::Submit( FrameCommander& frame, const Drawable& drawable ) const
+	void Step::Submit( const Drawable& drawable ) const
 	{
-		frame.Accept( Job{ this,&drawable }, targetPass );
+		pTargetPass->Accept( Rgph::Job{ this,&drawable } );
 	}
 
 	void Step::InitializeParentReferences( const Drawable& parent ) noexcept
@@ -18,4 +19,54 @@ namespace Hydro::gfx
 		}
 	}
 
+	Step::Step( std::string targetPassName )
+		:
+		targetPassName{ std::move( targetPassName ) }
+	{}
+
+	Step::Step( const Step& src ) noexcept
+		:
+		targetPassName( src.targetPassName )
+	{
+		bindables.reserve( src.bindables.size() );
+		for( auto& pb : src.bindables )
+		{
+			if( auto* pCloning = dynamic_cast<const Bind::CloningBindable*>(pb.get()) )
+			{
+				bindables.push_back( pCloning->Clone() );
+			}
+			else
+			{
+				bindables.push_back( pb );
+			}
+		}
+	}
+
+	void Step::AddBindable( std::shared_ptr<Bind::Bindable> bind_in ) noexcept
+	{
+		bindables.push_back( std::move( bind_in ) );
+	}
+
+	void Step::Bind( Graphics& gfx ) const noexcept(!_DEBUG)
+	{
+		for( const auto& b : bindables )
+		{
+			b->Bind( gfx );
+		}
+	}
+
+	void Step::Accept( TechniqueProbe& probe )
+	{
+		probe.SetStep( this );
+		for( auto& pb : bindables )
+		{
+			pb->Accept( probe );
+		}
+	}
+
+	void Step::Link( Rgph::RenderGraph& rg )
+	{
+		assert( pTargetPass == nullptr );
+		pTargetPass = &rg.GetRenderQueue( targetPassName );
+	}
 }

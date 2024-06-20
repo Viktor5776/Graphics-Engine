@@ -16,7 +16,7 @@ namespace Hydro::gfx
 		DirectX::XMStoreFloat4x4( &appliedTransform, DirectX::XMMatrixIdentity() );
 	}
 
-	void Node::Submit( FrameCommander& frame, DirectX::FXMMATRIX accumulatedTransform ) const noexcept(!_DEBUG)
+	void Node::Submit( DirectX::FXMMATRIX accumulatedTransform ) const noexcept(!_DEBUG)
 	{
 		const auto built =
 			DirectX::XMLoadFloat4x4( &appliedTransform ) *
@@ -24,11 +24,11 @@ namespace Hydro::gfx
 			accumulatedTransform;
 		for( const auto pm : meshPtrs )
 		{
-			pm->Submit( frame, built );
+			pm->Submit( built );
 		}
 		for( const auto& pc : childPtrs )
 		{
-			pc->Submit( frame, built );
+			pc->Submit( built );
 		}
 	}
 

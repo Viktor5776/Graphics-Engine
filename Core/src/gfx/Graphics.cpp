@@ -1,9 +1,11 @@
 #include "Graphics.h"
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
+#include <array>
 #include "../../third/ImGui/imgui_impl_dx11.h"
 #include "../../third/ImGui/imgui_impl_win32.h"
-#include "GraphicsResource\DepthStencil.h"
+#include "Bindable/DepthStencil.h"
+#include "Bindable/RenderTarget.h"
 
 
 #pragma comment(lib, "d3d11.lib")
@@ -60,9 +62,19 @@ namespace Hydro::gfx
 			&pContext
 		) );
 
-		Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
-		GFX_THROW_FAILED( pSwap->GetBuffer( 0, __uuidof( ID3D11Resource ), &pBackBuffer ) );
-		GFX_THROW_FAILED( pDevice->CreateRenderTargetView( pBackBuffer.Get(), nullptr, &pTarget));
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> pBackBuffer;
+		GFX_THROW_FAILED( pSwap->GetBuffer( 0, __uuidof(ID3D11Texture2D), &pBackBuffer ) );
+		pTarget = std::shared_ptr<Bind::RenderTarget>{ new Bind::OutputOnlyRenderTarget( *this,pBackBuffer.Get() ) };
+
+		// viewport always fullscreen (for now)
+		D3D11_VIEWPORT vp;
+		vp.Width = (float)width;
+		vp.Height = (float)height;
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+		vp.TopLeftX = 0.0f;
+		vp.TopLeftY = 0.0f;
+		pContext->RSSetViewports( 1u, &vp );
 
 		// init imgui d3d impl
 		ImGui_ImplDX11_Init( pDevice.Get(), pContext.Get() );
@@ -75,8 +87,6 @@ namespace Hydro::gfx
 
 	void Graphics::BeginFrame( float red, float green, float blue ) noexcept
 	{
-		const float color[] = { red, green, blue, 0.0f };
-		pContext->ClearRenderTargetView( pTarget.Get(), color );
 		if( imguiEnabled )
 		{
 			ImGui_ImplDX11_NewFrame();
@@ -112,36 +122,6 @@ namespace Hydro::gfx
 				GFX_THROW_FAILED( hr );
 			}
 		}
-	}
-
-	void Graphics::BindSwapBuffer() noexcept
-	{
-		pContext->OMSetRenderTargets( 1u, pTarget.GetAddressOf(), nullptr );
-			
-		// configure viewport
-		D3D11_VIEWPORT vp;
-		vp.Width = (float)width;
-		vp.Height = (float)height;
-		vp.MinDepth = 0.0f;
-		vp.MaxDepth = 1.0f;
-		vp.TopLeftX = 0.0f;
-		vp.TopLeftY = 0.0f;
-		pContext->RSSetViewports( 1u, &vp );
-	}
-
-	void Graphics::BindSwapBuffer( const DepthStencil& ds ) noexcept
-	{
-		pContext->OMSetRenderTargets( 1u, pTarget.GetAddressOf(), ds.pDepthStencilView.Get() );
-
-		// configure viewport
-		D3D11_VIEWPORT vp;
-		vp.Width = (float)width;
-		vp.Height = (float)height;
-		vp.MinDepth = 0.0f;
-		vp.MaxDepth = 1.0f;
-		vp.TopLeftX = 0.0f;
-		vp.TopLeftY = 0.0f;
-		pContext->RSSetViewports( 1u, &vp );
 	}
 
 	void Graphics::DrawIndexed( UINT count ) noexcept(!_DEBUG)
@@ -192,6 +172,11 @@ namespace Hydro::gfx
 	UINT Graphics::GetHeight() const noexcept
 	{
 		return height;
+	}
+
+	std::shared_ptr<Bind::RenderTarget> Graphics::GetTarget()
+	{
+		return pTarget;
 	}
 
 }

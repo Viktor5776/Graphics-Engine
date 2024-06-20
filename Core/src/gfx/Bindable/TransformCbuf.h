@@ -15,12 +15,12 @@ namespace Hydro::gfx::Bind
 		};
 	public:
 		TransformCbuf( Graphics& gfx, UINT slot = 0u );
-		void Bind( Graphics& gfx ) noexcept override;
+		void Bind( Graphics& gfx ) noexcept(!_DEBUG) override;
 		void InitializeParentReference( const Drawable& parent ) noexcept override;
 		std::unique_ptr<CloningBindable> Clone() const noexcept override;
 	protected:
-		void UpdateBindImpl( Graphics& gfx, const Transforms& tf ) noexcept;
-		Transforms GetTransforms( Graphics& gfx ) noexcept;
+		void UpdateBindImpl( Graphics& gfx, const Transforms& tf ) noexcept(!_DEBUG);
+		Transforms GetTransforms( Graphics& gfx ) noexcept(!_DEBUG);
 	private:
 		static std::unique_ptr<VertexConstantBuffer<Transforms>> pVcbuf;
 		const Drawable* pParent = nullptr;

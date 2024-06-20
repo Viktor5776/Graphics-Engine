@@ -14,7 +14,7 @@ namespace Hydro::gfx::Bind
 		GFX_THROW_FAILED( GetDevice( gfx )->CreatePixelShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader ) );
 	}
 
-	void PixelShader::Bind( Graphics& gfx ) noexcept
+	void PixelShader::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		GetContext( gfx )->PSSetShader( pPixelShader.Get(), nullptr, 0u );
 	}

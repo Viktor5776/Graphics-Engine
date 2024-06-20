@@ -11,7 +11,7 @@ namespace Hydro::gfx::Bind
 		}
 	}
 
-	void TransformCbuf::Bind( Graphics& gfx ) noexcept
+	void TransformCbuf::Bind( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		UpdateBindImpl( gfx, GetTransforms( gfx ) );
 	}
@@ -26,14 +26,14 @@ namespace Hydro::gfx::Bind
 		return std::make_unique<TransformCbuf>( *this );
 	}
 
-	void TransformCbuf::UpdateBindImpl( Graphics& gfx, const Transforms& tf ) noexcept
+	void TransformCbuf::UpdateBindImpl( Graphics& gfx, const Transforms& tf ) noexcept(!_DEBUG)
 	{
 		assert( pParent != nullptr );
 		pVcbuf->Update( gfx, tf );
 		pVcbuf->Bind( gfx );
 	}
 
-	TransformCbuf::Transforms TransformCbuf::GetTransforms( Graphics& gfx ) noexcept
+	TransformCbuf::Transforms TransformCbuf::GetTransforms( Graphics& gfx ) noexcept(!_DEBUG)
 	{
 		assert( pParent != nullptr );
 		const auto modelView = pParent->GetTransformXM() * gfx.GetCamera();
