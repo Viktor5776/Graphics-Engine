@@ -40,7 +40,7 @@ namespace Hydro::gfx
 				Source( std::move( name ) ),
 				buffer( buffer )
 			{}
-			void PostLinkValidate() const
+			void PostLinkValidate() const override
 			{}
 			std::shared_ptr<Bind::BufferResource> YieldBuffer() override
 			{
@@ -69,7 +69,7 @@ namespace Hydro::gfx
 				Source( std::move( name ) ),
 				bind( bind )
 			{}
-			void PostLinkValidate() const
+			void PostLinkValidate() const override
 			{}
 			std::shared_ptr<Bind::Bindable> YieldBindable() override
 			{

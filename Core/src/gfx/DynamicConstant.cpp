@@ -17,8 +17,8 @@ namespace Hydro::gfx::Dcb
 		struct Array : public LayoutElement::ExtraDataBase
 		{
 			std::optional<LayoutElement> layoutElement;
-			size_t element_size;
-			size_t size;
+			size_t element_size = 0;
+			size_t size = 0;
 		};
 	};
 
@@ -265,7 +265,7 @@ namespace Hydro::gfx::Dcb
 	{}
 	std::shared_ptr<LayoutElement> CookedLayout::RelinquishRoot() const noexcept
 	{
-		return std::move( pRoot );
+		return pRoot;
 	}
 	std::shared_ptr<LayoutElement> CookedLayout::ShareRoot() const noexcept
 	{

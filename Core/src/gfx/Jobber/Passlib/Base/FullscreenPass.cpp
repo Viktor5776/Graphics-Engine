@@ -8,7 +8,7 @@ namespace Hydro::gfx::Rgph
 
 	FullscreenPass::FullscreenPass( const std::string name, Graphics& gfx ) noexcept(!_DEBUG)
 		:
-	BindingPass( std::move( name ) )
+	BindingPass( name )
 	{
 		// setup fullscreen geometry
 		VertexLayout lay;
@@ -23,7 +23,7 @@ namespace Hydro::gfx::Rgph
 		AddBind( Bind::IndexBuffer::Resolve( gfx, "$Full", std::move( indices ) ) );
 		// setup other common fullscreen bindables
 		auto vs = Bind::VertexShader::Resolve( gfx, "Fullscreen_VS.cso" );
-		AddBind( Bind::InputLayout::Resolve( gfx, lay, vs->GetBytecode() ) );
+		AddBind( Bind::InputLayout::Resolve( gfx, lay, *vs ) );
 		AddBind( std::move( vs ) );
 		AddBind( Bind::Topology::Resolve( gfx ) );
 		AddBind( Bind::Rasterizer::Resolve( gfx, false ) );

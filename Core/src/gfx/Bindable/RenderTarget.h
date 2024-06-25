@@ -2,6 +2,11 @@
 #include "Bindable.h"
 #include "BufferResource.h"
 
+namespace Hydro::misc
+{
+	class Surface;
+}
+
 namespace Hydro::gfx
 {
 	class Graphics;
@@ -35,6 +40,7 @@ namespace Hydro::gfx
 		public:
 			ShaderInputRenderTarget( Graphics& gfx, UINT width, UINT height, UINT slot );
 			void Bind( Graphics& gfx ) noexcept(!_DEBUG) override;
+			misc::Surface ToSurface( Graphics& gfx ) const;
 		private:
 			UINT slot;
 			Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pShaderResourceView;

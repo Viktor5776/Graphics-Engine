@@ -16,10 +16,22 @@ WindowApplication::WindowApplication()
 	cube.SetPos( { 4.0f,0.0f,0.0f } );
 	cube2.SetPos( { 0.0f,4.0f,0.0f } );
 
+	nano.SetRootTransform(
+		dx::XMMatrixRotationY( PI / 2.f ) *
+		dx::XMMatrixTranslation( 27.f, -0.56f, 1.7f )
+	);
+	gobber.SetRootTransform(
+		dx::XMMatrixRotationY( -PI / 2.f ) *
+		dx::XMMatrixTranslation( -8.f, 10.f, 0.f )
+	);
+
 	cube.LinkTechniques( rg );
 	cube2.LinkTechniques( rg );
 	light.LinkTechniques( rg );
 	sponza.LinkTechniques( rg );
+	gobber.LinkTechniques( rg );
+	nano.LinkTechniques( rg );
+
 
 	window.Gfx().SetProjection( DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 16.0f, 0.5f, 400.0f ) );
 }
@@ -38,14 +50,20 @@ void WindowApplication::DoFrame()
 	cube.Submit();
 	sponza.Submit();
 	cube2.Submit();
+	gobber.Submit();
+	nano.Submit();
 
 	rg.Execute( window.Gfx() );
 
 	HandleInput(dt);
 
 	//Imgui windows
-	static MP modelProbe;
-	modelProbe.SpawnWindow( sponza );
+	static MP sponzeProbe{ "Sponza" };
+	static MP gobberProbe{ "Gobber" };
+	static MP nanoProbe{ "Nano" };
+	sponzeProbe.SpawnWindow( sponza );
+	gobberProbe.SpawnWindow( gobber );
+	nanoProbe.SpawnWindow( nano );
 	cam.SpawnControlWindow();
 	light.SpawnControlWindow();
 	cube.SpawnControlWindow( window.Gfx(), "Cube 1" );

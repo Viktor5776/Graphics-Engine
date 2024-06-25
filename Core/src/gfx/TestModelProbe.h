@@ -83,9 +83,13 @@ namespace Hydro::gfx
 	class MP : ModelProbe
 	{
 	public:
+		MP( std::string name )
+			:
+			name( std::move( name ) )
+		{}
 		void SpawnWindow( Model& model )
 		{
-			ImGui::Begin( "Model" );
+			ImGui::Begin( name.c_str() );
 			ImGui::Columns( 2, nullptr, true );
 			model.Accept( *this );
 
@@ -155,6 +159,7 @@ namespace Hydro::gfx
 			float y = 0.0f;
 			float z = 0.0f;
 		};
+		std::string name;
 		std::unordered_map<int, TransformParameters> transformParams;
 	private:
 		TransformParameters& ResolveTransform() noexcept

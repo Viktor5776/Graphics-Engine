@@ -535,5 +535,7 @@
     <FxCompile Include="src\gfx\shaders\Fullscreen_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Blur_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\BlurOutline_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifMskSpc_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\PhongDifMskSpc_PS.hlsl" />
   </ItemGroup>
 </Project>

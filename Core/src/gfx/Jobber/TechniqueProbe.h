@@ -14,7 +14,7 @@ namespace Hydro::gfx
 	{
 	public:
 		// TODO: add callback for visiting each mesh
-
+		virtual ~TechniqueProbe() {};
 		void SetTechnique( Technique* pTech_in )
 		{
 			pTech = pTech_in;
@@ -32,7 +32,6 @@ namespace Hydro::gfx
 			bufIdx++;
 			return OnVisitBuffer( buf );
 		}
-		virtual ~TechniqueProbe() {};
 	protected:
 		virtual void OnSetTechnique() {}
 		virtual void OnSetStep() {}

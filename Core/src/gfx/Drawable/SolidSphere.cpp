@@ -23,7 +23,7 @@ namespace Hydro::gfx
 			Step only( "lambertian" );
 
 			auto pvs = VertexShader::Resolve( gfx, "Solid_VS.cso" );
-			auto pvsbc = pvs->GetBytecode();
+			only.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), *pvs ) );
 			only.AddBindable( std::move( pvs ) );
 
 			only.AddBindable( PixelShader::Resolve( gfx, "Solid_PS.cso" ) );
@@ -31,11 +31,9 @@ namespace Hydro::gfx
 			struct PSColorConstant
 			{
 				DirectX::XMFLOAT3 color = { 1.0f,1.0f,1.0f };
-				float padding;
+				float padding = 0.0f;
 			} colorConst;
 			only.AddBindable( PixelConstantBuffer<PSColorConstant>::Resolve( gfx, colorConst, 1u ) );
-
-			only.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), pvsbc ) );
 
 			only.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
 

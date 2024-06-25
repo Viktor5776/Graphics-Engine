@@ -16,7 +16,7 @@ inline std::vector<std::string> TokenizeQuoted( const std::string& input )
 
 	while( stream >> std::quoted( token ) )
 	{
-		tokens.push_back( std::move( token ) );
+		tokens.push_back( token );
 	}
 	return tokens;
 }
@@ -59,4 +59,9 @@ inline std::vector<std::string> SplitString( const std::string& s, const std::st
 	std::vector<std::string> strings;
 	SplitStringIter( s, delim, std::back_inserter( strings ) );
 	return strings;
+}
+
+inline bool StringContains( std::string_view haystack, std::string_view needle )
+{
+	return std::search( haystack.begin(), haystack.end(), needle.begin(), needle.end() ) != haystack.end();
 }

@@ -34,7 +34,7 @@ namespace Hydro::gfx
 				only.AddBindable( Sampler::Resolve( gfx ) );
 
 				auto pvs = VertexShader::Resolve( gfx, "PhongDif_VS.cso" );
-				auto pvsbc = pvs->GetBytecode();
+				only.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), *pvs ) );
 				only.AddBindable( std::move( pvs ) );
 
 				only.AddBindable( PixelShader::Resolve( gfx, "PhongDif_PS.cso" ) );
@@ -48,8 +48,6 @@ namespace Hydro::gfx
 				buf["specularWeight"] = 0.1f;
 				buf["specularGloss"] = 20.0f;
 				only.AddBindable( std::make_shared<Bind::CachingPixelConstantBufferEx>( gfx, buf, 1u ) );
-
-				only.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), pvsbc ) );
 
 				only.AddBindable( Rasterizer::Resolve( gfx, false ) );
 
@@ -66,7 +64,7 @@ namespace Hydro::gfx
 				Step mask( "outlineMask" );
 
 				// TODO: better sub-layout generation tech for future consideration maybe
-				mask.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), VertexShader::Resolve( gfx, "Solid_VS.cso" )->GetBytecode() ) );
+				mask.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), *VertexShader::Resolve( gfx, "Solid_VS.cso" ) ) );
 
 				mask.AddBindable( std::move( tcb ) );
 
@@ -84,7 +82,7 @@ namespace Hydro::gfx
 				draw.AddBindable( std::make_shared<Bind::CachingPixelConstantBufferEx>( gfx, buf, 1u ) );
 
 				// TODO: better sub-layout generation tech for future consideration maybe
-				draw.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), VertexShader::Resolve( gfx, "Solid_VS.cso" )->GetBytecode() ) );
+				draw.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), *VertexShader::Resolve( gfx, "Solid_VS.cso" ) ) );
 
 				draw.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
 
