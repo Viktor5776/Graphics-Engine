@@ -11,7 +11,9 @@ namespace Hydro::gfx::Bind
 		{
 			Off,
 			Write,
-			Mask
+			Mask,
+			DepthOff,
+			DepthReversed
 		};
 		Stencil( Graphics& gfx, Mode mode )
 			:
@@ -37,6 +39,15 @@ namespace Hydro::gfx::Bind
 				dsDesc.FrontFace.StencilFunc = D3D11_COMPARISON_NOT_EQUAL;
 				dsDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 			}
+			else if( mode == Mode::DepthOff )
+			{
+				dsDesc.DepthEnable = FALSE;
+				dsDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
+			}
+			else if( mode == Mode::DepthReversed )
+			{
+				dsDesc.DepthFunc = D3D11_COMPARISON_GREATER;
+			}
 
 			GetDevice( gfx )->CreateDepthStencilState( &dsDesc, &pStencil );
 		}
@@ -59,6 +70,10 @@ namespace Hydro::gfx::Bind
 					return "write"s;
 				case Mode::Mask:
 					return "mask"s;
+				case Mode::DepthOff:
+					return "depth-off"s;
+				case Mode::DepthReversed:
+					return "depth-reversed"s;
 				}
 				return "ERROR"s;
 			};

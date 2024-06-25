@@ -1,16 +1,26 @@
 #include "Camera.h"
 #include "../../third/ImGui/imgui.h"
 #include "../misc/HydroMath.h"
+#include "Graphics.h"
 
 namespace Hydro::gfx
 {
-    Camera::Camera( DirectX::XMFLOAT3 homePos, float homePitch, float homeYaw ) noexcept
+    Camera::Camera( Graphics& gfx, std::string name, DirectX::XMFLOAT3 homePos, float homePitch, float homeYaw ) noexcept
         :
+        name( std::move( name ) ),
         homePos( homePos ),
         homePitch( homePitch ),
-        homeYaw( homeYaw )
+        homeYaw( homeYaw ),
+        proj( gfx, 1.0f, 9.0f / 16.0f, 0.5f, 400.0f ),
+        indicator( gfx )
     {
-        Reset();
+        Reset( gfx );
+    }
+
+    void Camera::BindToGraphics( Graphics& gfx ) const
+    {
+        gfx.SetCamera( GetMatrix() );
+        gfx.SetProjection( proj.GetMatrix() );
     }
 
     DirectX::XMMATRIX Camera::GetMatrix() const noexcept
@@ -30,36 +40,61 @@ namespace Hydro::gfx
         return DirectX::XMMatrixLookAtLH( camPosition, camTarget, DirectX::XMVectorSet( 0.0f, 1.0f, 0.0f, 0.0f ) );
     }
 
-    void Camera::SpawnControlWindow() noexcept
+    void Camera::SpawnControlWidgets( Graphics& gfx ) noexcept
     {
-        if( ImGui::Begin( "Camera" ) )
+        bool rotDirty = false;
+        bool posDirty = false;
+        const auto dcheck = []( bool d, bool& carry ) { carry = carry || d; };
+
+		ImGui::Text( "Position" );
+        dcheck( ImGui::SliderFloat( "X", &pos.x, -80.0f, 80.0f, "%.1f" ), posDirty );
+        dcheck( ImGui::SliderFloat( "Y", &pos.y, -80.0f, 80.0f, "%.1f" ), posDirty );
+        dcheck( ImGui::SliderFloat( "Z", &pos.z, -80.0f, 80.0f, "%.1f" ), posDirty );
+		ImGui::Text( "Orientation" );
+        dcheck( ImGui::SliderAngle( "Pitch", &pitch, 0.994f * -90.0f, 0.994f * 90.0f ), rotDirty );
+		dcheck( ImGui::SliderAngle( "Yaw", &yaw, -180.0f, 180.0f ), rotDirty );
+        proj.RenderWidgets( gfx );
+        ImGui::Checkbox( "Camera Indicator", &enableCameraIndicator );
+        ImGui::Checkbox( "Frustum Indicator", &enableFrustumIndicator );
+        if( ImGui::Button( "Reset" ) )
         {
-			ImGui::Text( "Position" );
-            ImGui::SliderFloat( "X", &pos.x, -80.0f, 80.0f, "%.1f" );
-            ImGui::SliderFloat( "Y", &pos.y, -80.0f, 80.0f, "%.1f" );
-            ImGui::SliderFloat( "Z", &pos.z, -80.0f, 80.0f, "%.1f" );
-			ImGui::Text( "Orientation" );
-            ImGui::SliderAngle( "Pitch", &pitch, 0.994f * -90.0f, 0.994f * 90.0f );
-			ImGui::SliderAngle( "Yaw", &yaw, -180.0f, 180.0f );
-            if( ImGui::Button( "Reset" ) )
-            {
-				Reset();
-			}
+			Reset( gfx );
 		}
-		ImGui::End();
+        
+        if( rotDirty )
+        {
+            const DirectX::XMFLOAT3 angles = { pitch,yaw,0.0f };
+            indicator.SetRotation( angles );
+            proj.SetRotation( angles );
+        }
+        if( posDirty )
+        {
+            indicator.SetPos( pos );
+            proj.SetPos( pos );
+        }
     }
 
-    void Camera::Reset() noexcept
+    void Camera::Reset( Graphics& gfx ) noexcept
     {
         pos = homePos;
         pitch = homePitch;
         yaw = homeYaw;
+
+        indicator.SetPos( pos );
+        proj.SetPos( pos );
+        const DirectX::XMFLOAT3 angles = { pitch,yaw,0.0f };
+        indicator.SetRotation( angles );
+        proj.SetRotation( angles );
+        proj.Reset( gfx );
     }
 
     void Camera::Rotate( float dx, float dy ) noexcept
     {
         yaw = wrap_angle( yaw + dx * rotationSpeed );
         pitch = std::clamp( pitch + dy * rotationSpeed, -PI / 2.0f + 0.01f, PI / 2.0f - 0.01f );
+        const DirectX::XMFLOAT3 angles = { pitch,yaw,0.0f };
+        indicator.SetRotation( angles );
+        proj.SetRotation( angles );
     }
 
     void Camera::Translate( DirectX::XMFLOAT3 translation ) noexcept
@@ -74,10 +109,35 @@ namespace Hydro::gfx
 			pos.y + translation.y,
 			pos.z + translation.z
 		};
+        indicator.SetPos( pos );
+        proj.SetPos( pos );
     }
 
     DirectX::XMFLOAT3 Camera::GetPos() const noexcept
     {
         return pos;
+    }
+
+    const std::string& Camera::GetName() const noexcept
+    {
+        return name;
+    }
+
+    void Camera::LinkTechniques( Rgph::RenderGraph& rg )
+    {
+        indicator.LinkTechniques( rg );
+        proj.LinkTechniques( rg );
+    }
+
+    void Camera::Submit() const
+    {
+        if( enableCameraIndicator )
+        {
+            indicator.Submit();
+        }
+        if( enableFrustumIndicator )
+        {
+            proj.Submit();
+        }
     }
 }
