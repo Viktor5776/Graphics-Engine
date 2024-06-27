@@ -14,7 +14,7 @@ namespace Hydro::gfx
 		friend Model;
 	public:
 		Node( int id, const std::string& name, std::vector<Mesh*> meshPtrs, const DirectX::XMMATRIX& transform ) noexcept(!_DEBUG);
-		void Submit( DirectX::FXMMATRIX accumulatedTransform ) const noexcept(!_DEBUG);
+		void Submit( size_t channels, DirectX::FXMMATRIX accumulatedTransform ) const noexcept(!_DEBUG);
 		void SetAppliedTransform( DirectX::FXMMATRIX transform ) noexcept;
 		const DirectX::XMFLOAT4X4& GetAppliedTransform() const noexcept;
 		int GetId() const noexcept;

@@ -6,6 +6,7 @@
 #include "../DynamicConstant.h"
 #include "../Jobber/TechniqueProbe.h"
 #include <string>
+#include "../Jobber/Channels.h"
 
 namespace Hydro::gfx
 {
@@ -26,18 +27,18 @@ namespace Hydro::gfx
 		auto tcb = std::make_shared<TransformCbuf>( gfx );
 
 		{
-			Technique shade( "Shade" );
+			Technique shade( "Shade", Channels::main );
 			{
 				Step only( "lambertian" );
 
 				only.AddBindable( Texture::Resolve( gfx, "Images\\brickwall.jpg" ) );
 				only.AddBindable( Sampler::Resolve( gfx ) );
 
-				auto pvs = VertexShader::Resolve( gfx, "PhongDif_VS.cso" );
+				auto pvs = VertexShader::Resolve( gfx, "ShadowTest_VS.cso" );
 				only.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), *pvs ) );
 				only.AddBindable( std::move( pvs ) );
 
-				only.AddBindable( PixelShader::Resolve( gfx, "PhongDif_PS.cso" ) );
+				only.AddBindable( PixelShader::Resolve( gfx, "ShadowTest_PS.cso" ) );
 
 				Dcb::RawLayout lay;
 				lay.Add<Dcb::Float3>( "specularColor" );
@@ -59,7 +60,7 @@ namespace Hydro::gfx
 		}
 
 		{
-			Technique outline( "Outline" );
+			Technique outline( "Outline", Channels::main );
 			{
 				Step mask( "outlineMask" );
 
@@ -91,6 +92,23 @@ namespace Hydro::gfx
 				outline.AddStep( std::move( draw ) );
 			}
 			AddTechnique( std::move( outline ) );
+		}
+		// shadow map technique
+		{
+			Technique map{ "ShadowMap",Channels::shadow,true };
+			{
+				Step draw( "shadowMap" );
+
+				// TODO: better sub-layout generation tech for future consideration maybe
+				draw.AddBindable( InputLayout::Resolve( gfx, model.vertices.GetLayout(), *VertexShader::Resolve( gfx, "Solid_VS.cso" ) ) );
+
+				draw.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
+
+				// TODO: might need to specify rasterizer when doubled-sided models start being used
+
+				map.AddStep( std::move( draw ) );
+			}
+			AddTechnique( std::move( map ) );
 		}
 	}
 

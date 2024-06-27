@@ -5,6 +5,7 @@
 #include <Core/src/misc/HydroUtility.h>
 #include <Core/src/gfx/TestModelProbe.h>
 #include <Core/src/gfx/Camera.h>
+#include <Core/src/gfx/Jobber/Channels.h>
 
 using namespace Hydro;
 using namespace Hydro::gfx;
@@ -12,13 +13,14 @@ using namespace Hydro::gfx;
 WindowApplication::WindowApplication()
 	:
 	App( 1280, 720 ),
-	light( window.Gfx(), 0.5f )
+	light( window.Gfx(), { 10.0f,5.0f,0.0f } )
 {
 	cameras.AddCamera( std::make_unique<Camera>( window.Gfx(), "A", dx::XMFLOAT3{ -13.5f,6.0f,3.5f }, 0.0f, PI / 2.0f ) );
 	cameras.AddCamera( std::make_unique<Camera>( window.Gfx(), "B", dx::XMFLOAT3{ -13.5f,28.8f,-6.4f }, PI / 180.0f * 13.0f, PI / 180.0f * 61.0f ) );
+	cameras.AddCamera( light.ShareCamera() );
 
-	cube.SetPos( { 4.0f,0.0f,0.0f } );
-	cube2.SetPos( { 0.0f,4.0f,0.0f } );
+	cube.SetPos( { 10.0f,5.0f,6.0f } );
+	cube2.SetPos( { 10.0f,5.0f,14.0f } );
 
 	nano.SetRootTransform(
 		dx::XMMatrixRotationY( PI / 2.f ) *
@@ -36,6 +38,8 @@ WindowApplication::WindowApplication()
 	gobber.LinkTechniques( rg );
 	nano.LinkTechniques( rg );
 	cameras.LinkTechniques( rg );
+
+	rg.BindShadowCamera( *light.ShareCamera() );
 }
 
 WindowApplication::~WindowApplication()
@@ -45,18 +49,31 @@ void WindowApplication::DoFrame()
 {
 	float dt = timer.Mark() * speed_factor;
 	window.Gfx().BeginFrame( 0.07f, 0.0f, 0.12f );
-	cameras->BindToGraphics( window.Gfx() );
+
 	light.Bind( window.Gfx(), cameras->GetMatrix() );
-	
-	light.Submit();
-	cube.Submit();
-	sponza.Submit();
-	cube2.Submit();
-	gobber.Submit();
-	nano.Submit();
-	cameras.Submit();
+	rg.BindMainCamera( cameras.GetActiveCamera() );
+
+	light.Submit( Channels::main );
+	cube.Submit( Channels::main );
+	sponza.Submit( Channels::main );
+	cube2.Submit( Channels::main );
+	gobber.Submit( Channels::main );
+	nano.Submit( Channels::main );
+	cameras.Submit( Channels::main );
+
+	sponza.Submit( Channels::shadow );
+	cube.Submit( Channels::shadow );
+	cube2.Submit( Channels::shadow );
+	gobber.Submit( Channels::shadow );
+	nano.Submit( Channels::shadow );
 
 	rg.Execute( window.Gfx() );
+
+	if( savingDepth )
+	{
+		rg.DumpShadowMap( window.Gfx(), "shadow.png" );
+		savingDepth = false;
+	}
 
 	HandleInput(dt);
 
@@ -99,6 +116,9 @@ void WindowApplication::HandleInput( float dt )
 				window.EnableCursor();
 				window.mouse.DisableRaw();
 			}
+			break;
+		case VK_RETURN:
+			savingDepth = true;
 			break;
 		}
 	}

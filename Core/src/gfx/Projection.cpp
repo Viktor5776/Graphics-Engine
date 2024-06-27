@@ -46,9 +46,9 @@ namespace Hydro::gfx
 		frust.SetRotation( rot );
 	}
 
-	void Projection::Submit() const
+	void Projection::Submit( size_t channels ) const
 	{
-		frust.Submit();
+		frust.Submit( channels );
 	}
 
 	void Projection::LinkTechniques( Rgph::RenderGraph& rg )

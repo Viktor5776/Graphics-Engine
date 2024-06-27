@@ -18,7 +18,7 @@ namespace Hydro::gfx
 		void RenderWidgets( Graphics& gfx );
 		void SetPos( DirectX::XMFLOAT3 );
 		void SetRotation( DirectX::XMFLOAT3 );
-		void Submit() const;
+		void Submit( size_t channels ) const;
 		void LinkTechniques( Rgph::RenderGraph& rg );
 		void Reset( Graphics& gfx );
 	private:

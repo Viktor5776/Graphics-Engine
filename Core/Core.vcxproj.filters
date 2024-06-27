@@ -324,6 +324,18 @@
     <ClInclude Include="src\gfx\Jobber\Passlib\WireframePass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Channels.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Jobber\Passlib\ShadowMappingPass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\ShadowCameraCBuf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\ShadowSampler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -530,6 +542,12 @@
     <ClCompile Include="src\gfx\Frustum.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\ShadowCameraCBuf.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\ShadowSampler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third\lib\assimp-vc140-mt.dll" />
@@ -564,5 +582,7 @@
     <FxCompile Include="src\gfx\shaders\BlurOutline_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifMskSpc_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifMskSpc_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\ShadowTest_PS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\ShadowTest_VS.hlsl" />
   </ItemGroup>
 </Project>

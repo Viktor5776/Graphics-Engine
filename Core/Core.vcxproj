@@ -25,6 +25,8 @@
     <ClInclude Include="src\gfx\Bindable\PixelShader.h" />
     <ClInclude Include="src\gfx\Bindable\Rasterizer.h" />
     <ClInclude Include="src\gfx\Bindable\Sampler.h" />
+    <ClInclude Include="src\gfx\Bindable\ShadowCameraCBuf.h" />
+    <ClInclude Include="src\gfx\Bindable\ShadowSampler.h" />
     <ClInclude Include="src\gfx\Bindable\Stencil.h" />
     <ClInclude Include="src\gfx\Bindable\Texture.h" />
     <ClInclude Include="src\gfx\Bindable\Topology.h" />
@@ -51,6 +53,7 @@
     <ClInclude Include="src\gfx\GraphicsException.h" />
     <ClInclude Include="src\gfx\Bindable\DepthStencil.h" />
     <ClInclude Include="src\gfx\GraphicsResource.h" />
+    <ClInclude Include="src\gfx\Jobber\Channels.h" />
     <ClInclude Include="src\gfx\Jobber\Graphlib\BlurOutlineRenderGraph.h" />
     <ClInclude Include="src\gfx\Jobber\Graphlib\ScaleOutlineRenderGraph.h" />
     <ClInclude Include="src\gfx\Jobber\Job.h" />
@@ -67,6 +70,7 @@
     <ClInclude Include="src\gfx\Jobber\Passlib\OutlineDrawingPass.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\OutlineMaskGenerationPass.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\RenderGraphCompileException.h" />
+    <ClInclude Include="src\gfx\Jobber\Passlib\ShadowMappingPass.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\VerticalBlurPass.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\WireframePass.h" />
     <ClInclude Include="src\gfx\Jobber\RenderGraph.h" />
@@ -124,6 +128,8 @@
     <ClCompile Include="src\gfx\Bindable\PixelShader.cpp" />
     <ClCompile Include="src\gfx\Bindable\Rasterizer.cpp" />
     <ClCompile Include="src\gfx\Bindable\Sampler.cpp" />
+    <ClCompile Include="src\gfx\Bindable\ShadowCameraCBuf.cpp" />
+    <ClCompile Include="src\gfx\Bindable\ShadowSampler.cpp" />
     <ClCompile Include="src\gfx\Bindable\Texture.cpp" />
     <ClCompile Include="src\gfx\Bindable\Topology.cpp" />
     <ClCompile Include="src\gfx\Bindable\TransformCbuf.cpp" />
@@ -312,6 +318,16 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\ShadowTest_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\ShadowTest_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="src\gfx\shaders\Solid_PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

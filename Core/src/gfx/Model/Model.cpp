@@ -45,9 +45,9 @@ namespace Hydro::gfx
 		pRoot = ParseNode( nextId, *pScene->mRootNode, scale );
 	}
 
-	void Model::Submit() const noexcept(!_DEBUG)
+	void Model::Submit( size_t channels ) const noexcept(!_DEBUG)
 	{
-		pRoot->Submit( DirectX::XMMatrixIdentity() );
+		pRoot->Submit( channels, DirectX::XMMatrixIdentity() );
 	}
 
 	void Model::SetRootTransform( DirectX::FXMMATRIX tf ) noexcept

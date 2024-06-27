@@ -5,7 +5,7 @@
 #include "../Bindable/TransformCbufScaling.h"
 #include "../Bindable/Stencil.h"
 #include <filesystem>
-
+#include "../Jobber/Channels.h"
 
 namespace Hydro::gfx
 {
@@ -23,7 +23,7 @@ namespace Hydro::gfx
 		}
 		// phong technique
 		{
-			Technique phong{ "Phong" };
+			Technique phong{ "Phong", Channels::main };
 			Step step( "lambertian" );
 			std::string shaderCode = "Phong";
 			aiString texFileName;
@@ -131,7 +131,7 @@ namespace Hydro::gfx
 		}
 		// outline technique
 		{
-			Technique outline( "Outline",false );
+			Technique outline( "Outline", Channels::main, false );
 			{
 				Step mask( "outlineMask" );
 
@@ -166,6 +166,23 @@ namespace Hydro::gfx
 			}
 			techniques.push_back( std::move( outline ) );
 		}
+		// shadow map technique
+		//{
+		//	Technique map{ "ShadowMap",Channels::shadow,true };
+		//	{
+		//		Step draw( "shadowMap" );
+		//
+		//		// TODO: better sub-layout generation tech for future consideration maybe
+		//		draw.AddBindable( InputLayout::Resolve( gfx, vtxLayout, *VertexShader::Resolve( gfx, "Solid_VS.cso" ) ) );
+		//
+		//		draw.AddBindable( std::make_shared<TransformCbuf>( gfx ) );
+		//
+		//		// TODO: might need to specify rasterizer when doubled-sided models start being used
+		//
+		//		map.AddStep( std::move( draw ) );
+		//	}
+		//	techniques.push_back( std::move( map ) );
+		//}
 	}
 
 	DynamicVertexBuffer Material::ExtractVertices( const aiMesh& mesh ) const noexcept

@@ -18,10 +18,10 @@ namespace Hydro::gfx
 		Drawable( gfx, mat, mesh, scale )
 	{}
 
-	void Mesh::Submit( DirectX::FXMMATRIX accumulatedTranform ) const noexcept(!_DEBUG)
+	void Mesh::Submit( size_t channels, DirectX::FXMMATRIX accumulatedTranform ) const noexcept(!_DEBUG)
 	{
 		DirectX::XMStoreFloat4x4( &transform, accumulatedTranform );
-		Drawable::Submit();
+		Drawable::Submit( channels );
 	}
 
 	DirectX::XMMATRIX Mesh::GetTransformXM() const noexcept

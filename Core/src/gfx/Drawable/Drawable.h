@@ -32,7 +32,7 @@ namespace Hydro::gfx
 		Drawable( const Drawable& ) = delete;
 		void AddTechnique( Technique tech_in ) noexcept;
 		virtual DirectX::XMMATRIX GetTransformXM() const noexcept = 0;
-		void Submit() const noexcept;
+		void Submit( size_t channelFilter ) const noexcept;
 		void Bind( Graphics& gfx ) const noexcept(!_DEBUG);
 		void Accept( TechniqueProbe& probe );
 		UINT GetIndexCount() const noexcept(!_DEBUG);

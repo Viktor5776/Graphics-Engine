@@ -3,6 +3,7 @@
 #include "Vertex.h"
 #include "Drawable/Sphere.h"
 #include "Bindable/Stencil.h"
+#include "Jobber\Channels.h"
 
 namespace dx = DirectX;
 
@@ -45,7 +46,7 @@ namespace Hydro::gfx
 		pTopology = Topology::Resolve( gfx, D3D11_PRIMITIVE_TOPOLOGY_LINELIST );
 
 		{
-			Technique line;
+			Technique line{ Channels::main };
 			{
 				Step unoccluded( "lambertian" );
 

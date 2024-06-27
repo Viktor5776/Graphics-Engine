@@ -5,9 +5,9 @@
 namespace Hydro::gfx
 {
 
-	void Technique::Submit( const Drawable& drawable ) const noexcept
+	void Technique::Submit( const Drawable& drawable, size_t channelFilter ) const noexcept
 	{
-		if( active )
+		if( active && ((channels & channelFilter) != 0 ) )
 		{
 			for( const auto& step : steps )
 			{
@@ -24,10 +24,16 @@ namespace Hydro::gfx
 		}
 	}
 
-	Technique::Technique( std::string name, bool startActive ) noexcept
+	Technique::Technique( size_t channels )
+		:
+		channels{ channels }
+	{}
+
+	Technique::Technique( std::string name, size_t channels, bool startActive ) noexcept
 		:
 		active( startActive ),
-		name( name )
+		name( name ),
+		channels( channels )
 	{}
 
 	void Technique::AddStep( Step step ) noexcept

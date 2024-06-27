@@ -4,6 +4,7 @@
 #include "../Vertex.h"
 #include "../Bindable/Stencil.h"
 #include <string>
+#include "../Jobber/Channels.h"
 
 namespace Hydro::gfx
 {
@@ -19,7 +20,7 @@ namespace Hydro::gfx
 		pTopology = Topology::Resolve( gfx, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
 
 		{
-			Technique solid;
+			Technique solid{ Channels::main };
 			Step only( "lambertian" );
 
 			auto pvs = VertexShader::Resolve( gfx, "Solid_VS.cso" );
