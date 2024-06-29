@@ -555,11 +555,12 @@
     <None Include="third\dxtex\include\dxtex\DirectXTex.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="src\gfx\shaders\VShadow.hlsli" />
+    <None Include="src\gfx\shaders\PShadow.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\gfx\shaders\PhongDif_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifNrm_PS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PhongPSNormalMapObject.hlsl" />
     <FxCompile Include="src\gfx\shaders\Phong_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifSpcNrm_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDif_VS.hlsl" />
@@ -567,16 +568,16 @@
     <FxCompile Include="src\gfx\shaders\Phong_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Solid_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Solid_VS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\ShaderOps.hlsl" />
-    <FxCompile Include="src\gfx\shaders\PointLight.hlsl" />
-    <FxCompile Include="src\gfx\shaders\LightVectorData.hlsl" />
-    <FxCompile Include="src\gfx\shaders\Transform.hlsl" />
+    <FxCompile Include="src\gfx\shaders\ShaderOps.hlsli" />
+    <FxCompile Include="src\gfx\shaders\PointLight.hlsli" />
+    <FxCompile Include="src\gfx\shaders\LightVectorData.hlsli" />
+    <FxCompile Include="src\gfx\shaders\Transform.hlsli" />
     <FxCompile Include="src\gfx\shaders\PhongDifSpc_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifMskSpcNrm_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifMskSpcNrm_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifSpcNrm_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\PhongDifSpc_VS.hlsl" />
-    <FxCompile Include="src\gfx\shaders\Offset_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Offset_VS_deprecated.hlsl" />
     <FxCompile Include="src\gfx\shaders\Fullscreen_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Blur_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\BlurOutline_PS.hlsl" />

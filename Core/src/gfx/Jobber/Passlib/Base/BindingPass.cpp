@@ -18,7 +18,7 @@ namespace Hydro::gfx::Rgph
 		binds.push_back( std::move( bind ) );
 	}
 
-	void BindingPass::BindAll( Graphics& gfx ) const noexcept
+	void BindingPass::BindAll( Graphics& gfx ) const noexcept(!_DEBUG)
 	{
 		BindBufferResources( gfx );
 		for( auto& bind : binds )

@@ -1,20 +1,19 @@
-#include "ShaderOps.hlsl"
-#include "LightVectorData.hlsl"
+#include "ShaderOps.hlsli"
+#include "LightVectorData.hlsli"
 
-#include "PointLight.hlsl"
+#include "PointLight.hlsli"
+#include "PShadow.hlsli"
 
-cbuffer ObjectCBuf
+cbuffer ObjectCBuf : register( b1 )
 {
     float3 specularColor;
     float specularWeight;
     float specularGloss;
 };
 
-Texture2D tex;
-Texture2D smap : register( t3 );
+Texture2D tex : register( t0 );
 
-SamplerState splr;
-SamplerState ssam;
+SamplerState splr : register( s0 );
 
 
 float4 main( float3 viewFragPos : Position, float3 viewNormal : Normal, float2 tc : Texcoord, float4 spos : ShadowPosition ) : SV_Target
@@ -23,8 +22,7 @@ float4 main( float3 viewFragPos : Position, float3 viewNormal : Normal, float2 t
     float3 specular;
 
     // shadow map test
-    spos.xyz = spos.xyz / spos.w;
-    if ( smap.Sample( ssam, spos.xy ).r > spos.z )
+    if ( ShadowUnoccluded( spos ) )
     {
         // renormalize interpolated normal
         viewNormal = normalize( viewNormal );
@@ -39,7 +37,7 @@ float4 main( float3 viewFragPos : Position, float3 viewNormal : Normal, float2 t
     }
     else
     {
-        diffuse = specular = float3( 0.0f, 0.0f, 0.0f );
+        diffuse = specular = 0.0f;
     }
 	// final color
     return float4( saturate( (diffuse + ambient) * tex.Sample( splr, tc ).rgb + specular ), 1.0f );
