@@ -25,7 +25,8 @@ float4 main( float3 viewFragPos : Position, float3 viewNormal : Normal, float2 t
     float3 specularReflected;
 
     // shadow map test
-    if ( ShadowUnoccluded( spos ) )
+    const float shadowLevel = Shadow( spos );
+    if ( shadowLevel != 0.0f )
     {
         // normalize the mesh normal
         viewNormal = normalize( viewNormal );
@@ -56,6 +57,7 @@ float4 main( float3 viewFragPos : Position, float3 viewNormal : Normal, float2 t
             diffuseColor * specularReflectionColor, specularWeight, viewNormal,
             lv.vToL, viewFragPos, att, specularPowerLoaded
         );
+        diffuse *= shadowLevel;
     }
     else
     {

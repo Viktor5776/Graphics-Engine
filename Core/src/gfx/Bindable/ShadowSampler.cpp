@@ -14,6 +14,7 @@ namespace Hydro::gfx::Bind
 		samplerDesc.BorderColor[0] = 1.0f;
 		samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
 		samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 
 		GFX_THROW_FAILED( GetDevice( gfx )->CreateSamplerState( &samplerDesc, &pSampler ) );
 	}
