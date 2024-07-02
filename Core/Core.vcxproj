@@ -26,6 +26,7 @@
     <ClInclude Include="src\gfx\Bindable\Rasterizer.h" />
     <ClInclude Include="src\gfx\Bindable\Sampler.h" />
     <ClInclude Include="src\gfx\Bindable\ShadowCameraCBuf.h" />
+    <ClInclude Include="src\gfx\Bindable\ShadowRasterizer.h" />
     <ClInclude Include="src\gfx\Bindable\ShadowSampler.h" />
     <ClInclude Include="src\gfx\Bindable\Stencil.h" />
     <ClInclude Include="src\gfx\Bindable\Texture.h" />
@@ -129,6 +130,7 @@
     <ClCompile Include="src\gfx\Bindable\Rasterizer.cpp" />
     <ClCompile Include="src\gfx\Bindable\Sampler.cpp" />
     <ClCompile Include="src\gfx\Bindable\ShadowCameraCBuf.cpp" />
+    <ClCompile Include="src\gfx\Bindable\ShadowRasterizer.cpp" />
     <ClCompile Include="src\gfx\Bindable\ShadowSampler.cpp" />
     <ClCompile Include="src\gfx\Bindable\Texture.cpp" />
     <ClCompile Include="src\gfx\Bindable\Topology.cpp" />
@@ -194,6 +196,8 @@
   <ItemGroup>
     <None Include="src\gfx\shaders\PShadow.hlsli" />
     <None Include="src\gfx\shaders\VShadow.hlsli" />
+    <None Include="src\gfx\shaders\_PShadow_Dynamic.hlsli" />
+    <None Include="src\gfx\shaders\_PShadow_Static.hlsli" />
     <None Include="third\dxtex\include\dxtex\DirectXTex.inl" />
     <None Include="third\lib\assimp-vc140-mt.dll" />
     <None Include="third\lib\zlib1.dll" />

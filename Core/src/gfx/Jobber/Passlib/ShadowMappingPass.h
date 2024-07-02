@@ -11,6 +11,7 @@
 #include "../../Bindable/Blender.h"
 #include "../../Bindable/NullPixelShader.h"
 #include "../../Camera.h"
+#include "../../Bindable/ShadowRasterizer.h"
 
 namespace Hydro::gfx
 {
@@ -36,6 +37,7 @@ namespace Hydro::gfx
 				AddBind( NullPixelShader::Resolve( gfx ) );
 				AddBind( Stencil::Resolve( gfx, Stencil::Mode::Off ) );
 				AddBind( Blender::Resolve( gfx, false ) );
+				AddBind( std::make_shared<Bind::ShadowRasterizer>( gfx, 50, 2.0f, 0.1f ) );
 				RegisterSource( DirectBindableSource<Bind::DepthStencil>::Make( "map", depthStencil ) );
 			}
 			void Execute( Graphics& gfx ) const noexcept(!_DEBUG) override

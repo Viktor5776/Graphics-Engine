@@ -13,6 +13,8 @@ namespace Hydro::gfx
 	{
 		class Bindable;
 		class RenderTarget;
+		class ShadowSampler;
+		class ShadowRasterizer;
 	}
 
 	namespace Rgph
@@ -21,11 +23,12 @@ namespace Hydro::gfx
 		{
 		public:
 			BlurOutlineRenderGraph( Graphics& gfx );
-			void RenderWidgets( Graphics& gfx );
+			void RenderWindows( Graphics& gfx );
 			void DumpShadowMap( Graphics& gfx, const std::string& path );
 			void BindMainCamera( Camera& cam );
 			void BindShadowCamera( Camera& cam );
 		private:
+			void RenderKernelWindow( Graphics& gfx );
 			// private functions
 			void SetKernelGauss( int radius, float sigma ) noexcept(!_DEBUG);
 			void SetKernelBox( int radius ) noexcept(!_DEBUG);

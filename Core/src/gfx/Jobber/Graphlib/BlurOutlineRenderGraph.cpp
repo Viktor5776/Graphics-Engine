@@ -13,6 +13,8 @@
 #include "../../DynamicConstant.h"
 #include "../../../misc/HydroMath.h"
 #include "../../../third/ImGui/imgui.h"
+#include "../../Bindable/ShadowSampler.h"
+#include "../../Bindable/ShadowRasterizer.h"
 
 namespace Hydro::gfx::Rgph
 {
@@ -30,10 +32,12 @@ namespace Hydro::gfx::Rgph
 			pass->SetSinkLinkage( "buffer", "$.masterDepth" );
 			AppendPass( std::move( pass ) );
 		}
+
 		{
 			auto pass = std::make_unique<ShadowMappingPass>( gfx, "shadowMap" );
 			AppendPass( std::move( pass ) );
 		}
+		
 		{
 			auto pass = std::make_unique<LambertianPass>( gfx, "lambertian" );
 			pass->SetSinkLinkage( "shadowMap", "shadowMap.map" );
@@ -134,7 +138,28 @@ namespace Hydro::gfx::Rgph
 		blurKernel->SetBuffer( k );
 	}
 
-	void BlurOutlineRenderGraph::RenderWidgets( Graphics& gfx )
+	void BlurOutlineRenderGraph::RenderWindows( Graphics& gfx )
+	{
+		RenderKernelWindow( gfx );
+	}
+
+	void Rgph::BlurOutlineRenderGraph::DumpShadowMap( Graphics& gfx, const std::string& path )
+	{
+		dynamic_cast<ShadowMappingPass&>(FindPassByName( "shadowMap" )).DumpShadowMap( gfx, path );
+	}
+
+	void Rgph::BlurOutlineRenderGraph::BindMainCamera( Camera& cam )
+	{
+		dynamic_cast<LambertianPass&>(FindPassByName( "lambertian" )).BindMainCamera( cam );
+	}
+
+	void Rgph::BlurOutlineRenderGraph::BindShadowCamera( Camera& cam )
+	{
+		dynamic_cast<ShadowMappingPass&>(FindPassByName( "shadowMap" )).BindShadowCamera( cam );
+		dynamic_cast<LambertianPass&>(FindPassByName( "lambertian" )).BindShadowCamera( cam );
+	}
+
+	void Rgph::BlurOutlineRenderGraph::RenderKernelWindow( Graphics& gfx )
 	{
 		if( ImGui::Begin( "Kernel" ) )
 		{
@@ -184,21 +209,5 @@ namespace Hydro::gfx::Rgph
 			}
 		}
 		ImGui::End();
-	}
-
-	void Rgph::BlurOutlineRenderGraph::DumpShadowMap( Graphics& gfx, const std::string& path )
-	{
-		dynamic_cast<ShadowMappingPass&>(FindPassByName( "shadowMap" )).DumpShadowMap( gfx, path );
-	}
-
-	void Rgph::BlurOutlineRenderGraph::BindMainCamera( Camera& cam )
-	{
-		dynamic_cast<LambertianPass&>(FindPassByName( "lambertian" )).BindMainCamera( cam );
-	}
-
-	void Rgph::BlurOutlineRenderGraph::BindShadowCamera( Camera& cam )
-	{
-		dynamic_cast<ShadowMappingPass&>(FindPassByName( "shadowMap" )).BindShadowCamera( cam );
-		dynamic_cast<LambertianPass&>(FindPassByName( "lambertian" )).BindShadowCamera( cam );
 	}
 }

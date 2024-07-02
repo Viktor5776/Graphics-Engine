@@ -336,6 +336,9 @@
     <ClInclude Include="src\gfx\Bindable\ShadowSampler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\ShadowRasterizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -548,6 +551,9 @@
     <ClCompile Include="src\gfx\Bindable\ShadowSampler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gfx\Bindable\ShadowRasterizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="third\lib\assimp-vc140-mt.dll" />
@@ -557,6 +563,8 @@
     </None>
     <None Include="src\gfx\shaders\VShadow.hlsli" />
     <None Include="src\gfx\shaders\PShadow.hlsli" />
+    <None Include="src\gfx\shaders\_PShadow_Dynamic.hlsli" />
+    <None Include="src\gfx\shaders\_PShadow_Static.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="src\gfx\shaders\PhongDif_PS.hlsl" />
