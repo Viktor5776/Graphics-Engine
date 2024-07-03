@@ -13,8 +13,7 @@
 #include "../../DynamicConstant.h"
 #include "../../../misc/HydroMath.h"
 #include "../../../third/ImGui/imgui.h"
-#include "../../Bindable/ShadowSampler.h"
-#include "../../Bindable/ShadowRasterizer.h"
+#include "../Passlib/SkyboxPass.h"
 
 namespace Hydro::gfx::Rgph
 {
@@ -27,6 +26,7 @@ namespace Hydro::gfx::Rgph
 			pass->SetSinkLinkage( "buffer", "$.backbuffer" );
 			AppendPass( std::move( pass ) );
 		}
+
 		{
 			auto pass = std::make_unique<BufferClearPass>( "clearDS" );
 			pass->SetSinkLinkage( "buffer", "$.masterDepth" );
@@ -45,9 +45,18 @@ namespace Hydro::gfx::Rgph
 			pass->SetSinkLinkage( "depthStencil", "clearDS.buffer" );
 			AppendPass( std::move( pass ) );
 		}
+
+		{
+			auto pass = std::make_unique<SkyboxPass>( gfx, "skybox" );
+
+			pass->SetSinkLinkage( "renderTarget", "lambertian.renderTarget" );
+			pass->SetSinkLinkage( "depthStencil", "lambertian.depthStencil" );
+			AppendPass( std::move( pass ) );
+		}
+
 		{
 			auto pass = std::make_unique<OutlineMaskGenerationPass>( gfx, "outlineMask" );
-			pass->SetSinkLinkage( "depthStencil", "lambertian.depthStencil" );
+			pass->SetSinkLinkage( "depthStencil", "skybox.depthStencil" );
 			AppendPass( std::move( pass ) );
 		}
 
@@ -76,6 +85,7 @@ namespace Hydro::gfx::Rgph
 			auto pass = std::make_unique<BlurOutlineDrawingPass>( gfx, "outlineDraw", gfx.GetWidth(), gfx.GetHeight() );
 			AppendPass( std::move( pass ) );
 		}
+
 		{
 			auto pass = std::make_unique<HorizontalBlurPass>( "horizontal", gfx, gfx.GetWidth(), gfx.GetHeight() );
 			pass->SetSinkLinkage( "scratchIn", "outlineDraw.scratchOut" );
@@ -83,15 +93,17 @@ namespace Hydro::gfx::Rgph
 			pass->SetSinkLinkage( "direction", "$.blurDirection" );
 			AppendPass( std::move( pass ) );
 		}
+
 		{
 			auto pass = std::make_unique<VerticalBlurPass>( "vertical", gfx );
-			pass->SetSinkLinkage( "renderTarget", "lambertian.renderTarget" );
+			pass->SetSinkLinkage( "renderTarget", "skybox.renderTarget" );
 			pass->SetSinkLinkage( "depthStencil", "outlineMask.depthStencil" );
 			pass->SetSinkLinkage( "scratchIn", "horizontal.scratchOut" );
 			pass->SetSinkLinkage( "kernel", "$.blurKernel" );
 			pass->SetSinkLinkage( "direction", "$.blurDirection" );
 			AppendPass( std::move( pass ) );
 		}
+
 		{
 			auto pass = std::make_unique<WireframePass>( gfx, "wireframe" );
 			pass->SetSinkLinkage( "renderTarget", "vertical.renderTarget" );
@@ -141,6 +153,7 @@ namespace Hydro::gfx::Rgph
 	void BlurOutlineRenderGraph::RenderWindows( Graphics& gfx )
 	{
 		RenderKernelWindow( gfx );
+		dynamic_cast<SkyboxPass&>(FindPassByName( "skybox" )).RenderWindow();
 	}
 
 	void Rgph::BlurOutlineRenderGraph::DumpShadowMap( Graphics& gfx, const std::string& path )
@@ -151,6 +164,8 @@ namespace Hydro::gfx::Rgph
 	void Rgph::BlurOutlineRenderGraph::BindMainCamera( Camera& cam )
 	{
 		dynamic_cast<LambertianPass&>(FindPassByName( "lambertian" )).BindMainCamera( cam );
+
+		dynamic_cast<SkyboxPass&>(FindPassByName( "skybox" )).BindMainCamera( cam );
 	}
 
 	void Rgph::BlurOutlineRenderGraph::BindShadowCamera( Camera& cam )

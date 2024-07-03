@@ -4,8 +4,7 @@
 #include "IndexedTriangleList.h"
 #include <DirectXMath.h>
 #include <math.h>
-
-constexpr float PI = 3.14159265359f;
+#include "../../misc/HydroMath.h"
 
 namespace Hydro::gfx
 {

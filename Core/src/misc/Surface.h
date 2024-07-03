@@ -111,6 +111,7 @@ namespace Hydro::misc
 		Color GetPixel( unsigned int x, unsigned int y ) const noexcept(!_DEBUG);
 		unsigned int GetWidth() const noexcept;
 		unsigned int GetHeight() const noexcept;
+		unsigned int GetBytePitch() const noexcept;
 		Color* GetBufferPtr() noexcept;
 		const Color* GetBufferPtr() const noexcept;
 		const Color* GetBufferPtrConst() const noexcept;

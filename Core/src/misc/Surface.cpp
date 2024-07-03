@@ -68,6 +68,11 @@ namespace Hydro::misc
 		return reinterpret_cast<Color*>(scratch.GetPixels());
 	}
 
+	unsigned int Surface::GetBytePitch() const noexcept
+	{
+		return (unsigned int)scratch.GetImage( 0, 0, 0 )->rowPitch;
+	}
+
 	const Surface::Color* Surface::GetBufferPtr() const noexcept
 	{
 		return const_cast<Surface*>(this)->GetBufferPtr();

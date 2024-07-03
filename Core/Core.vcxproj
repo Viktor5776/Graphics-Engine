@@ -19,6 +19,7 @@
     <ClInclude Include="src\gfx\Bindable\Blender.h" />
     <ClInclude Include="src\gfx\Bindable\BufferResource.h" />
     <ClInclude Include="src\gfx\Bindable\ConstantBuffers.h" />
+    <ClInclude Include="src\gfx\Bindable\CubeTexture.h" />
     <ClInclude Include="src\gfx\Bindable\IndexBuffer.h" />
     <ClInclude Include="src\gfx\Bindable\InputLayout.h" />
     <ClInclude Include="src\gfx\Bindable\NullPixelShader.h" />
@@ -28,6 +29,7 @@
     <ClInclude Include="src\gfx\Bindable\ShadowCameraCBuf.h" />
     <ClInclude Include="src\gfx\Bindable\ShadowRasterizer.h" />
     <ClInclude Include="src\gfx\Bindable\ShadowSampler.h" />
+    <ClInclude Include="src\gfx\Bindable\SkyboxTransformCbuf.h" />
     <ClInclude Include="src\gfx\Bindable\Stencil.h" />
     <ClInclude Include="src\gfx\Bindable\Texture.h" />
     <ClInclude Include="src\gfx\Bindable\Topology.h" />
@@ -72,6 +74,7 @@
     <ClInclude Include="src\gfx\Jobber\Passlib\OutlineMaskGenerationPass.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\RenderGraphCompileException.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\ShadowMappingPass.h" />
+    <ClInclude Include="src\gfx\Jobber\Passlib\SkyboxPass.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\VerticalBlurPass.h" />
     <ClInclude Include="src\gfx\Jobber\Passlib\WireframePass.h" />
     <ClInclude Include="src\gfx\Jobber\RenderGraph.h" />
@@ -123,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="src\app\App.cpp" />
     <ClCompile Include="src\gfx\Bindable\Blender.cpp" />
+    <ClCompile Include="src\gfx\Bindable\CubeTexture.cpp" />
     <ClCompile Include="src\gfx\Bindable\IndexBuffer.cpp" />
     <ClCompile Include="src\gfx\Bindable\InputLayout.cpp" />
     <ClCompile Include="src\gfx\Bindable\NullPixelShader.cpp" />
@@ -132,6 +136,7 @@
     <ClCompile Include="src\gfx\Bindable\ShadowCameraCBuf.cpp" />
     <ClCompile Include="src\gfx\Bindable\ShadowRasterizer.cpp" />
     <ClCompile Include="src\gfx\Bindable\ShadowSampler.cpp" />
+    <ClCompile Include="src\gfx\Bindable\SkyboxTransformCbuf.cpp" />
     <ClCompile Include="src\gfx\Bindable\Texture.cpp" />
     <ClCompile Include="src\gfx\Bindable\Topology.cpp" />
     <ClCompile Include="src\gfx\Bindable\TransformCbuf.cpp" />
@@ -346,6 +351,16 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\Skybox_PS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\Skybox_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="src\gfx\shaders\Solid_PS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

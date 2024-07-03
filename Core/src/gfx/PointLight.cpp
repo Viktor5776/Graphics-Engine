@@ -1,6 +1,7 @@
 #include "PointLight.h"
 #include "../../third/ImGui/imgui.h"
 #include "Camera.h"
+#include "../misc/HydroMath.h"
 
 namespace Hydro::gfx
 {
@@ -21,7 +22,7 @@ namespace Hydro::gfx
 		};
 
 		Reset();
-		pCamera = std::make_shared<Camera>( gfx, "Light", cbData.pos, 0.0f, 0.0f, true );
+		pCamera = std::make_shared<Camera>( gfx, "Light", cbData.pos, 0.0f, PI / 2.0f, true );
 	}
 
 	void Hydro::gfx::PointLight::SpawnControlWindow() noexcept
