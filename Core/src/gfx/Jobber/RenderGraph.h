@@ -29,7 +29,6 @@ namespace Hydro::gfx
 			void Execute( Graphics& gfx ) noexcept(!_DEBUG);
 			void Reset() noexcept;
 			RenderQueuePass& GetRenderQueue( const std::string& passName );
-			void StoreDepth( Graphics& gfx, const std::string& path );
 		protected:
 			void SetSinkTarget( const std::string& sinkName, const std::string& target );
 			void AddGlobalSource( std::unique_ptr<Source> );
@@ -37,6 +36,8 @@ namespace Hydro::gfx
 			void Finalize();
 			void AppendPass( std::unique_ptr<Pass> pass );
 			Pass& FindPassByName( const std::string& name );
+			std::shared_ptr<Bind::RenderTarget> backBufferTarget;
+			std::shared_ptr<Bind::DepthStencil> masterDepth;
 		private:
 			void LinkSinks( Pass& pass );
 			void LinkGlobalSinks();
@@ -44,8 +45,6 @@ namespace Hydro::gfx
 			std::vector<std::unique_ptr<Pass>> passes;
 			std::vector<std::unique_ptr<Source>> globalSources;
 			std::vector<std::unique_ptr<Sink>> globalSinks;
-			std::shared_ptr<Bind::RenderTarget> backBufferTarget;
-			std::shared_ptr<Bind::DepthStencil> masterDepth;
 			bool finalized = false;
 		};
 	}

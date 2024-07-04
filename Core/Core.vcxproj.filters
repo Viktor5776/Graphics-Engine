@@ -348,6 +348,9 @@
     <ClInclude Include="src\gfx\Bindable\SkyboxTransformCbuf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\gfx\Bindable\Viewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\win\Window.cpp">
@@ -610,5 +613,6 @@
     <FxCompile Include="src\gfx\shaders\ShadowTest_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Skybox_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Skybox_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Shadow_VS.hlsl" />
   </ItemGroup>
 </Project>

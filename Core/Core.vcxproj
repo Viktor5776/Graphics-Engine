@@ -37,6 +37,7 @@
     <ClInclude Include="src\gfx\Bindable\TransformCbufScaling.h" />
     <ClInclude Include="src\gfx\Bindable\VertexBuffer.h" />
     <ClInclude Include="src\gfx\Bindable\VertexShader.h" />
+    <ClInclude Include="src\gfx\Bindable\Viewport.h" />
     <ClInclude Include="src\gfx\Camera.h" />
     <ClInclude Include="src\gfx\CameraContainer.h" />
     <ClInclude Include="src\gfx\CameraIndicator.h" />
@@ -347,6 +348,12 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="src\gfx\shaders\ShadowTest_VS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="src\gfx\shaders\Shadow_VS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)WindowApplication\%(Filename).cso</ObjectFileOutput>
