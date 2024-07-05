@@ -614,5 +614,6 @@
     <FxCompile Include="src\gfx\shaders\Skybox_PS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Skybox_VS.hlsl" />
     <FxCompile Include="src\gfx\shaders\Shadow_VS.hlsl" />
+    <FxCompile Include="src\gfx\shaders\Shadow_PS.hlsl" />
   </ItemGroup>
 </Project>

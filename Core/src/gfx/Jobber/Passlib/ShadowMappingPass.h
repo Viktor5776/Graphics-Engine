@@ -79,12 +79,19 @@ namespace Hydro::gfx
 				gfx.SetProjection( XMLoadFloat4x4( &projection ) );
 				for( size_t i = 0; i < 6; i++ )
 				{
-					auto d = pDepthCube->GetDepthBuffer( i );
-					d->Clear( gfx );
-					SetDepthBuffer( std::move( d ) );
-					const auto lookAt = pos + XMLoadFloat3( &cameraDirections[i] );
-					gfx.SetCamera( XMMatrixLookAtLH( pos, lookAt, XMLoadFloat3( &cameraUps[i] ) ) );
-					RenderQueuePass::Execute( gfx );
+					using namespace DirectX;
+					auto shadowCameraPos = pShadowCamera->GetPos();
+					const auto pos = XMLoadFloat3( &shadowCameraPos );
+					gfx.SetProjection( XMLoadFloat4x4( &projection ) );
+					for( size_t i = 0; i < 6; i++ )
+					{
+						auto d = pDepthCube->GetDepthBuffer( i );
+						d->Clear( gfx );
+						SetDepthBuffer( std::move( d ) );
+						const auto lookAt = pos + XMLoadFloat3( &cameraDirections[i] );
+						gfx.SetCamera( XMMatrixLookAtLH( pos, lookAt, XMLoadFloat3( &cameraUps[i] ) ) );
+						RenderQueuePass::Execute( gfx );
+					}
 				}
 			}
 			void DumpShadowMap( Graphics& gfx, const std::string& path ) const

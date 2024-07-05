@@ -1,6 +1,7 @@
 #pragma once
 #include "Bindable.h"
 #include "BufferResource.h"
+#include <optional>
 
 namespace Hydro::misc
 {
@@ -28,7 +29,7 @@ namespace Hydro::gfx
 		private:
 			void BindAsBuffer( Graphics& gfx, ID3D11DepthStencilView* pDepthStencilView ) noexcept(!_DEBUG);
 		protected:
-			RenderTarget( Graphics& gfx, ID3D11Texture2D* pTexture );
+			RenderTarget( Graphics& gfx, ID3D11Texture2D* pTexture, std::optional<UINT> face );
 			RenderTarget( Graphics& gfx, UINT width, UINT height );
 			UINT width;
 			UINT height;
@@ -46,14 +47,11 @@ namespace Hydro::gfx
 			Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pShaderResourceView;
 		};
 
-		// RT for Graphics to create RenderTarget for the back buffer
 		class OutputOnlyRenderTarget : public RenderTarget
 		{
-			friend Graphics;
 		public:
 			void Bind( Graphics& gfx ) noexcept(!_DEBUG) override;
-		private:
-			OutputOnlyRenderTarget( Graphics& gfx, ID3D11Texture2D* pTexture );
+			OutputOnlyRenderTarget( Graphics& gfx, ID3D11Texture2D* pTexture, std::optional<UINT> face = {} );
 		};
 	}
 }
