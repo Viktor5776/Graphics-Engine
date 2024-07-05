@@ -11,7 +11,10 @@
 namespace Hydro::gfx
 {
 
-	Model::Model( Graphics& gfx, const std::string& pathString, const float scale )
+	Model::Model( Graphics& gfx, const std::string& pathString, const std::string& name, const size_t channels, const float scale )
+		:
+		name( name ),
+		channels( channels )
 	{
 		Assimp::Importer imp;
 		const auto pScene = imp.ReadFile( pathString.c_str(),
@@ -45,6 +48,23 @@ namespace Hydro::gfx
 		pRoot = ParseNode( nextId, *pScene->mRootNode, scale );
 	}
 
+	Model::Model( Model&& other ) noexcept
+		:
+		channels( 0 )
+	{
+		*this = std::move(other);
+	}
+
+	Model& Model::operator=( Model&& other ) noexcept
+	{
+		name = std::move( other.name );
+		channels = std::move( other.channels );
+		pRoot = std::move( other.pRoot );
+		meshPtrs = std::move( other.meshPtrs );
+
+		return *this;
+	}
+
 	void Model::Submit( size_t channels ) const noexcept(!_DEBUG)
 	{
 		pRoot->Submit( channels, DirectX::XMMatrixIdentity() );
@@ -66,6 +86,16 @@ namespace Hydro::gfx
 		{
 			pMesh->LinkTechniques( rg );
 		}
+	}
+
+	std::string Model::GetName() noexcept
+	{
+		return name;
+	}
+
+	size_t Model::GetChannels() noexcept
+	{
+		return channels;
 	}
 
 	Model::~Model() noexcept

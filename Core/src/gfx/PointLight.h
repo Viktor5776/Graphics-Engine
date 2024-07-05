@@ -15,12 +15,14 @@ namespace Hydro::gfx
 	class PointLight
 	{
 	public:
-		PointLight( Graphics& gfx, DirectX::XMFLOAT3 pos = { 10.0f,9.0f,2.5f }, float radius = 0.5f );
+		PointLight( Graphics& gfx, DirectX::XMFLOAT3 pos = { 10.0f,9.0f,2.5f }, float radius = 0.5f, const size_t channels = 0 );
 		void SpawnControlWindow() noexcept;
 		void Reset() noexcept;
+		void Reset( DirectX::XMFLOAT3 pos, size_t channels ) noexcept;
 		void Submit( size_t channels ) const noexcept(!_DEBUG);
 		void Bind( Graphics& gfx, DirectX::FXMMATRIX view ) const noexcept;
 		void LinkTechniques( Rgph::RenderGraph& );
+		size_t GetChannels() const noexcept;
 		std::shared_ptr<Camera> ShareCamera() const noexcept;
 	private:
 		struct PointLightCBuf
@@ -34,6 +36,7 @@ namespace Hydro::gfx
 			float attQuad;
 		};
 	private:
+		size_t channels;
 		PointLightCBuf home;
 		PointLightCBuf cbData;
 		mutable SolidSphere mesh;

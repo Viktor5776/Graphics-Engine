@@ -6,10 +6,11 @@
 namespace Hydro::gfx
 {
 
-	PointLight::PointLight( Graphics& gfx, DirectX::XMFLOAT3 pos, float radius )
+	PointLight::PointLight( Graphics& gfx, DirectX::XMFLOAT3 pos, float radius, const size_t channels )
 		:
 		mesh( gfx, radius ),
-		cbuf( gfx )
+		cbuf( gfx ),
+		channels( channels )
 	{
 		home = {
 			pos,
@@ -63,6 +64,23 @@ namespace Hydro::gfx
 		cbData = home;
 	}
 
+	void PointLight::Reset( DirectX::XMFLOAT3 pos, size_t channels ) noexcept
+	{
+		home = {
+			pos,
+			{ 0.05f,0.05f,0.05f },
+			{ 1.0f,1.0f,1.0f },
+			1.0f,
+			1.0f,
+			0.025f,
+			0.0030f,
+		};
+
+		this->channels = channels;
+
+		cbData = home;
+	}
+
 	void PointLight::Submit( size_t channels ) const noexcept(!_DEBUG)
 	{
 		mesh.SetPos( cbData.pos );
@@ -81,6 +99,11 @@ namespace Hydro::gfx
 	void PointLight::LinkTechniques( Rgph::RenderGraph& rg )
 	{
 		mesh.LinkTechniques( rg );
+	}
+
+	size_t PointLight::GetChannels() const noexcept
+	{
+		return channels;
 	}
 
 	std::shared_ptr<Camera> PointLight::ShareCamera() const noexcept

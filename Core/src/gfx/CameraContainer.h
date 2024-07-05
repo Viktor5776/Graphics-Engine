@@ -22,9 +22,12 @@ namespace Hydro::gfx
 		void LinkTechniques( Rgph::RenderGraph& rg );
 		void Submit( size_t channels ) const;
 		Camera& GetActiveCamera();
+		void SetChannels( size_t channels );
+		size_t GetChannels();
 	private:
 		Camera& GetControlledCamera();
 	private:
+		size_t channels = 0;
 		std::vector<std::shared_ptr<Camera>> cameras;
 		int active = 0;
 		int controlled = 0;

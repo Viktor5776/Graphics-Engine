@@ -93,6 +93,7 @@
     <ClInclude Include="src\gfx\PointLight.h" />
     <ClInclude Include="src\gfx\Bindable\RenderTarget.h" />
     <ClInclude Include="src\gfx\Projection.h" />
+    <ClInclude Include="src\gfx\Scene.h" />
     <ClInclude Include="src\gfx\TestModelProbe.h" />
     <ClInclude Include="src\gfx\Vertex.h" />
     <ClInclude Include="src\misc\HydroException.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="src\gfx\PointLight.cpp" />
     <ClCompile Include="src\gfx\Bindable\RenderTarget.cpp" />
     <ClCompile Include="src\gfx\Projection.cpp" />
+    <ClCompile Include="src\gfx\Scene.cpp" />
     <ClCompile Include="src\gfx\Vertex.cpp" />
     <ClCompile Include="src\misc\HydroException.cpp" />
     <ClCompile Include="src\misc\HydroXM.cpp" />
