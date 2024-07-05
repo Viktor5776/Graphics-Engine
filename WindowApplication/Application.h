@@ -23,17 +23,6 @@ private:
 	Hydro::misc::Timer timer;
 	Hydro::gfx::Rgph::BlurOutlineRenderGraph rg{ window.Gfx() };
 	Hydro::gfx::Scene scene;
-
-	//Hydro::gfx::CameraContainer cameras;
-	//Hydro::gfx::PointLight light;
-	////Models
-	//Hydro::gfx::Model sponza{ window.Gfx(), "models\\Sponza\\sponza.obj", "Sponza", 0b0, 1.0f / 20.0f};
-	//Hydro::gfx::TestCube cube{ window.Gfx(),4.0f };
-	//Hydro::gfx::TestCube cube2{ window.Gfx(),4.0f };
-	//Hydro::gfx::Model gobber{ window.Gfx(),"Models\\gobber\\GoblinX.obj", "Gobber", 0b0, 4.0f };
-	//Hydro::gfx::Model nano{ window.Gfx(),"Models\\nano_textured\\nanosuit.obj", "Nano", 0b0, 2.0f };
-
-	bool savingDepth = false;
 };
 
 Hydro::app::App* Hydro::app::CreateApplication()

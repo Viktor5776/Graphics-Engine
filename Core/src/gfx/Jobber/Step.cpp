@@ -66,7 +66,6 @@ namespace Hydro::gfx
 
 	void Step::Link( Rgph::RenderGraph& rg )
 	{
-		assert( pTargetPass == nullptr );
 		pTargetPass = &rg.GetRenderQueue( targetPassName );
 	}
 }

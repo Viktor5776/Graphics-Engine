@@ -87,6 +87,13 @@ namespace Hydro::gfx
 		this->channels = channels;
 	}
 
+	void CameraContainer::clear()
+	{
+		cameras.clear();
+		active = 0;
+		controlled = 0;
+	}
+
 	size_t CameraContainer::GetChannels()
 	{
 		return channels;

@@ -1,0 +1,41 @@
+{
+	"Light": {
+		"pos": [ 10.0, 5.0, 0.0 ],
+		"channels": 1
+	},
+	"Cameras":[
+		{
+			"name": "Main",
+			"channels": 1,
+			"pos": [-13.5, 6.0, 3.5],
+			"pitch": 0.0,
+			"yaw": 1.57
+		}
+	],
+	"Models": [
+		{
+			"name": "Sponza",
+			"path": "models\\Sponza\\sponza.obj",
+			"channels": 3,
+			"pos": [0,0,0],
+			"scale": [0.05,0.05,0.05],
+			"rotation": [0,0,0]
+		},
+		{
+			"name": "Gobber",
+			"path": "models\\gobber\\GoblinX.obj",
+			"channels": 3,
+			"pos": [-8,10,0],
+			"scale": [4,4,4],
+			"rotation": [0,-1.57,0]
+		},
+		{
+			"name": "Nano",
+			"path": "models\\nano_textured\\nanosuit.obj",
+			"channels": 3,
+			"pos": [27,-0.56,1.7],
+			"scale": [2,2,2],
+			"rotation": [0,1.57,0]
+		}
+	]
+}

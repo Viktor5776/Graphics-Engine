@@ -23,6 +23,7 @@ namespace Hydro::gfx
 		void Submit( size_t channels ) const;
 		Camera& GetActiveCamera();
 		void SetChannels( size_t channels );
+		void clear();
 		size_t GetChannels();
 	private:
 		Camera& GetControlledCamera();

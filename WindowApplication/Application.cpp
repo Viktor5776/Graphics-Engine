@@ -13,34 +13,13 @@ using namespace Hydro::gfx;
 WindowApplication::WindowApplication()
 	:
 	App( 1280, 720 ),
-	scene( window.Gfx(), reinterpret_cast<Rgph::RenderGraph&>(rg), "" )
-	//light( window.Gfx(), { 10.0f,5.0f,0.0f } )
+	scene( window.Gfx(), reinterpret_cast<Rgph::RenderGraph&>(rg), "Scenes\\scene.json" )
 {
-
-	//cameras.AddCamera( std::make_unique<Camera>( window.Gfx(), "A", dx::XMFLOAT3{ -13.5f,6.0f,3.5f }, 0.0f, PI / 2.0f ) );
-	//cameras.AddCamera( std::make_unique<Camera>( window.Gfx(), "B", dx::XMFLOAT3{ -13.5f,28.8f,-6.4f }, PI / 180.0f * 13.0f, PI / 180.0f * 61.0f ) );
-	//cameras.AddCamera( light.ShareCamera() );
-	//
-	//cube.SetPos( { 10.0f,5.0f,6.0f } );
-	//cube2.SetPos( { 10.0f,5.0f,14.0f } );
-	//
 	//nano.SetRootTransform(
 	//	dx::XMMatrixRotationY( PI / 2.f ) *
 	//	dx::XMMatrixTranslation( 27.f, -0.56f, 1.7f )
 	//);
-	//gobber.SetRootTransform(
-	//	dx::XMMatrixRotationY( -PI / 2.f ) *
-	//	dx::XMMatrixTranslation( -8.f, 10.f, 0.f )
-	//);
-	//
-	//cube.LinkTechniques( rg );
-	//cube2.LinkTechniques( rg );
-	//light.LinkTechniques( rg );
-	//sponza.LinkTechniques( rg );
-	//gobber.LinkTechniques( rg );
-	//nano.LinkTechniques( rg );
-	//cameras.LinkTechniques( rg );
-	//
+	
 	rg.BindShadowCamera( *scene.GetLight().ShareCamera());
 }
 
@@ -52,29 +31,10 @@ void WindowApplication::DoFrame()
 	float dt = timer.Mark() * speed_factor;
 	window.Gfx().BeginFrame( 0.07f, 0.0f, 0.12f );
 
+	scene.RenderSceneWindow( window.Gfx(), reinterpret_cast<Rgph::RenderGraph&>(rg) );
 	rg.BindMainCamera( scene.GetActiveCamera() );
-
 	scene.Submit( window.Gfx() );
-
 	rg.Execute( window.Gfx() );
-
-	//light.Bind( window.Gfx(), cameras->GetMatrix() );
-	//rg.BindMainCamera( cameras.GetActiveCamera() );
-	//
-	//light.Submit( Channels::main );
-	//cube.Submit( Channels::main );
-	//sponza.Submit( Channels::main );
-	//cube2.Submit( Channels::main );
-	//gobber.Submit( Channels::main );
-	//nano.Submit( Channels::main );
-	//cameras.Submit( Channels::main );
-	//
-	//sponza.Submit( Channels::shadow );
-	//cube.Submit( Channels::shadow );
-	//cube2.Submit( Channels::shadow );
-	//gobber.Submit( Channels::shadow );
-	//nano.Submit( Channels::shadow );
-	//
 	
 	HandleInput(dt);
 
@@ -90,10 +50,6 @@ void WindowApplication::DoFrame()
 	//cube.SpawnControlWindow( window.Gfx(), "Cube 1" );
 	//cube2.SpawnControlWindow( window.Gfx(), "Cube 2" );
 	//rg.RenderWindows( window.Gfx() );
-
-	ImGui::Begin( "FPS" );
-	ImGui::Text( "Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate );
-	ImGui::End();
 
 	window.Gfx().EndFrame();
 	rg.Reset();
@@ -121,9 +77,6 @@ void WindowApplication::HandleInput( float dt )
 				window.EnableCursor();
 				window.mouse.DisableRaw();
 			}
-			break;
-		case VK_RETURN:
-			savingDepth = true;
 			break;
 		}
 	}
