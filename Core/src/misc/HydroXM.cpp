@@ -24,6 +24,17 @@ DirectX::XMFLOAT3 ExtractTranslation( const DirectX::XMFLOAT4X4& matrix )
 	return { matrix._41,matrix._42,matrix._43 };
 }
 
+DirectX::XMFLOAT3 ExtractScale( const DirectX::XMFLOAT4X4& matrix )
+{
+	DirectX::XMVECTOR x = DirectX::XMVectorSet( matrix._11, matrix._21, matrix._31, 0.0f );
+	DirectX::XMVECTOR y = DirectX::XMVectorSet( matrix._12, matrix._22, matrix._32, 0.0f );
+	DirectX::XMVECTOR z = DirectX::XMVectorSet( matrix._13, matrix._23, matrix._33, 0.0f );
+
+	return { DirectX::XMVectorGetX( DirectX::XMVector3Length( x ) ),
+			 DirectX::XMVectorGetX( DirectX::XMVector3Length( y ) ),
+			 DirectX::XMVectorGetX( DirectX::XMVector3Length( z ) ) };
+}
+
 DirectX::XMMATRIX ScaleTranslation( DirectX::XMMATRIX matrix, float scale )
 {
 	matrix.r[3].m128_f32[0] *= scale;

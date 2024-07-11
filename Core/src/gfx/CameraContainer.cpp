@@ -94,6 +94,11 @@ namespace Hydro::gfx
 		controlled = 0;
 	}
 
+	std::vector<std::shared_ptr<Camera>> CameraContainer::GetCameras()
+	{
+		return cameras;
+	}
+
 	size_t CameraContainer::GetChannels()
 	{
 		return channels;

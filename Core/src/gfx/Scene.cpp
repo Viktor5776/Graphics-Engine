@@ -6,6 +6,8 @@
 #include <nlohmann\json.hpp>
 #include <fstream>
 #include "../../third/ImGui/imgui.h"
+#include "../misc/HydroXM.h"
+#include "TestModelProbe.h"
 
 namespace Hydro::gfx
 {
@@ -46,13 +48,29 @@ namespace Hydro::gfx
 	void Scene::RenderSceneWindow( Graphics& gfx, Rgph::RenderGraph& rg )
 	{
 		ImGui::Begin( "Scene" );
+
+		ImGui::Begin( "Models" );
+		for( auto& model : models )
+		{
+			ImGui::BeginChild( model.GetName().c_str() );
+			static MP probe;
+			probe.SpawnWindow( model );
+			ImGui::EndChild();
+		}
+		ImGui::End();
+
 		if( ImGui::Button( "Load" ) )
 		{
 			LoadScene( gfx, rg, path );
 		}
+
+		if( ImGui::Button( "Save" ) )
+		{
+			SaveScene( "Scenes\\scene_save.json" );
+		}
 		ImGui::End();
 		
-		//TODO
+		//TODO modify scene
 	}
 
 	Camera& Scene::GetActiveCamera()
@@ -67,7 +85,50 @@ namespace Hydro::gfx
 
 	void Scene::SaveScene( const std::string& path )
 	{
+		//TODO SAVE SCENE BOOL TO SAVE ACTIVE CAMERA SHOLD BE ADDED
+		using json = nlohmann::json;
+		json sceneData;
 
+		//Light
+		DirectX::XMFLOAT3 lightPos = light.GetPos();
+		sceneData["Light"]["pos"] = { lightPos.x, lightPos.y, lightPos.z };
+		sceneData["Light"]["channels"] = light.GetChannels();
+
+		//Cameras
+		for( auto& cam : cameras.GetCameras() )
+		{
+			sceneData["Cameras"].push_back( {
+				{ "name", cam->GetName() },
+				{ "pos", { cam->GetPos().x, cam->GetPos().y, cam->GetPos().z } },
+				{ "pitch", cam->GetPitch() },
+				{ "yaw", cam->GetYaw() },
+				{ "channels", cameras.GetChannels() }
+			} );
+		}
+
+		//Models
+		for( auto& model : models )
+		{
+			DirectX::XMFLOAT4X4 transform = model.GetRootTransform();
+
+			DirectX::XMFLOAT3 rot = ExtractEulerAngles( transform );
+			DirectX::XMFLOAT3 pos = ExtractTranslation( transform );
+			DirectX::XMFLOAT3 scale = ExtractScale( transform );
+
+			sceneData["Models"].push_back( {
+				{ "path", model.GetPath() },
+				{ "name", model.GetName() },
+				{ "channels", model.GetChannels() },
+				{ "scale", { scale.x, scale.y, scale.z } },
+				{ "rotation", { rot.x, rot.y, rot.z }},
+				{ "pos", { pos.x,pos.y,pos.z }}
+			} );
+		}
+
+		//Save scene path
+		std::ofstream file;
+		file.open( path );
+		file << sceneData.dump( 4 );
 	}
 
 	void Scene::LoadScene( Graphics& gfx, Rgph::RenderGraph& rg, const std::string& path )

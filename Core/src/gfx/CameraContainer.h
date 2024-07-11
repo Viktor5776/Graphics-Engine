@@ -24,6 +24,7 @@ namespace Hydro::gfx
 		Camera& GetActiveCamera();
 		void SetChannels( size_t channels );
 		void clear();
+		std::vector<std::shared_ptr<Camera>> GetCameras();
 		size_t GetChannels();
 	private:
 		Camera& GetControlledCamera();

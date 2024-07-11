@@ -32,12 +32,16 @@ namespace Hydro::gfx
 		void Accept( class ModelProbe& probe );
 		void LinkTechniques( Rgph::RenderGraph& );
 		std::string GetName() noexcept;
+		std::string GetPath() noexcept;
 		size_t GetChannels() noexcept;
+		DirectX::XMFLOAT4X4 GetRootTransform() noexcept;
 		~Model() noexcept;
 	private:
 		std::unique_ptr<Node> ParseNode( int& nextId, const aiNode& node, float scale ) noexcept;
 	private:
 		std::string name;
+		std::string path;
+		DirectX::XMFLOAT4X4 rootTransform;
 		size_t channels;
 		std::unique_ptr<Node> pRoot;
 		//sharing meshes here perhaps dangerous?

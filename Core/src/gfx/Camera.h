@@ -26,6 +26,8 @@ namespace Hydro::gfx
 		DirectX::XMFLOAT3 GetPos() const noexcept;
 		void SetPos( const DirectX::XMFLOAT3& pos ) noexcept;
 		const std::string& GetName() const noexcept;
+		float GetPitch() const noexcept;
+		float GetYaw() const noexcept;
 		void LinkTechniques( Rgph::RenderGraph& rg );
 		void Submit( size_t channels ) const;
 	private:

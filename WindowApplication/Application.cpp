@@ -13,13 +13,8 @@ using namespace Hydro::gfx;
 WindowApplication::WindowApplication()
 	:
 	App( 1280, 720 ),
-	scene( window.Gfx(), reinterpret_cast<Rgph::RenderGraph&>(rg), "Scenes\\scene.json" )
+	scene( window.Gfx(), reinterpret_cast<Rgph::RenderGraph&>(rg), "Scenes\\scene_save.json" )
 {
-	//nano.SetRootTransform(
-	//	dx::XMMatrixRotationY( PI / 2.f ) *
-	//	dx::XMMatrixTranslation( 27.f, -0.56f, 1.7f )
-	//);
-	
 	rg.BindShadowCamera( *scene.GetLight().ShareCamera());
 }
 

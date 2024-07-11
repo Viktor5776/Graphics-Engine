@@ -101,6 +101,11 @@ namespace Hydro::gfx
 		mesh.LinkTechniques( rg );
 	}
 
+	DirectX::XMFLOAT3 PointLight::GetPos() const noexcept
+	{
+		return cbData.pos;
+	}
+
 	size_t PointLight::GetChannels() const noexcept
 	{
 		return channels;

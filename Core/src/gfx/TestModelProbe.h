@@ -83,13 +83,9 @@ namespace Hydro::gfx
 	class MP : ModelProbe
 	{
 	public:
-		MP( std::string name )
-			:
-			name( std::move( name ) )
-		{}
+		MP() = default;
 		void SpawnWindow( Model& model )
 		{
-			ImGui::Begin( name.c_str() );
 			ImGui::Columns( 2, nullptr, true );
 			model.Accept( *this );
 
@@ -107,9 +103,14 @@ namespace Hydro::gfx
 				dcheck( ImGui::SliderAngle( "X-rotation", &tf.xRot, -180.0f, 180.0f ) );
 				dcheck( ImGui::SliderAngle( "Y-rotation", &tf.yRot, -180.0f, 180.0f ) );
 				dcheck( ImGui::SliderAngle( "Z-rotation", &tf.zRot, -180.0f, 180.0f ) );
+				ImGui::TextColored( { 0.4f,1.0f,0.6f,1.0f }, "Scale" );
+				dcheck( ImGui::SliderFloat( "X-Scale", &tf.xS, -60.f, 60.f ) );
+				dcheck( ImGui::SliderFloat( "Y-Scale", &tf.yS, -60.f, 60.f ) );
+				dcheck( ImGui::SliderFloat( "Z-Scale", &tf.zS, -60.f, 60.f ) );
 				if( dirty )
 				{
 					pSelectedNode->SetAppliedTransform(
+						dx::XMMatrixScaling( tf.xS, tf.yS, tf.zS ) *
 						dx::XMMatrixRotationX( tf.xRot ) *
 						dx::XMMatrixRotationY( tf.yRot ) *
 						dx::XMMatrixRotationZ( tf.zRot ) *
@@ -120,7 +121,6 @@ namespace Hydro::gfx
 				TP probe;
 				pSelectedNode->Accept( probe );
 			}
-			ImGui::End();
 		}
 	protected:
 		bool PushNode( Node& node ) override
@@ -158,8 +158,10 @@ namespace Hydro::gfx
 			float x = 0.0f;
 			float y = 0.0f;
 			float z = 0.0f;
+			float xS = 1.0f;
+			float yS = 1.0f;
+			float zS = 1.0f;
 		};
-		std::string name;
 		std::unordered_map<int, TransformParameters> transformParams;
 	private:
 		TransformParameters& ResolveTransform() noexcept
@@ -177,6 +179,7 @@ namespace Hydro::gfx
 			const auto& applied = pSelectedNode->GetAppliedTransform();
 			const auto angles = ExtractEulerAngles( applied );
 			const auto translation = ExtractTranslation( applied );
+			const auto scale = ExtractScale( applied );
 			TransformParameters tp;
 			tp.zRot = angles.z;
 			tp.xRot = angles.x;
@@ -184,6 +187,9 @@ namespace Hydro::gfx
 			tp.x = translation.x;
 			tp.y = translation.y;
 			tp.z = translation.z;
+			tp.xS = scale.x;
+			tp.yS = scale.y;
+			tp.zS = scale.z;
 			return transformParams.insert( { id,{ tp } } ).first->second;
 		}
 	};

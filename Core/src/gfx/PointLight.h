@@ -22,6 +22,7 @@ namespace Hydro::gfx
 		void Submit( size_t channels ) const noexcept(!_DEBUG);
 		void Bind( Graphics& gfx, DirectX::FXMMATRIX view ) const noexcept;
 		void LinkTechniques( Rgph::RenderGraph& );
+		DirectX::XMFLOAT3 GetPos() const noexcept;
 		size_t GetChannels() const noexcept;
 		std::shared_ptr<Camera> ShareCamera() const noexcept;
 	private:

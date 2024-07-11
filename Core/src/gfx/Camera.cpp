@@ -153,6 +153,16 @@ namespace Hydro::gfx
         return name;
     }
 
+    float Camera::GetPitch() const noexcept
+    {
+        return pitch;
+    }
+
+    float Camera::GetYaw() const noexcept
+    {
+        return yaw;
+    }
+
     void Camera::LinkTechniques( Rgph::RenderGraph& rg )
     {
         indicator.LinkTechniques( rg );

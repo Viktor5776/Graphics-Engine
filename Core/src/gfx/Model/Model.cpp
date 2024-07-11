@@ -14,8 +14,11 @@ namespace Hydro::gfx
 	Model::Model( Graphics& gfx, const std::string& pathString, const std::string& name, const size_t channels, const float scale )
 		:
 		name( name ),
-		channels( channels )
+		channels( channels ),
+		path( pathString )
 	{
+		DirectX::XMStoreFloat4x4( &rootTransform, DirectX::XMMatrixIdentity() );
+
 		Assimp::Importer imp;
 		const auto pScene = imp.ReadFile( pathString.c_str(),
 			aiProcess_Triangulate |
@@ -61,6 +64,8 @@ namespace Hydro::gfx
 		channels = std::move( other.channels );
 		pRoot = std::move( other.pRoot );
 		meshPtrs = std::move( other.meshPtrs );
+		rootTransform = std::move( other.rootTransform );
+		path = std::move( other.path );
 
 		return *this;
 	}
@@ -72,6 +77,7 @@ namespace Hydro::gfx
 
 	void Model::SetRootTransform( DirectX::FXMMATRIX tf ) noexcept
 	{
+		DirectX::XMStoreFloat4x4( &rootTransform, tf );
 		pRoot->SetAppliedTransform( tf );
 	}
 
@@ -93,9 +99,19 @@ namespace Hydro::gfx
 		return name;
 	}
 
+	std::string Model::GetPath() noexcept
+	{
+		return path;
+	}
+
 	size_t Model::GetChannels() noexcept
 	{
 		return channels;
+	}
+
+	DirectX::XMFLOAT4X4 Model::GetRootTransform() noexcept
+	{
+		return rootTransform;
 	}
 
 	Model::~Model() noexcept
